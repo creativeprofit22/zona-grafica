@@ -10,7 +10,7 @@ export default function LoginForm() {
   return (
     <div className={styles.loginPage}>
       <form action={action} className={styles.loginForm}>
-        <h1 className={styles.loginTitle}>Douro Digital</h1>
+        <h1 className={styles.loginTitle}>Zona Gráfica</h1>
         <p className={styles.loginSubtitle}>Admin Panel</p>
 
         {state?.error && <p className={styles.loginError}>{state.error}</p>}

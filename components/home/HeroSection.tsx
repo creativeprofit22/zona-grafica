@@ -1,9 +1,12 @@
 "use client";
 
+import { homeData } from "@/data/home";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 import styles from "./HeroSection.module.css";
+
+const { hero } = homeData;
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -80,51 +83,52 @@ export default function HeroSection() {
       <div className={styles.composition}>
         {/* Line 1: "zona" — medium, pushed right */}
         <div className={`${styles.line} ${styles.lineZona}`}>
-          <span className={`${styles.zona} ${styles.animItem}`}>zona</span>
+          <span className={`${styles.zona} ${styles.animItem}`}>
+            {hero.headline[0]}
+          </span>
         </div>
 
         {/* Line 2: "GRÁFICA" — massive, dominant */}
         <div className={`${styles.line} ${styles.lineGrafica}`}>
           <span className={`${styles.grafica} ${styles.animItem}`}>
-            GRÁFICA
+            {hero.headline[1]}
           </span>
         </div>
 
         {/* Line 3: "(estudio creativo)" — small annotation, offset right */}
         <div className={`${styles.line} ${styles.lineAnnotation}`}>
           <span className={`${styles.annotation} ${styles.animItem}`}>
-            (estudio creativo)
+            {hero.subtitle}
           </span>
         </div>
 
         {/* Line 4: "diseño que" — medium display */}
         <div className={`${styles.line} ${styles.lineDiseno}`}>
           <span className={`${styles.diseno} ${styles.animItem}`}>
-            diseño que
+            {hero.headline[2]}
           </span>
         </div>
 
         {/* Line 5: "habla →" — with arrow, offset */}
         <div className={`${styles.line} ${styles.lineHabla}`}>
           <span className={`${styles.habla} ${styles.animItem}`}>
-            habla <span className={styles.arrow}>→</span>
+            {hero.headline[3]} <span className={styles.arrow}>→</span>
           </span>
         </div>
       </div>
 
       {/* Footnotes — asterisk style */}
       <div className={styles.footnotes}>
-        <p className={styles.footnote}>
-          <span className={styles.asterisk}>*</span> San Miguel de Allende, GTO
-        </p>
-        <p className={styles.footnote}>
-          <span className={styles.asterisk}>*</span> Desde 1993
-        </p>
+        {hero.location.split(" · ").map((note) => (
+          <p key={note} className={styles.footnote}>
+            <span className={styles.asterisk}>*</span> {note}
+          </p>
+        ))}
       </div>
 
       {/* Scroll prompt */}
       <div className={styles.prompt}>
-        <span className={styles.promptText}>Scroll</span>
+        <span className={styles.promptText}>{hero.scrollPrompt}</span>
         <svg
           className={styles.chevron}
           width={14}

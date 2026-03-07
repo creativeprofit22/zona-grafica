@@ -24,7 +24,6 @@ export interface SiteConfig {
     instagram?: string;
     facebook?: string;
     behance?: string;
-    linkedin?: string;
   };
 }
 
@@ -126,6 +125,11 @@ export interface ValueItem {
   description: string;
 }
 
+export interface ManifestoSegment {
+  text: string;
+  style?: "bold" | "italic" | "accent" | "ochre" | "bold-accent";
+}
+
 export interface HomeData {
   hero: {
     headline: string[];
@@ -134,7 +138,8 @@ export interface HomeData {
     location: string;
   };
   manifesto: {
-    text: string;
+    segments: ManifestoSegment[];
+    attribution: string;
   };
   cta: {
     headline: string;

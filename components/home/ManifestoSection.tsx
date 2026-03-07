@@ -1,5 +1,6 @@
 "use client";
 
+import { homeData } from "@/data/home";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,33 +9,7 @@ import styles from "./ManifestoSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface ManifestoSegment {
-  text: string;
-  style?: "bold" | "italic" | "accent" | "ochre" | "bold-accent";
-}
-
-const manifesto: ManifestoSegment[] = [
-  { text: "Fundé Zona Gráfica" },
-  { text: "porque creo que", style: "italic" },
-  { text: "el diseño no es decoración", style: "bold-accent" },
-  { text: "— es" },
-  { text: "comunicación.", style: "bold" },
-  { text: "Llevamos más de" },
-  { text: "30 años", style: "ochre" },
-  { text: "haciendo carteles, libros, marcas e identidades desde" },
-  { text: "San Miguel de Allende.", style: "bold" },
-  { text: "Hemos retratado a" },
-  { text: "Tim Burton,", style: "italic" },
-  { text: "diseñado" },
-  { text: "22 años", style: "ochre" },
-  { text: "la imagen del" },
-  { text: "GIFF,", style: "bold" },
-  { text: "y creado el cartel de la" },
-  { text: "edición 33", style: "ochre" },
-  { text: "del Cervantino." },
-  { text: "No seguimos tendencias." },
-  { text: "Hacemos diseño con raíz.", style: "bold-accent" },
-];
+const { manifesto } = homeData;
 
 export default function ManifestoSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,7 +47,7 @@ export default function ManifestoSection() {
     { scope: sectionRef, dependencies: [isMounted] },
   );
 
-  const plainText = manifesto.map((s) => s.text).join(" ");
+  const plainText = manifesto.segments.map((s) => s.text).join(" ");
 
   if (!isMounted) {
     return (
@@ -86,7 +61,7 @@ export default function ManifestoSection() {
           <blockquote ref={quoteRef} className={styles.quote}>
             <p className={styles.text}>{plainText}</p>
           </blockquote>
-          <cite className={styles.attribution}>— Jesús Herrera, fundador</cite>
+          <cite className={styles.attribution}>{manifesto.attribution}</cite>
         </div>
       </section>
     );
@@ -102,7 +77,7 @@ export default function ManifestoSection() {
         </div>
         <blockquote ref={quoteRef} className={styles.quote}>
           <p className={styles.text}>
-            {manifesto.map((segment, si) =>
+            {manifesto.segments.map((segment, si) =>
               segment.text.split(" ").map((word, wi) => (
                 <span
                   // biome-ignore lint/suspicious/noArrayIndexKey: stable segment/word order

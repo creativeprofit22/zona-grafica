@@ -297,6 +297,4 @@ export const portfolioCategories = [
   { slug: "fotografia", label: "Fotografía" },
   { slug: "ilustracion", label: "Ilustración" },
   { slug: "poster", label: "Poster / Cartel" },
-  { slug: "carteleria", label: "Cartelería" },
-  { slug: "video", label: "Video" },
 ] as const;

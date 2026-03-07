@@ -53,8 +53,17 @@ export default function ContactForm() {
     setStatus("submitting");
 
     try {
-      console.log("Contact form submission:", form);
-      await new Promise((resolve) => setTimeout(resolve, 600));
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Error al enviar");
+      }
+
       setStatus("success");
       setForm({ name: "", projectType: "", contact: "", message: "" });
     } catch {

@@ -2,86 +2,79 @@ import { listContent } from "@/lib/content";
 import Link from "next/link";
 import styles from "../../admin.module.css";
 
-export const metadata = { title: "Content — Douro Digital Admin" };
+export const metadata = { title: "Content — Zona Gráfica Admin" };
 export const dynamic = "force-dynamic";
 
 /* Human-friendly names + descriptions for content keys */
 const contentMeta: Record<string, { name: string; desc: string }> = {
   "about.hero": {
-    name: "About Hero",
-    desc: "Headline, italic text, and subtitle on the About page",
+    name: "Nosotros Hero",
+    desc: "Encabezado y subtítulo de la página Nosotros",
   },
   "about.intro": {
-    name: "About Intro",
-    desc: "The long intro paragraph on the About page",
+    name: "Nosotros Intro",
+    desc: "Párrafo introductorio — la historia de Jesús y Zona Gráfica",
   },
   "about.values": {
-    name: "Our Values",
-    desc: "Value cards — brand voice, security, partners",
+    name: "Valores",
+    desc: "Tarjetas de valores — diseño con raíz, comunicación, oficio",
   },
   "about.team.intro": {
-    name: "Team Intro",
-    desc: "One-liner above the team member cards",
+    name: "Intro Equipo",
+    desc: "Línea introductoria sobre el equipo",
   },
   "about.team.members": {
-    name: "Team Members",
-    desc: "Names, roles, photos, and accent colors",
-  },
-  "about.team.highlights": {
-    name: "Team Highlights",
-    desc: "Small team, built for results, security first",
+    name: "Miembros del Equipo",
+    desc: "Nombres, roles y fotos del equipo",
   },
   "about.cta": {
-    name: "About CTA",
-    desc: "Call-to-action section at bottom of About page",
+    name: "Nosotros CTA",
+    desc: "Llamada a la acción al final de Nosotros",
   },
-  "home.hero": { name: "Home Hero", desc: "Main headline on the homepage" },
-  "home.mission": {
-    name: "Mission Text",
-    desc: "The paragraph describing who Douro is",
+  "home.hero": {
+    name: "Home Hero",
+    desc: "Encabezado principal — zona GRÁFICA diseño que habla",
   },
-  "home.aboutTopics": {
-    name: "About Topics",
-    desc: "Our Approach, Values, and Process cards",
+  "home.manifesto": {
+    name: "Manifiesto",
+    desc: "Cita de Jesús Herrera sobre Zona Gráfica y su trayectoria",
   },
   "home.cta": {
-    name: "Rotating CTA",
-    desc: "Missed calls, lead response, tool graveyard, follow-up",
+    name: "Home CTA",
+    desc: "¿Tienes una idea? Platiquemos — WhatsApp y correo",
   },
-  "home.testimonials": {
-    name: "Testimonials",
-    desc: "Written client testimonials with quotes",
-  },
-  "home.videoTestimonials": {
-    name: "Video Testimonials",
-    desc: "Video testimonial names and companies",
-  },
-  "home.nav": { name: "Navigation Links", desc: "Top navigation menu items" },
+  "home.nav": { name: "Navegación", desc: "Links del menú principal" },
   "home.footer.description": {
-    name: "Footer Description",
-    desc: "Paragraph in the site footer",
+    name: "Footer Descripción",
+    desc: "Párrafo en el pie de página",
   },
   "home.footer.contact": {
-    name: "Footer Contact",
-    desc: "Email, phone, and address",
+    name: "Footer Contacto",
+    desc: "Correo, teléfono y dirección",
   },
   "home.footer.nav": {
-    name: "Footer Navigation",
-    desc: "Links shown in the footer",
+    name: "Footer Navegación",
+    desc: "Links del pie de página",
   },
-  services: { name: "Services", desc: "AI Agents, Custom Builds, AI Strategy" },
-  clients: { name: "Client Logos", desc: "Client names and logo paths" },
+  services: {
+    name: "Servicios",
+    desc: "Branding, editorial, web, fotografía, cartelería, ilustración",
+  },
+  clients: {
+    name: "Clientes",
+    desc: "GIFF, Cervantino, Cardo Café, Duncan Galería y más",
+  },
   "work.hero": {
-    name: "Work Hero",
-    desc: "Headline and subtitle on the Work page",
+    name: "Portafolio Hero",
+    desc: "Encabezado y subtítulo de la página de Portafolio",
   },
   "case-studies": {
-    name: "Case Studies",
-    desc: "Voice Noob, Pocket Agent, Social Bro, Viral Kid",
+    name: "Casos de Estudio",
+    desc: "Proyectos destacados con detalle completo",
   },
   "blog.categories": {
-    name: "Blog Categories",
-    desc: "Compliance, AI Automation, Data Security, etc.",
+    name: "Categorías del Blog",
+    desc: "Branding, Diseño, Fotografía, etc.",
   },
 };
 
@@ -124,18 +117,7 @@ export default async function ContentPage() {
         <div style={{ textAlign: "center", padding: "60px 0", color: "#666" }}>
           <p style={{ fontSize: 16, marginBottom: 8 }}>No content blocks yet</p>
           <p style={{ fontSize: 13 }}>
-            Run{" "}
-            <code
-              style={{
-                color: "#fafafa",
-                background: "#1a1a1a",
-                padding: "2px 8px",
-                borderRadius: 4,
-              }}
-            >
-              npx tsx scripts/seed-content.ts
-            </code>{" "}
-            to populate.
+            Agrega bloques de contenido desde el panel de admin para empezar.
           </p>
         </div>
       ) : (

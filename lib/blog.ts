@@ -69,11 +69,3 @@ export const getPostBySlug = cache(
     };
   },
 );
-
-export function getFeaturedPosts(): BlogPostMeta[] {
-  return getAllPosts().filter((p) => p.featured);
-}
-
-export function getRecentPosts(count = 3): BlogPostMeta[] {
-  return getAllPosts().slice(0, count);
-}

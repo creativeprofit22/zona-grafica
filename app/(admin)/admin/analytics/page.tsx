@@ -8,7 +8,7 @@ import { count, desc, sql } from "drizzle-orm";
 import styles from "../../admin.module.css";
 
 export const metadata = {
-  title: "Analytics — Douro Digital Admin",
+  title: "Analytics — Zona Gráfica Admin",
 };
 
 export const dynamic = "force-dynamic";

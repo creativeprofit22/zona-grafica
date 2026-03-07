@@ -37,6 +37,17 @@ export const newsletterSubscribers = pgTable("newsletter_subscribers", {
     .defaultNow(),
 });
 
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  projectType: text("project_type").notNull(),
+  contact: text("contact").notNull(),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 export const contentBlocks = pgTable("content_blocks", {
   id: serial("id").primaryKey(),
   key: text("key").notNull().unique(),

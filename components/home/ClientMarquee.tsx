@@ -1,16 +1,10 @@
 "use client";
 
+import { clients } from "@/data/clients";
 import { useEffect, useRef } from "react";
 import styles from "./ClientMarquee.module.css";
 
-const FEATURED_CLIENTS = [
-  "Festival Cervantino",
-  "GIFF",
-  "Cardo Café",
-  "Duncan Galería",
-  "Lobby",
-  "Zeferino Mezcal",
-];
+const FEATURED_CLIENTS = clients.slice(0, 6).map((c) => c.name);
 
 export default function ClientMarquee() {
   const ref = useRef<HTMLElement>(null);
