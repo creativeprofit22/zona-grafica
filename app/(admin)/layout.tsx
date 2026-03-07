@@ -18,7 +18,7 @@ export default async function AdminLayout({
   return (
     <div className={styles.adminShell}>
       <nav className={styles.sidebar}>
-        <p className={styles.sidebarBrand}>Douro Admin</p>
+        <p className={styles.sidebarBrand}>Zona Gráfica</p>
         <AdminNav />
         <div className={styles.sidebarSpacer} />
         <form action={logoutAction}>

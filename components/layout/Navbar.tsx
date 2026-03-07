@@ -23,9 +23,10 @@ export default function Navbar() {
 
   // Detect if hero section is dark-themed
   // Watches for elements with data-theme="dark" in the first viewport
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-observe hero on route change
   useEffect(() => {
     const heroEl = document.querySelector<HTMLElement>(
-      '[data-hero-theme="dark"]'
+      '[data-hero-theme="dark"]',
     );
     if (!heroEl) {
       setHeroDark(false);
@@ -37,7 +38,7 @@ export default function Navbar() {
         // Hero is dark when it's visible (intersecting) and covers most of viewport
         setHeroDark(entry.isIntersecting && entry.intersectionRatio > 0.3);
       },
-      { threshold: [0, 0.3, 0.5, 1] }
+      { threshold: [0, 0.3, 0.5, 1] },
     );
 
     observer.observe(heroEl);
@@ -45,6 +46,7 @@ export default function Navbar() {
   }, [pathname]);
 
   // Close menu on route change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally only react to pathname changes
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);

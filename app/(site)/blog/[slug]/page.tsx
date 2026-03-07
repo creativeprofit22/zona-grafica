@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-import PostHeader from "@/components/blog/PostHeader";
 import PostContent from "@/components/blog/PostContent";
+import PostHeader from "@/components/blog/PostHeader";
 
 interface Props {
   params: Promise<{ slug: string }>;

@@ -2,12 +2,12 @@ import MotionSection from "@/components/animations/MotionSection";
 import styles from "./Marquee.module.css";
 
 const DEFAULT_ITEMS = [
-  "AI Agents",
-  "Custom Software",
-  "Revenue Growth",
-  "Go-to-Market Strategy",
-  "Automation",
-  "Digital Transformation",
+  "Branding",
+  "Diseño Editorial",
+  "Cartelería",
+  "Fotografía",
+  "Ilustración",
+  "Diseño Web",
 ];
 
 export default function Marquee({

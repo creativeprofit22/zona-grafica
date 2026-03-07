@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import type { Testimonial } from "@/types/content";
 import MotionSection from "@/components/animations/MotionSection";
+import type { Testimonial } from "@/types/content";
+import { useCallback, useState } from "react";
 import styles from "./TestimonialCarousel.module.css";
 
 interface Props {
@@ -13,16 +13,13 @@ export default function TestimonialCarousel({ testimonials }: Props) {
   const [current, setCurrent] = useState(0);
   const total = testimonials.length;
 
-  if (total === 0) return null;
-
   const prev = useCallback(
     () => setCurrent((c) => (c - 1 + total) % total),
     [total],
   );
-  const next = useCallback(
-    () => setCurrent((c) => (c + 1) % total),
-    [total],
-  );
+  const next = useCallback(() => setCurrent((c) => (c + 1) % total), [total]);
+
+  if (total === 0) return null;
 
   const t = testimonials[current];
 

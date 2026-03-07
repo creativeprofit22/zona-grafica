@@ -264,10 +264,26 @@ export const caseStudies: CaseStudy[] = [
     result:
       "La nueva identidad posicionó a Cardo Café como referencia de café artesanal en la región. El reconocimiento de marca aumentó significativamente en los primeros meses.",
     gallery: [
-      { src: "/images/portfolio/cardo-cafe-01.jpg", alt: "Logotipo Cardo Café", width: "full" },
-      { src: "/images/portfolio/cardo-cafe-02.jpg", alt: "Papelería Cardo Café", width: "half" },
-      { src: "/images/portfolio/cardo-cafe-03.jpg", alt: "Menú Cardo Café", width: "half" },
-      { src: "/images/portfolio/cardo-cafe-04.jpg", alt: "Señalética Cardo Café", width: "full" },
+      {
+        src: "/images/portfolio/cardo-cafe-01.jpg",
+        alt: "Logotipo Cardo Café",
+        width: "full",
+      },
+      {
+        src: "/images/portfolio/cardo-cafe-02.jpg",
+        alt: "Papelería Cardo Café",
+        width: "half",
+      },
+      {
+        src: "/images/portfolio/cardo-cafe-03.jpg",
+        alt: "Menú Cardo Café",
+        width: "half",
+      },
+      {
+        src: "/images/portfolio/cardo-cafe-04.jpg",
+        alt: "Señalética Cardo Café",
+        width: "full",
+      },
     ],
     relatedSlugs: ["lobby-branding", "zeferino-mezcal"],
   },

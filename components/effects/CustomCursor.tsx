@@ -35,7 +35,7 @@ export default function CustomCursor() {
       const target = e.target as HTMLElement;
       const closestProject = target.closest("[data-cursor-project]");
       const closestLink = target.closest(
-        'a, button, [role="button"], input, textarea, select, label[for]'
+        'a, button, [role="button"], input, textarea, select, label[for]',
       );
 
       if (closestProject) {

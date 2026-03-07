@@ -50,7 +50,11 @@ export default function HeroSection() {
 
       // Scroll prompt
       if (prompt) {
-        tl.to(prompt, { opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.2");
+        tl.to(
+          prompt,
+          { opacity: 1, duration: 0.5, ease: "power2.out" },
+          "-=0.2",
+        );
       }
 
       // Chevron bounce
@@ -81,7 +85,9 @@ export default function HeroSection() {
 
         {/* Line 2: "GRÁFICA" — massive, dominant */}
         <div className={`${styles.line} ${styles.lineGrafica}`}>
-          <span className={`${styles.grafica} ${styles.animItem}`}>GRÁFICA</span>
+          <span className={`${styles.grafica} ${styles.animItem}`}>
+            GRÁFICA
+          </span>
         </div>
 
         {/* Line 3: "(estudio creativo)" — small annotation, offset right */}
@@ -93,7 +99,9 @@ export default function HeroSection() {
 
         {/* Line 4: "diseño que" — medium display */}
         <div className={`${styles.line} ${styles.lineDiseno}`}>
-          <span className={`${styles.diseno} ${styles.animItem}`}>diseño que</span>
+          <span className={`${styles.diseno} ${styles.animItem}`}>
+            diseño que
+          </span>
         </div>
 
         {/* Line 5: "habla →" — with arrow, offset */}

@@ -53,8 +53,7 @@
   border-bottom: 2px solid var(--stone);
   padding: 0 0 4px;
   width: 100%;
-  transition:
-    border-color var(--duration-fast) var(--ease-out);
+  transition: border-color var(--duration-fast) var(--ease-out);
 }
 
 .inlineInput::placeholder,
@@ -138,9 +137,8 @@
   font-weight: 600;
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-fast) var(--ease-out), transform
+    var(--duration-fast) var(--ease-out);
 }
 
 .submit:hover {
@@ -209,9 +207,8 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    border-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+  transition: border-color var(--duration-fast) var(--ease-out), color
+    var(--duration-fast) var(--ease-out);
 }
 
 .resetButton:hover {

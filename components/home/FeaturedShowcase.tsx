@@ -1,13 +1,13 @@
 "use client";
 
+import ImageReveal from "@/components/animations/ImageReveal";
+import type { Project } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import ImageReveal from "@/components/animations/ImageReveal";
-import type { Project } from "@/types/content";
 import styles from "./FeaturedShowcase.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -92,7 +92,7 @@ export default function FeaturedShowcase({ projects }: Props) {
         const cards = container.querySelectorAll<HTMLElement>(
           `.${styles.mobileCard}`,
         );
-        cards.forEach((card) => {
+        for (const card of cards) {
           gsap.fromTo(
             card,
             { opacity: 0, y: 30 },
@@ -108,7 +108,7 @@ export default function FeaturedShowcase({ projects }: Props) {
               },
             },
           );
-        });
+        }
       });
     },
     { scope: containerRef },
@@ -162,9 +162,7 @@ export default function FeaturedShowcase({ projects }: Props) {
 
               <h3 className={styles.projectTitle}>{project.title}</h3>
 
-              <p className={styles.projectDescription}>
-                {project.description}
-              </p>
+              <p className={styles.projectDescription}>{project.description}</p>
 
               <div className={styles.projectCta}>
                 <span className={styles.projectCtaText}>Ver proyecto</span>

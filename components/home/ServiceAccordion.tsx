@@ -55,12 +55,9 @@ export default function ServiceAccordion({ services }: Props) {
     }
   }, []);
 
-  const handleTap = useCallback(
-    (id: string) => {
-      setTappedId((prev) => (prev === id ? null : id));
-    },
-    [],
-  );
+  const handleTap = useCallback((id: string) => {
+    setTappedId((prev) => (prev === id ? null : id));
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -104,7 +101,9 @@ export default function ServiceAccordion({ services }: Props) {
                   <span className={styles.number}>{service.number}</span>
                   <span className={styles.name}>{service.title}</span>
                 </div>
-                <span className={styles.oneliner}>{service.description.split(".")[0]}.</span>
+                <span className={styles.oneliner}>
+                  {service.description.split(".")[0]}.
+                </span>
                 <span className={styles.arrow} aria-hidden="true">
                   →
                 </span>

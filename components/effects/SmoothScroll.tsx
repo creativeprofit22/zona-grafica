@@ -41,6 +41,7 @@ export default function SmoothScroll({
   }, []);
 
   // Scroll to top on route change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally only react to pathname changes
   useEffect(() => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });

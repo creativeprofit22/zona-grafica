@@ -16,8 +16,8 @@ export default function ContactHero() {
           </span>
         </h1>
         <p className={styles.subtitle}>
-          Escríbenos directo o llena el formulario. Te respondemos en menos de 24
-          horas.
+          Escríbenos directo o llena el formulario. Te respondemos en menos de
+          24 horas.
         </p>
 
         <a

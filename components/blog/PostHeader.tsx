@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { BlogPostMeta } from "@/lib/blog";
+import Link from "next/link";
 import styles from "./PostHeader.module.css";
 
 interface Props {

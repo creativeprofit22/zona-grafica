@@ -1,5 +1,5 @@
-import type { Service } from "@/types/content";
 import MotionSection from "@/components/animations/MotionSection";
+import type { Service } from "@/types/content";
 import ServiceCard from "./ServiceCard";
 import styles from "./ServicesList.module.css";
 

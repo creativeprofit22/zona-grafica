@@ -74,8 +74,8 @@
   padding: 6px 14px;
   border: 1px solid var(--stone);
   border-radius: 100px;
-  transition: border-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+  transition: border-color var(--duration-fast) var(--ease-out), color
+    var(--duration-fast) var(--ease-out);
 }
 
 .card:hover .step {

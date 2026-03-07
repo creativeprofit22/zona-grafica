@@ -95,10 +95,9 @@
   color: var(--fg-light);
   font-size: 18px;
   cursor: pointer;
-  transition:
-    border-color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+  transition: border-color var(--duration-fast) var(--ease-out), background
+    var(--duration-fast) var(--ease-out), color var(--duration-fast)
+    var(--ease-out);
 }
 
 .arrow:hover {

@@ -1,13 +1,16 @@
+import { mkdir } from "node:fs/promises";
+import { join } from "node:path";
 /**
  * Generate gradient placeholder images for portfolio projects.
  * Each image uses SMA-inspired color gradients with project initials.
  * Run: bun scripts/generate-portfolio-placeholders.ts
  */
 import sharp from "sharp";
-import { mkdir } from "node:fs/promises";
-import { join } from "node:path";
 
-const OUTPUT_DIR = join(import.meta.dir, "../public/images/portfolio");
+const OUTPUT_DIR = join(
+  new URL(".", import.meta.url).pathname,
+  "../public/images/portfolio",
+);
 
 // SMA palette gradients - each project gets a unique combo
 const GRADIENTS: [string, string][] = [
@@ -35,42 +38,222 @@ interface ImageSpec {
 
 const images: ImageSpec[] = [
   // ─── Portfolio Thumbnails (800×600) ───────────────────────
-  { filename: "giff-thumb.jpg", initials: "GF", width: 800, height: 600, gradientIndex: 0 },
-  { filename: "cervantino-thumb.jpg", initials: "FC", width: 800, height: 600, gradientIndex: 1 },
-  { filename: "cardo-cafe-thumb.jpg", initials: "CC", width: 800, height: 600, gradientIndex: 2 },
-  { filename: "lobby-thumb.jpg", initials: "LB", width: 800, height: 600, gradientIndex: 3 },
-  { filename: "duncan-thumb.jpg", initials: "DG", width: 800, height: 600, gradientIndex: 4 },
-  { filename: "zeferino-thumb.jpg", initials: "ZM", width: 800, height: 600, gradientIndex: 5 },
-  { filename: "sma-475-thumb.jpg", initials: "475", width: 800, height: 600, gradientIndex: 6 },
-  { filename: "guanajuato-patrimonio-thumb.jpg", initials: "GP", width: 800, height: 600, gradientIndex: 7 },
-  { filename: "consejo-turistico-thumb.jpg", initials: "CT", width: 800, height: 600, gradientIndex: 8 },
-  { filename: "prospecta-thumb.jpg", initials: "PR", width: 800, height: 600, gradientIndex: 9 },
-  { filename: "casa-misha-thumb.jpg", initials: "CM", width: 800, height: 600, gradientIndex: 10 },
-  { filename: "geek-thumb.jpg", initials: "GK", width: 800, height: 600, gradientIndex: 11 },
-  { filename: "cpi-thumb.jpg", initials: "CPI", width: 800, height: 600, gradientIndex: 0 },
-  { filename: "giff-retratos-thumb.jpg", initials: "GR", width: 800, height: 600, gradientIndex: 1 },
-  { filename: "artes-mexico-thumb.jpg", initials: "AM", width: 800, height: 600, gradientIndex: 2 },
-  { filename: "cervantino-carteles-thumb.jpg", initials: "CC", width: 800, height: 600, gradientIndex: 3 },
-  { filename: "personajes-thumb.jpg", initials: "PJ", width: 800, height: 600, gradientIndex: 4 },
-  { filename: "giff-web-thumb.jpg", initials: "GW", width: 800, height: 600, gradientIndex: 5 },
-  { filename: "duncan-web-thumb.jpg", initials: "DW", width: 800, height: 600, gradientIndex: 6 },
+  {
+    filename: "giff-thumb.jpg",
+    initials: "GF",
+    width: 800,
+    height: 600,
+    gradientIndex: 0,
+  },
+  {
+    filename: "cervantino-thumb.jpg",
+    initials: "FC",
+    width: 800,
+    height: 600,
+    gradientIndex: 1,
+  },
+  {
+    filename: "cardo-cafe-thumb.jpg",
+    initials: "CC",
+    width: 800,
+    height: 600,
+    gradientIndex: 2,
+  },
+  {
+    filename: "lobby-thumb.jpg",
+    initials: "LB",
+    width: 800,
+    height: 600,
+    gradientIndex: 3,
+  },
+  {
+    filename: "duncan-thumb.jpg",
+    initials: "DG",
+    width: 800,
+    height: 600,
+    gradientIndex: 4,
+  },
+  {
+    filename: "zeferino-thumb.jpg",
+    initials: "ZM",
+    width: 800,
+    height: 600,
+    gradientIndex: 5,
+  },
+  {
+    filename: "sma-475-thumb.jpg",
+    initials: "475",
+    width: 800,
+    height: 600,
+    gradientIndex: 6,
+  },
+  {
+    filename: "guanajuato-patrimonio-thumb.jpg",
+    initials: "GP",
+    width: 800,
+    height: 600,
+    gradientIndex: 7,
+  },
+  {
+    filename: "consejo-turistico-thumb.jpg",
+    initials: "CT",
+    width: 800,
+    height: 600,
+    gradientIndex: 8,
+  },
+  {
+    filename: "prospecta-thumb.jpg",
+    initials: "PR",
+    width: 800,
+    height: 600,
+    gradientIndex: 9,
+  },
+  {
+    filename: "casa-misha-thumb.jpg",
+    initials: "CM",
+    width: 800,
+    height: 600,
+    gradientIndex: 10,
+  },
+  {
+    filename: "geek-thumb.jpg",
+    initials: "GK",
+    width: 800,
+    height: 600,
+    gradientIndex: 11,
+  },
+  {
+    filename: "cpi-thumb.jpg",
+    initials: "CPI",
+    width: 800,
+    height: 600,
+    gradientIndex: 0,
+  },
+  {
+    filename: "giff-retratos-thumb.jpg",
+    initials: "GR",
+    width: 800,
+    height: 600,
+    gradientIndex: 1,
+  },
+  {
+    filename: "artes-mexico-thumb.jpg",
+    initials: "AM",
+    width: 800,
+    height: 600,
+    gradientIndex: 2,
+  },
+  {
+    filename: "cervantino-carteles-thumb.jpg",
+    initials: "CC",
+    width: 800,
+    height: 600,
+    gradientIndex: 3,
+  },
+  {
+    filename: "personajes-thumb.jpg",
+    initials: "PJ",
+    width: 800,
+    height: 600,
+    gradientIndex: 4,
+  },
+  {
+    filename: "giff-web-thumb.jpg",
+    initials: "GW",
+    width: 800,
+    height: 600,
+    gradientIndex: 5,
+  },
+  {
+    filename: "duncan-web-thumb.jpg",
+    initials: "DW",
+    width: 800,
+    height: 600,
+    gradientIndex: 6,
+  },
 
   // ─── Case Study Hero (1600×900) ───────────────────────────
-  { filename: "cardo-cafe-hero.jpg", initials: "CC", width: 1600, height: 900, gradientIndex: 2 },
+  {
+    filename: "cardo-cafe-hero.jpg",
+    initials: "CC",
+    width: 1600,
+    height: 900,
+    gradientIndex: 2,
+  },
 
   // ─── Case Study Gallery (1200×800 full, 600×800 half) ─────
-  { filename: "cardo-cafe-01.jpg", initials: "CC¹", width: 1200, height: 800, gradientIndex: 2 },
-  { filename: "cardo-cafe-02.jpg", initials: "CC²", width: 600, height: 800, gradientIndex: 5 },
-  { filename: "cardo-cafe-03.jpg", initials: "CC³", width: 600, height: 800, gradientIndex: 7 },
-  { filename: "cardo-cafe-04.jpg", initials: "CC⁴", width: 1200, height: 800, gradientIndex: 10 },
+  {
+    filename: "cardo-cafe-01.jpg",
+    initials: "CC¹",
+    width: 1200,
+    height: 800,
+    gradientIndex: 2,
+  },
+  {
+    filename: "cardo-cafe-02.jpg",
+    initials: "CC²",
+    width: 600,
+    height: 800,
+    gradientIndex: 5,
+  },
+  {
+    filename: "cardo-cafe-03.jpg",
+    initials: "CC³",
+    width: 600,
+    height: 800,
+    gradientIndex: 7,
+  },
+  {
+    filename: "cardo-cafe-04.jpg",
+    initials: "CC⁴",
+    width: 1200,
+    height: 800,
+    gradientIndex: 10,
+  },
 
   // ─── Service Hero Images (1200×800) ───────────────────────
-  { filename: "branding-hero.jpg", initials: "BR", width: 1200, height: 800, gradientIndex: 0 },
-  { filename: "editorial-hero.jpg", initials: "ED", width: 1200, height: 800, gradientIndex: 7 },
-  { filename: "web-hero.jpg", initials: "WB", width: 1200, height: 800, gradientIndex: 1 },
-  { filename: "foto-hero.jpg", initials: "FT", width: 1200, height: 800, gradientIndex: 4 },
-  { filename: "ilustracion-hero.jpg", initials: "IL", width: 1200, height: 800, gradientIndex: 6 },
-  { filename: "carteleria-hero.jpg", initials: "CT", width: 1200, height: 800, gradientIndex: 8 },
+  {
+    filename: "branding-hero.jpg",
+    initials: "BR",
+    width: 1200,
+    height: 800,
+    gradientIndex: 0,
+  },
+  {
+    filename: "editorial-hero.jpg",
+    initials: "ED",
+    width: 1200,
+    height: 800,
+    gradientIndex: 7,
+  },
+  {
+    filename: "web-hero.jpg",
+    initials: "WB",
+    width: 1200,
+    height: 800,
+    gradientIndex: 1,
+  },
+  {
+    filename: "foto-hero.jpg",
+    initials: "FT",
+    width: 1200,
+    height: 800,
+    gradientIndex: 4,
+  },
+  {
+    filename: "ilustracion-hero.jpg",
+    initials: "IL",
+    width: 1200,
+    height: 800,
+    gradientIndex: 6,
+  },
+  {
+    filename: "carteleria-hero.jpg",
+    initials: "CT",
+    width: 1200,
+    height: 800,
+    gradientIndex: 8,
+  },
 ];
 
 function createSVG(spec: ImageSpec): string {
@@ -141,7 +324,9 @@ async function main() {
     }
   }
 
-  console.log(`\n${generated}/${images.length} images generated in public/images/portfolio/`);
+  console.log(
+    `\n${generated}/${images.length} images generated in public/images/portfolio/`,
+  );
   if (errors.length) {
     console.error(`${errors.length} error(s)`);
     process.exit(1);

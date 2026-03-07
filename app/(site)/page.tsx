@@ -1,19 +1,19 @@
-import { siteConfig } from "@/data/site";
+import { homeFAQ } from "@/data/faq";
 import { homeData, stats, testimonials } from "@/data/home";
 import { services } from "@/data/services";
+import { siteConfig } from "@/data/site";
 import { projects } from "@/data/work";
-import { homeFAQ } from "@/data/faq";
 import { faqSchema, webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
 
+import CTASection from "@/components/home/CTASection";
+import ClientMarquee from "@/components/home/ClientMarquee";
+import FeaturedShowcase from "@/components/home/FeaturedShowcase";
 import HeroSection from "@/components/home/HeroSection";
 import ManifestoSection from "@/components/home/ManifestoSection";
 import ServiceAccordion from "@/components/home/ServiceAccordion";
-import FeaturedShowcase from "@/components/home/FeaturedShowcase";
 import StatsStrip from "@/components/home/StatsStrip";
 import TestimonialCarousel from "@/components/home/TestimonialCarousel";
-import CTASection from "@/components/home/CTASection";
-import ClientMarquee from "@/components/home/ClientMarquee";
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} — Estudio Creativo en ${siteConfig.location.city}`,

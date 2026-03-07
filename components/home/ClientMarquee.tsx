@@ -36,20 +36,24 @@ export default function ClientMarquee() {
   return (
     <section ref={ref} className={styles.wrapper}>
       <div className={styles.inner}>
-        <p className={styles.tagline}>Buenos clientes hacen buenas historias.</p>
+        <p className={styles.tagline}>
+          Buenos clientes hacen buenas historias.
+        </p>
         <p className={styles.sentence}>
           <span className={styles.prefix}>Hemos trabajado con </span>
           {FEATURED_CLIENTS.map((name, i) => (
             <span key={name}>
               <span className={styles.client}>
-                <span className={styles.paren}>(</span>
-                {" "}
-                <span className={styles.name}>{name}</span>
-                {" "}
+                <span className={styles.paren}>(</span>{" "}
+                <span className={styles.name}>{name}</span>{" "}
                 <span className={styles.paren}>)</span>
               </span>
-              {i < lastIndex - 1 && <span className={styles.separator}>, </span>}
-              {i === lastIndex - 1 && <span className={styles.separator}> y </span>}
+              {i < lastIndex - 1 && (
+                <span className={styles.separator}>, </span>
+              )}
+              {i === lastIndex - 1 && (
+                <span className={styles.separator}> y </span>
+              )}
             </span>
           ))}
           <span className={styles.suffix}> y muchos más.</span>

@@ -12,6 +12,7 @@ export default function ScrollPrompt({
   return (
     <div className={`${styles.prompt} ${className || ""}`}>
       <span className={styles.text}>{text}</span>
+      {/* biome-ignore lint/a11y/noSvgWithoutTitle: decorative chevron */}
       <svg
         width={14}
         height={14}

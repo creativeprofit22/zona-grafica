@@ -16,12 +16,14 @@ export default function PageTransition() {
   const isTransitioning = useRef(false);
 
   // Cache reference to main element
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-cache on route change
   useEffect(() => {
     mainRef.current = document.getElementById("main-content");
   }, [pathname]);
 
   // Assign view-transition-name to main content so the CSS
   // ::view-transition-old / ::view-transition-new rules apply
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-apply on route change
   useEffect(() => {
     const main = document.getElementById("main-content");
     if (main) {
@@ -32,8 +34,7 @@ export default function PageTransition() {
   // Intercept internal anchor clicks to wrap navigation in startViewTransition
   useEffect(() => {
     const supportsVT =
-      typeof document !== "undefined" &&
-      "startViewTransition" in document;
+      typeof document !== "undefined" && "startViewTransition" in document;
 
     if (!supportsVT) return;
 
@@ -93,7 +94,8 @@ export default function PageTransition() {
     main.style.animation = "none";
     // Force reflow
     main.offsetHeight;
-    main.style.animation = "pageEnter 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both";
+    main.style.animation =
+      "pageEnter 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both";
 
     const cleanup = () => {
       main.style.animation = "";

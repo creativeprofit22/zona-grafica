@@ -1,6 +1,6 @@
+import type { CaseStudy, Project } from "@/types/content";
 import Image from "next/image";
 import Link from "next/link";
-import type { CaseStudy, Project } from "@/types/content";
 import styles from "./CaseStudyHero.module.css";
 
 interface Props {

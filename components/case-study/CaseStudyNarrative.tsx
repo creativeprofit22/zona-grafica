@@ -41,7 +41,11 @@ export default function CaseStudyNarrative({
       </MotionSection>
 
       {stats && stats.length > 0 && (
-        <MotionSection as="div" className={styles.statsSection} data-theme="light">
+        <MotionSection
+          as="div"
+          className={styles.statsSection}
+          data-theme="light"
+        >
           <div className={styles.statsInner}>
             {stats.map((stat) => (
               <div key={stat.label} className={styles.stat}>

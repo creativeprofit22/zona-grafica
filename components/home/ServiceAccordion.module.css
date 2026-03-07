@@ -108,9 +108,8 @@
   font-size: 20px;
   font-weight: 300;
   color: var(--muted);
-  transition:
-    transform var(--duration-normal) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-normal) var(--ease-out), color
+    var(--duration-fast) var(--ease-out);
   flex-shrink: 0;
   width: 28px;
   text-align: center;

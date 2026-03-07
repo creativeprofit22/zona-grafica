@@ -1,8 +1,8 @@
-import Image from "next/image";
 import ImageReveal from "@/components/animations/ImageReveal";
 import MotionSection from "@/components/animations/MotionSection";
 import ParallaxDrift from "@/components/animations/ParallaxDrift";
 import type { TeamMember } from "@/types/content";
+import Image from "next/image";
 import styles from "./TeamSection.module.css";
 
 interface Props {
@@ -23,8 +23,16 @@ export default function TeamSection({ members }: Props) {
         </div>
 
         <div className={styles.portrait}>
-          <ImageReveal direction="left" duration={1.4} className={styles.imageWrap}>
-            <ParallaxDrift distance={20} className={styles.parallaxWrap} style={{ height: "100%" }}>
+          <ImageReveal
+            direction="left"
+            duration={1.4}
+            className={styles.imageWrap}
+          >
+            <ParallaxDrift
+              distance={20}
+              className={styles.parallaxWrap}
+              style={{ height: "100%" }}
+            >
               <Image
                 src={member.image}
                 alt={member.name}

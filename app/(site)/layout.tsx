@@ -4,8 +4,8 @@ import RouteProgress from "@/components/effects/RouteProgress";
 import ScrollColorTransition from "@/components/effects/ScrollColorTransition";
 import ScrollProgress from "@/components/effects/ScrollProgress";
 import SmoothScroll from "@/components/effects/SmoothScroll";
-import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
 
 export default function SiteLayout({
   children,

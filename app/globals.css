@@ -30,26 +30,26 @@
 /* ─── Design Tokens — San Miguel Editorial ──────────────── */
 :root {
   /* Paper & ink — light dominant */
-  --bg-paper:     #FAF9F6;   /* warm white, aged paper */
-  --bg-cream:     #F2EDE7;   /* cream for alternating sections */
-  --bg-ink:       #1A1714;   /* deep ink for hero, footer, accents */
+  --bg-paper: #faf9f6; /* warm white, aged paper */
+  --bg-cream: #f2ede7; /* cream for alternating sections */
+  --bg-ink: #1a1714; /* deep ink for hero, footer, accents */
 
   /* SMA palette */
-  --accent:       #C45D3E;   /* terracotta — primary CTA */
-  --accent-hover: #D4714F;
-  --ochre:        #D4893F;   /* SMA façade ochre — section numbers, highlights */
-  --ink-blue:     #2A3F5F;   /* colonial blue doors — secondary accent */
-  --stone:        #C4B9A8;   /* cantera stone — borders, subtle fills */
+  --accent: #c45d3e; /* terracotta — primary CTA */
+  --accent-hover: #d4714f;
+  --ochre: #d4893f; /* SMA façade ochre — section numbers, highlights */
+  --ink-blue: #2a3f5f; /* colonial blue doors — secondary accent */
+  --stone: #c4b9a8; /* cantera stone — borders, subtle fills */
 
   /* Foreground */
-  --fg-dark:      #1A1714;   /* primary text on light */
-  --fg-light:     #FAF9F6;   /* text on dark sections */
-  --muted:        #7A756E;   /* secondary text, captions */
-  --muted-light:  #B0A99F;   /* tertiary, timestamps */
+  --fg-dark: #1a1714; /* primary text on light */
+  --fg-light: #faf9f6; /* text on dark sections */
+  --muted: #7a756e; /* secondary text, captions */
+  --muted-light: #b0a99f; /* tertiary, timestamps */
 
   /* Borders */
   --border-light: rgba(26, 23, 20, 0.1);
-  --border-dark:  rgba(250, 249, 246, 0.12);
+  --border-dark: rgba(250, 249, 246, 0.12);
 
   /* Default: light mode (paper bg, dark text) */
   --bg: var(--bg-paper);
@@ -84,7 +84,7 @@
   --bg: var(--bg-cream);
   --fg: var(--fg-dark);
   --border: var(--border-light);
-  --muted: #7A756E;
+  --muted: #7a756e;
 }
 
 /* Dark section — hero, footer, CTA */
@@ -177,8 +177,8 @@ img {
 [data-animate] {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity var(--duration-slow) var(--ease-out),
-    transform var(--duration-slow) var(--ease-out);
+  transition: opacity var(--duration-slow) var(--ease-out), transform
+    var(--duration-slow) var(--ease-out);
 }
 
 [data-animate].is-visible {
@@ -198,14 +198,30 @@ img {
   transform: translateY(0);
 }
 
-[data-animate][data-stagger].is-visible > *:nth-child(1) { transition-delay: 0.00s; }
-[data-animate][data-stagger].is-visible > *:nth-child(2) { transition-delay: 0.10s; }
-[data-animate][data-stagger].is-visible > *:nth-child(3) { transition-delay: 0.15s; }
-[data-animate][data-stagger].is-visible > *:nth-child(4) { transition-delay: 0.20s; }
-[data-animate][data-stagger].is-visible > *:nth-child(5) { transition-delay: 0.25s; }
-[data-animate][data-stagger].is-visible > *:nth-child(6) { transition-delay: 0.30s; }
-[data-animate][data-stagger].is-visible > *:nth-child(7) { transition-delay: 0.35s; }
-[data-animate][data-stagger].is-visible > *:nth-child(8) { transition-delay: 0.40s; }
+[data-animate][data-stagger].is-visible > *:nth-child(1) {
+  transition-delay: 0.00s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(2) {
+  transition-delay: 0.10s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(3) {
+  transition-delay: 0.15s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(4) {
+  transition-delay: 0.20s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(5) {
+  transition-delay: 0.25s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(6) {
+  transition-delay: 0.30s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(7) {
+  transition-delay: 0.35s;
+}
+[data-animate][data-stagger].is-visible > *:nth-child(8) {
+  transition-delay: 0.40s;
+}
 
 /* ─── Prose (MDX content) ───────────────────────────────── */
 .prose h1,
@@ -219,10 +235,22 @@ img {
   margin-bottom: 1rem;
 }
 
-.prose h1 { font-size: 36px; line-height: 1.2; }
-.prose h2 { font-size: 28px; line-height: 1.3; }
-.prose h3 { font-size: 22px; line-height: 1.3; }
-.prose h4 { font-size: 18px; line-height: 1.4; }
+.prose h1 {
+  font-size: 36px;
+  line-height: 1.2;
+}
+.prose h2 {
+  font-size: 28px;
+  line-height: 1.3;
+}
+.prose h3 {
+  font-size: 22px;
+  line-height: 1.3;
+}
+.prose h4 {
+  font-size: 18px;
+  line-height: 1.4;
+}
 
 .prose p {
   font-size: 17px;
@@ -369,9 +397,15 @@ img {
 
 /* ─── Skeleton Loading ─────────────────────────────────────── */
 @keyframes skeleton-pulse {
-  0% { opacity: 0.06; }
-  50% { opacity: 0.12; }
-  100% { opacity: 0.06; }
+  0% {
+    opacity: 0.06;
+  }
+  50% {
+    opacity: 0.12;
+  }
+  100% {
+    opacity: 0.06;
+  }
 }
 
 .skeleton-bone {
@@ -437,8 +471,14 @@ html {
 
 /* ─── Initial Page Load ─────────────────────────────────────── */
 @keyframes initialFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body {
@@ -464,19 +504,41 @@ body {
 }
 
 @keyframes pageOut {
-  0%   { opacity: 1; transform: translateY(0); filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-30px); filter: blur(2px); }
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+    filter: blur(2px);
+  }
 }
 
 @keyframes pageIn {
-  0%   { opacity: 0; transform: translateY(40px); filter: blur(2px); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 /* Fallback entrance animation for browsers without View Transitions */
 @keyframes pageEnter {
-  0%   { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Prevent the root snapshot from animating (keeps navbar/footer stable) */

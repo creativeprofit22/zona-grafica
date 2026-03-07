@@ -16,7 +16,7 @@ interface ManifestoSegment {
 const manifesto: ManifestoSegment[] = [
   { text: "Fundé Zona Gráfica" },
   { text: "porque creo que", style: "italic" },
-  { text: "el diseño no es decoración" , style: "bold-accent" },
+  { text: "el diseño no es decoración", style: "bold-accent" },
   { text: "— es" },
   { text: "comunicación.", style: "bold" },
   { text: "Llevamos más de" },
@@ -38,7 +38,7 @@ const manifesto: ManifestoSegment[] = [
 
 export default function ManifestoSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const quoteRef = useRef<HTMLBlockquoteElement>(null);
+  const quoteRef = useRef<HTMLQuoteElement>(null);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -86,9 +86,7 @@ export default function ManifestoSection() {
           <blockquote ref={quoteRef} className={styles.quote}>
             <p className={styles.text}>{plainText}</p>
           </blockquote>
-          <cite className={styles.attribution}>
-            — Jesús Herrera, fundador
-          </cite>
+          <cite className={styles.attribution}>— Jesús Herrera, fundador</cite>
         </div>
       </section>
     );

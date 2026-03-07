@@ -3,10 +3,10 @@ import { siteConfig } from "@/data/site";
 import { webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
 
+import CTASection from "@/components/home/CTASection";
 import ServicesHero from "@/components/services/ServicesHero";
 import ServicesList from "@/components/services/ServicesList";
 import ServicesProcess from "@/components/services/ServicesProcess";
-import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
   title: "Servicios",
@@ -25,8 +25,7 @@ export default function ServiciosPage() {
           __html: JSON.stringify(
             webPageSchema({
               name: "Servicios",
-              description:
-                "Servicios creativos de diseño gráfico y branding.",
+              description: "Servicios creativos de diseño gráfico y branding.",
               url: "/servicios",
             }),
           ).replace(/</g, "\\u003c"),

@@ -24,8 +24,7 @@ export default function BlogPage() {
           __html: JSON.stringify(
             webPageSchema({
               name: "Blog — Zona Gráfica",
-              description:
-                "Ideas sobre branding, diseño y proceso creativo.",
+              description: "Ideas sobre branding, diseño y proceso creativo.",
               url: "/blog",
             }),
           ).replace(/</g, "\\u003c"),

@@ -48,7 +48,11 @@ function getSectionColor(el: HTMLElement): string {
 
   // 3. Computed background (catches CSS module backgrounds like bg-ink, bg-cream)
   const computed = getComputedStyle(el).backgroundColor;
-  if (computed && computed !== "rgba(0, 0, 0, 0)" && computed !== "transparent") {
+  if (
+    computed &&
+    computed !== "rgba(0, 0, 0, 0)" &&
+    computed !== "transparent"
+  ) {
     return rgbToHex(computed);
   }
 
@@ -60,6 +64,7 @@ export default function ScrollColorTransition() {
   const pathname = usePathname();
   const cleanupRef = useRef<(() => void) | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-run on pathname change to rebuild scroll triggers
   useEffect(() => {
     // Clean up previous transitions
     if (cleanupRef.current) {
@@ -73,7 +78,7 @@ export default function ScrollColorTransition() {
       if (!main) return;
 
       const sections = Array.from(
-        main.querySelectorAll<HTMLElement>(":scope > section")
+        main.querySelectorAll<HTMLElement>(":scope > section"),
       );
 
       if (sections.length < 2) return;
@@ -106,7 +111,7 @@ export default function ScrollColorTransition() {
               end: "top 25%",
               scrub: 0.4,
             },
-          }
+          },
         );
 
         tweens.push(tween);

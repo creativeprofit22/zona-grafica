@@ -48,16 +48,14 @@ export default function AboutStory({ body }: Props) {
             <span className={styles.milestoneValue}>33</span>
             <span className={styles.milestoneLabel}>
               edición del Cervantino
-              <br />
-              — nuestro cartel
+              <br />— nuestro cartel
             </span>
           </div>
           <div className={styles.milestone}>
             <span className={styles.milestoneValue}>475</span>
             <span className={styles.milestoneLabel}>
               aniversario de SMA
-              <br />
-              — libro conmemorativo
+              <br />— libro conmemorativo
             </span>
           </div>
           <div className={styles.milestone}>

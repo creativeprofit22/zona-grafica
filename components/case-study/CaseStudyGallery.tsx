@@ -1,7 +1,7 @@
-import Image from "next/image";
 import ImageReveal from "@/components/animations/ImageReveal";
 import MotionSection from "@/components/animations/MotionSection";
 import type { CaseStudyImage } from "@/types/content";
+import Image from "next/image";
 import styles from "./CaseStudyGallery.module.css";
 
 interface Props {
@@ -23,7 +23,9 @@ export default function CaseStudyGallery({ images }: Props) {
               className={`${styles.item} ${styles[variant]}`}
             >
               <ImageReveal
-                direction={variant === "full" ? "left" : i % 2 === 0 ? "left" : "bottom"}
+                direction={
+                  variant === "full" ? "left" : i % 2 === 0 ? "left" : "bottom"
+                }
                 delay={variant === "half" && i % 2 !== 0 ? 0.15 : 0}
                 className={styles.imageWrap}
               >

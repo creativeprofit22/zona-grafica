@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import type { Project } from "@/types/content";
+import { useMemo, useState } from "react";
 import ProjectFilter from "./ProjectFilter";
 import ProjectGrid from "./ProjectGrid";
 

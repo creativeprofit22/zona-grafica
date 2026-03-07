@@ -1,8 +1,8 @@
 import { webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
 
-import ContactHero from "@/components/contact/ContactHero";
 import ContactForm from "@/components/contact/ContactForm";
+import ContactHero from "@/components/contact/ContactHero";
 import ContactInfo from "@/components/contact/ContactInfo";
 
 export const metadata: Metadata = {
@@ -22,8 +22,7 @@ export default function ContactoPage() {
           __html: JSON.stringify(
             webPageSchema({
               name: "Contacto — Zona Gráfica",
-              description:
-                "Escríbenos para cotizar tu proyecto de diseño.",
+              description: "Escríbenos para cotizar tu proyecto de diseño.",
               url: "/contacto",
             }),
           ).replace(/</g, "\\u003c"),
@@ -32,7 +31,10 @@ export default function ContactoPage() {
 
       <ContactHero />
 
-      <section className="page-padding" style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <section
+        className="page-padding"
+        style={{ paddingTop: 0, paddingBottom: 0 }}
+      >
         <div
           style={{
             maxWidth: "var(--max-width)",

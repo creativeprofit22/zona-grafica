@@ -55,9 +55,8 @@
   font-weight: 600;
   font-size: clamp(15px, 1.2vw, 18px);
   letter-spacing: 0.01em;
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-fast) var(--ease-out), transform
+    var(--duration-fast) var(--ease-out);
 }
 
 .whatsapp:hover {

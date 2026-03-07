@@ -1,4 +1,4 @@
-import { story, values, team } from "@/data/about";
+import { story, team, values } from "@/data/about";
 import { aboutFAQ } from "@/data/faq";
 import { siteConfig } from "@/data/site";
 import { aboutPageSchema, faqSchema } from "@/lib/jsonld";
@@ -6,8 +6,8 @@ import type { Metadata } from "next";
 
 import AboutHero from "@/components/about/AboutHero";
 import AboutStory from "@/components/about/AboutStory";
-import ValuesGrid from "@/components/about/ValuesGrid";
 import TeamSection from "@/components/about/TeamSection";
+import ValuesGrid from "@/components/about/ValuesGrid";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {

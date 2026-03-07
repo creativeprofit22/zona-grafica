@@ -25,7 +25,10 @@ export const stats: Stat[] = [
     value: "1",
     label: "retrato de Tim Burton que nunca publicamos",
   },
-  { value: "5", label: "libros de arte con Guanajuato Patrimonio de la Humanidad" },
+  {
+    value: "5",
+    label: "libros de arte con Guanajuato Patrimonio de la Humanidad",
+  },
   { value: "∞", label: "cafés en el estudio" },
 ];
 

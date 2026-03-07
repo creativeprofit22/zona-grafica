@@ -12,11 +12,9 @@
   opacity: 0;
   mix-blend-mode: difference;
   will-change: transform, width, height, opacity;
-  transition:
-    width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-    height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-    background 0.3s ease,
-    mix-blend-mode 0.3s ease;
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1), height 0.3s
+    cubic-bezier(0.23, 1, 0.32, 1), background 0.3s ease, mix-blend-mode 0.3s
+    ease;
 }
 
 .cursor.visible {

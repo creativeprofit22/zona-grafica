@@ -13,11 +13,9 @@
   height: 80px;
   display: flex;
   align-items: center;
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    backdrop-filter var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out),
-    color var(--duration-normal) var(--ease-out);
+  transition: background var(--duration-normal) var(--ease-out), backdrop-filter
+    var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal)
+    var(--ease-out), color var(--duration-normal) var(--ease-out);
 }
 
 /* Scrolled state — always paper bg with dark text */
@@ -110,9 +108,8 @@
   border-radius: 100px;
   background: var(--accent);
   color: var(--fg-light);
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-fast) var(--ease-out), transform
+    var(--duration-fast) var(--ease-out);
 }
 
 .ctaButton:hover {
@@ -138,10 +135,9 @@
   width: 100%;
   background: var(--fg-dark);
   border-radius: 1px;
-  transition:
-    transform var(--duration-normal) var(--ease-out),
-    opacity var(--duration-fast) var(--ease-out),
-    background var(--duration-normal) var(--ease-out);
+  transition: transform var(--duration-normal) var(--ease-out), opacity
+    var(--duration-fast) var(--ease-out), background var(--duration-normal)
+    var(--ease-out);
   transform-origin: center;
 }
 
@@ -214,9 +210,8 @@
   padding: 120px 48px 48px;
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity var(--duration-slow) var(--ease-out),
-    visibility var(--duration-slow) var(--ease-out);
+  transition: opacity var(--duration-slow) var(--ease-out), visibility
+    var(--duration-slow) var(--ease-out);
 }
 
 .overlayOpen {
@@ -238,9 +233,7 @@
   border-bottom: 1px solid var(--border-dark);
   opacity: 0;
   transform: translateY(20px);
-  transition:
-    opacity 0.5s var(--ease-out),
-    transform 0.5s var(--ease-out);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
 
 .overlayOpen .overlayLink {

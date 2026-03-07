@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import ImageReveal from "@/components/animations/ImageReveal";
 import type { Project } from "@/types/content";
+import Image from "next/image";
+import Link from "next/link";
 import styles from "./ProjectGrid.module.css";
 
 interface Props {

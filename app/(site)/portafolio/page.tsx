@@ -1,8 +1,8 @@
-import { projects, portfolioCategories } from "@/data/work";
+import PortfolioClient from "@/components/portfolio/PortfolioClient";
+import PortfolioHero from "@/components/portfolio/PortfolioHero";
+import { portfolioCategories, projects } from "@/data/work";
 import { webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
-import PortfolioHero from "@/components/portfolio/PortfolioHero";
-import PortfolioClient from "@/components/portfolio/PortfolioClient";
 
 export const metadata: Metadata = {
   title: "Portafolio",
@@ -35,10 +35,7 @@ export default function PortafolioPage() {
         projectCount={projects.length}
       />
 
-      <PortfolioClient
-        projects={projects}
-        categories={portfolioCategories}
-      />
+      <PortfolioClient projects={projects} categories={portfolioCategories} />
     </main>
   );
 }

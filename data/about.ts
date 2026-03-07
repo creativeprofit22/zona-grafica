@@ -5,12 +5,7 @@ export const story = {
   intro:
     "Fundé Zona Gráfica en 1993 porque creo que el buen diseño no es un lujo — es la forma más honesta de comunicar. Desde entonces, este estudio ha sido mi manera de contar historias visuales para la cultura, el turismo, la educación y la iniciativa privada de Guanajuato y más allá.",
   body: "Durante 22 años hemos diseñado la imagen del GIFF — el Guanajuato International Film Festival — donde he tenido el privilegio de fotografiar a Tim Burton, Spike Lee, Danny Boyle y Peter Greenaway. Diseñamos el cartel de la edición 33 del Festival Internacional Cervantino. Creamos el libro conmemorativo del 475 aniversario de San Miguel de Allende y cinco libros de arte con Guanajuato Patrimonio de la Humanidad. Trabajamos en cuatro sectores: Cultura y Educación, Iniciativa Privada, Turismo, y Arte. No somos una agencia grande ni queremos serlo. Somos un estudio donde cada proyecto recibe la atención que merece.",
-  sectors: [
-    "Cultura y Educación",
-    "Iniciativa Privada",
-    "Turismo",
-    "Arte",
-  ],
+  sectors: ["Cultura y Educación", "Iniciativa Privada", "Turismo", "Arte"],
 };
 
 export const values: ValueItem[] = [

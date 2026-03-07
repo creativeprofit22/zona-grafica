@@ -30,9 +30,9 @@ export default function ContactForm() {
     message: "",
   });
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [errors, setErrors] = useState<
-    Partial<Record<keyof FormData, string>>
-  >({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
+    {},
+  );
 
   function validate(): boolean {
     const next: Partial<Record<keyof FormData, string>> = {};
@@ -109,9 +109,7 @@ export default function ContactForm() {
               required
               aria-label="Nombre"
             />
-            {errors.name && (
-              <span className={styles.error}>{errors.name}</span>
-            )}
+            {errors.name && <span className={styles.error}>{errors.name}</span>}
           </span>
         </p>
 

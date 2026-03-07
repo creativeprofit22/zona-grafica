@@ -30,11 +30,7 @@ const steps = [
 
 export default function ServicesProcess() {
   return (
-    <MotionSection
-      className={styles.section}
-      data-theme="cream"
-      stagger
-    >
+    <MotionSection className={styles.section} data-theme="cream" stagger>
       <div className={styles.inner}>
         <div className={styles.header}>
           <span className={styles.label}>(proceso)</span>
