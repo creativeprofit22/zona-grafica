@@ -1,0 +1,126 @@
+/* ─── CTA Section — Bold Typography ──────────────────────── */
+.section {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl) 48px;
+  background: var(--bg-ink);
+  color: var(--fg-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* ─── Headline — Extreme display size ───────────────────── */
+.headline {
+  font-size: clamp(48px, 12vw, 160px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-xl);
+  color: var(--fg-light);
+}
+
+.line {
+  display: block;
+}
+
+.accent {
+  color: var(--accent);
+  padding-left: 0.15em;
+}
+
+/* ─── Actions ───────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding-left: 0.15em;
+}
+
+.whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--accent);
+  color: var(--fg-light);
+  padding: 18px 40px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: clamp(15px, 1.2vw, 18px);
+  letter-spacing: 0.01em;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.whatsapp:hover {
+  background: var(--accent-hover);
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.email {
+  color: var(--muted-light);
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  position: relative;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.email::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--fg-light);
+  transition: width 0.3s var(--ease-out);
+}
+
+.email:hover {
+  color: var(--fg-light);
+}
+
+.email:hover::after {
+  width: 100%;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 20px;
+    min-height: 50vh;
+  }
+
+  .headline {
+    font-size: clamp(40px, 10vw, 80px);
+    margin-bottom: var(--space-xl);
+  }
+
+  .accent {
+    padding-left: 0;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding-left: 0;
+  }
+
+  .whatsapp {
+    padding: 16px 32px;
+  }
+}

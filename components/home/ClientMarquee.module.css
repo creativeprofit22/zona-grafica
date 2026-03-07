@@ -1,0 +1,128 @@
+/* ─── Client Strip — Inline Editorial ───────────────────── */
+.wrapper {
+  padding: clamp(2rem, 4vw, 3.5rem) 0;
+  border-top: 1px solid var(--stone);
+  border-bottom: 1px solid var(--stone);
+  background: var(--bg-paper);
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+
+/* ─── Tagline above ─────────────────────────────────────── */
+.tagline {
+  font-family: var(--font-display);
+  font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.visible .tagline {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Sentence ──────────────────────────────────────────── */
+.sentence {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  line-height: 1.8;
+  color: var(--fg-dark);
+  margin: 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+}
+
+.visible .sentence {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.prefix,
+.suffix {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.separator {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ─── Client name with parentheses ──────────────────────── */
+.client {
+  display: inline;
+  white-space: nowrap;
+  position: relative;
+  cursor: default;
+}
+
+.paren {
+  color: var(--stone);
+  font-weight: 300;
+  transition: color 0.3s ease;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--fg-dark);
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.name::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Hover states ──────────────────────────────────────── */
+.client:hover .name {
+  color: var(--accent);
+}
+
+.client:hover .paren {
+  color: var(--accent);
+}
+
+.client:hover .name::after {
+  transform: scaleX(1);
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sentence {
+    line-height: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagline,
+  .sentence {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .name::after {
+    transition: none;
+  }
+}

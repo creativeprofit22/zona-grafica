@@ -1,0 +1,146 @@
+/* ─── About Story ────────────────────────────────────────── */
+.section {
+  padding: var(--space-2xl) 48px;
+  background: var(--bg-cream);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Section Label ──────────────────────────────────────── */
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: var(--space-xl);
+}
+
+.number {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ochre);
+  letter-spacing: 0.02em;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+/* ─── Content Layout ─────────────────────────────────────── */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+  margin-bottom: var(--space-2xl);
+}
+
+/* ─── Pull Quote ─────────────────────────────────────────── */
+.pullQuote {
+  position: relative;
+  padding-top: var(--space-md);
+}
+
+.quoteMarks {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 12vw, 160px);
+  line-height: 0.6;
+  color: var(--ochre);
+  opacity: 0.3;
+  position: absolute;
+  top: -10px;
+  left: -8px;
+  pointer-events: none;
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--fg-dark);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Body Text ──────────────────────────────────────────── */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-top: var(--space-md);
+}
+
+.body {
+  font-size: clamp(16px, 1.8vw, 19px);
+  line-height: 1.75;
+  color: var(--fg-dark);
+  max-width: 540px;
+}
+
+/* ─── Milestones ─────────────────────────────────────────── */
+.milestones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--stone);
+}
+
+.milestone {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.milestoneValue {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.milestoneLabel {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 180px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .section {
+    padding: var(--space-xl) 20px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .milestones {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .milestones {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+}

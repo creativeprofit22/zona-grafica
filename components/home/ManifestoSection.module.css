@@ -1,0 +1,114 @@
+/* ─── Manifesto Section — Editorial Text Reveal ─────────── */
+.section {
+  background: var(--bg-cream);
+  color: var(--fg-dark);
+  padding: var(--space-3xl) 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 1000px;
+  width: 100%;
+  position: relative;
+}
+
+/* ─── Pull-quote mark ────────────────────────────────────── */
+.quoteMarkWrapper {
+  position: relative;
+  margin-bottom: -0.3em;
+}
+
+.quoteMark {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 12vw, 180px);
+  font-weight: 600;
+  line-height: 0.8;
+  color: var(--ochre);
+  opacity: 0.25;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ─── Quote block ────────────────────────────────────────── */
+.quote {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.text {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.8vw, 48px);
+  line-height: 1.35;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--fg-dark);
+  margin: 0;
+}
+
+/* ─── Per-word spans ─────────────────────────────────────── */
+.word {
+  display: inline;
+  transition: opacity 0.2s ease;
+}
+
+/* Typographic variation classes */
+.bold {
+  font-weight: 600;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.ochre {
+  color: var(--ochre);
+  font-weight: 600;
+}
+
+.bold-accent {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ─── Attribution ────────────────────────────────────────── */
+.attribution {
+  display: block;
+  margin-top: 2rem;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-style: normal;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 20px;
+    min-height: auto;
+  }
+
+  .quoteMark {
+    font-size: 80px;
+  }
+
+  .text {
+    font-size: clamp(20px, 5.5vw, 32px);
+  }
+
+  .attribution {
+    margin-top: 1.5rem;
+  }
+}

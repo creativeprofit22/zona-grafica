@@ -1,0 +1,112 @@
+/* ─── Service Card — Editorial Row ───────────────────────── */
+.card {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-lg);
+  padding: var(--space-xl) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.card:first-child {
+  border-top: 1px solid var(--border-light);
+}
+
+/* ─── Number Column ──────────────────────────────────────── */
+.numberCol {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+}
+
+.number {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  color: var(--ochre);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* ─── Text Content ───────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 640px;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--fg-dark);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.card:hover .title {
+  color: var(--accent);
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 520px;
+}
+
+/* ─── Process Steps — Inline List ────────────────────────── */
+.process {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--space-sm);
+}
+
+.step {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted-light);
+  padding: 6px 14px;
+  border: 1px solid var(--stone);
+  border-radius: 100px;
+  transition: border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.card:hover .step {
+  border-color: var(--accent);
+  color: var(--muted);
+}
+
+/* ─── Reversed layout (visual variety, no RTL hack) ──────── */
+.reversed .content {
+  margin-left: auto;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 48px 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+  }
+
+  .number {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .numberCol {
+    justify-content: flex-start;
+  }
+}

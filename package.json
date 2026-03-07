@@ -1,0 +1,51 @@
+{
+  "name": "zona-grafica",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zona Gráfica — Creative agency website. Logo design, branding, editorial, web design, photography, illustration, poster design. Based in San Miguel de Allende, Guanajuato, Mexico.",
+  "keywords": [
+    "creative-agency",
+    "branding",
+    "graphic-design",
+    "logo-design",
+    "editorial",
+    "photography",
+    "illustration",
+    "portfolio",
+    "web-design",
+    "mexico"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check ."
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "^16.1.6",
+    "drizzle-orm": "^0.45.1",
+    "gray-matter": "^4.0.3",
+    "gsap": "^3.14.2",
+    "lenis": "^1.3.17",
+    "next": "16.1.6",
+    "next-mdx-remote": "^6.0.0",
+    "pg": "^8.20.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "rehype-pretty-code": "^0.14.1",
+    "shiki": "^3.22.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^22",
+    "@types/pg": "^8.18.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.9",
+    "typescript": "5.9.3"
+  }
+}

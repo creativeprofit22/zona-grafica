@@ -1,0 +1,40 @@
+/* ─── Image Reveal — Clip-path wipe on scroll ────────────── */
+.wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Initial state: fully clipped (hidden) */
+.wipeLeft {
+  clip-path: inset(0 100% 0 0);
+}
+
+.wipeBottom {
+  clip-path: inset(100% 0 0 0);
+}
+
+.wipeRight {
+  clip-path: inset(0 0 0 100%);
+}
+
+/* Revealed state (set by GSAP) — clip-path: inset(0 0 0 0) */
+
+/* Inner element for subtle zoom on reveal */
+.inner {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Parallax drift variant ─────────────────────────────── */
+.parallaxWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallaxInner {
+  width: 100%;
+  height: 110%;
+  position: relative;
+  top: -5%;
+  will-change: transform;
+}

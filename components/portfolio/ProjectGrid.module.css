@@ -1,0 +1,117 @@
+/* ─── Editorial Project Grid — Clean 2-Column ───────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px 32px;
+  padding: 0 48px var(--space-3xl);
+  max-width: calc(var(--max-width) + 96px);
+  margin: 0 auto;
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+.card {
+  display: block;
+  text-decoration: none;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+/* ─── Image Container ────────────────────────────────────── */
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-cream);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.card:hover .image {
+  transform: scale(1.04);
+}
+
+/* ─── Info — Below Image ─────────────────────────────────── */
+.info {
+  padding-top: 16px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--fg);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  transition: background-size 0.4s var(--ease-out);
+}
+
+.card:hover .title {
+  background-size: 100% 1.5px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.category {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.separator {
+  font-size: 12px;
+  color: var(--stone);
+}
+
+.year {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--muted-light);
+}
+
+/* ─── Empty State ────────────────────────────────────────── */
+.empty {
+  grid-column: 1 / -1;
+  padding: var(--space-3xl) 48px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 0 20px var(--space-2xl);
+  }
+
+  .imageWrap {
+    aspect-ratio: 3 / 2;
+  }
+
+  .info {
+    padding-top: 12px;
+  }
+
+  .empty {
+    padding: var(--space-2xl) 20px;
+  }
+}

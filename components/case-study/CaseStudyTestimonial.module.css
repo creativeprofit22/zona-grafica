@@ -1,0 +1,84 @@
+/* ─── Case Study Testimonial — Editorial Quote ──────────── */
+.section {
+  padding: var(--space-3xl) 48px;
+  background: var(--bg-cream);
+}
+
+.inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: var(--space-xl);
+}
+
+/* ─── Quote ──────────────────────────────────────────────── */
+.quote {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.quoteMark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 120px;
+  line-height: 0.5;
+  color: var(--ochre);
+  opacity: 0.15;
+  margin-bottom: var(--space-md);
+  user-select: none;
+}
+
+.quoteText {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--fg-dark);
+  letter-spacing: -0.02em;
+  font-style: italic;
+}
+
+/* ─── Attribution ────────────────────────────────────────── */
+.attribution {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.authorName {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-dark);
+}
+
+.authorRole {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 20px;
+  }
+
+  .quoteMark {
+    font-size: 72px;
+  }
+}

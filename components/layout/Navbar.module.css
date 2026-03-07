@@ -1,0 +1,309 @@
+/* ─── Navbar ─────────────────────────────────────────────── */
+/* Theme-aware: adapts to dark/light hero sections.          */
+/* Default: dark text on transparent → paper bg on scroll.   */
+/* Inverted: light text on transparent → paper bg on scroll. */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 48px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  transition:
+    background var(--duration-normal) var(--ease-out),
+    backdrop-filter var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+/* Scrolled state — always paper bg with dark text */
+.nav.scrolled {
+  background: rgba(250, 249, 246, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--border-light);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Logo ────────────────────────────────────────────── */
+.logo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-dark);
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.logoMonogram {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.logoFull {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--muted);
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+/* ─── Desktop Links ──────────────────────────────────── */
+.desktopLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  transition: color var(--duration-fast) var(--ease-out);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.navLink:hover,
+.navLink.active {
+  color: var(--fg-dark);
+}
+
+.navNumber {
+  font-size: 10px;
+  color: var(--ochre);
+  font-weight: 500;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+/* ─── Right Side ─────────────────────────────────────── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ctaButton {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 10px 24px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--fg-light);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.ctaButton:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* ─── Burger (mobile) ─────────────────────────────────── */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  width: 28px;
+  padding: 4px 0;
+  background: none;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.burgerLine {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--fg-dark);
+  border-radius: 1px;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out),
+    background var(--duration-normal) var(--ease-out);
+  transform-origin: center;
+}
+
+.burgerOpen .burgerLine:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.burgerOpen .burgerLine:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* ─── Inverted State (dark hero, not scrolled) ──────── */
+/* When over a dark hero section, use light text          */
+.nav.inverted .logo {
+  color: var(--fg-light);
+}
+
+.nav.inverted .logoFull {
+  color: rgba(250, 249, 246, 0.55);
+}
+
+.nav.inverted .navLink {
+  color: rgba(250, 249, 246, 0.55);
+}
+
+.nav.inverted .navLink:hover,
+.nav.inverted .navLink.active {
+  color: var(--fg-light);
+}
+
+.nav.inverted .navNumber {
+  color: var(--ochre);
+}
+
+.nav.inverted .burgerLine {
+  background: var(--fg-light);
+}
+
+/* When scrolled, always revert to dark text (paper bg) */
+.nav.scrolled .logo {
+  color: var(--fg-dark);
+}
+
+.nav.scrolled .logoFull {
+  color: var(--muted);
+}
+
+.nav.scrolled .navLink {
+  color: var(--muted);
+}
+
+.nav.scrolled .navLink:hover,
+.nav.scrolled .navLink.active {
+  color: var(--fg-dark);
+}
+
+.nav.scrolled .burgerLine {
+  background: var(--fg-dark);
+}
+
+/* ─── Mobile Overlay ──────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--bg-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 48px 48px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    visibility var(--duration-slow) var(--ease-out);
+}
+
+.overlayOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.overlayContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.overlayLink {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-dark);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+
+.overlayOpen .overlayLink {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.overlayNumber {
+  font-size: 12px;
+  color: var(--ochre);
+  font-weight: 500;
+  min-width: 20px;
+}
+
+.overlayLabel {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 600;
+  color: var(--fg-light);
+  letter-spacing: -0.02em;
+}
+
+.overlayFooter {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.overlayWhatsapp {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.overlayEmail {
+  font-size: 13px;
+  color: rgba(250, 249, 246, 0.55);
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav {
+    padding: 0 20px;
+  }
+
+  .desktopLinks {
+    display: none;
+  }
+
+  .ctaButton {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .overlay {
+    padding: 120px 20px 32px;
+  }
+
+  .logoFull {
+    display: none;
+  }
+}

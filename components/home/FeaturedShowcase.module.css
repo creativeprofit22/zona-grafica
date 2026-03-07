@@ -1,0 +1,330 @@
+/* ─── Featured Showcase — Horizontal Scroll Editorial ────── */
+.section {
+  position: relative;
+  background: var(--bg-paper);
+  overflow: hidden;
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+.header {
+  padding: var(--space-2xl) 48px var(--space-lg);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ochre);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 600;
+  color: var(--fg-dark);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+/* ─── Horizontal Scroll Track (Desktop) ─────────────────── */
+.track {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .track {
+    display: flex;
+    width: max-content;
+    height: calc(100vh - 160px);
+    gap: 0;
+  }
+}
+
+/* ─── Each Spread (Magazine Page) ───────────────────────── */
+.spread {
+  display: flex;
+  width: 90vw;
+  height: 100%;
+  text-decoration: none;
+  color: var(--fg-dark);
+  flex-shrink: 0;
+  cursor: pointer;
+  border-right: 1px solid var(--border-light);
+}
+
+.spread:last-of-type {
+  border-right: none;
+}
+
+/* ─── Spread: Image (Left 55%) ──────────────────────────── */
+.spreadImage {
+  position: relative;
+  width: 55%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-cream);
+}
+
+.spreadImageInner {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.spread:hover .image {
+  transform: scale(1.03);
+}
+
+/* ─── Spread: Content (Right 45%) ───────────────────────── */
+.spreadContent {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-xl) clamp(32px, 4vw, 64px);
+  position: relative;
+}
+
+/* ─── Project Index ─────────────────────────────────────── */
+.projectIndex {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 8vw, 120px);
+  font-weight: 700;
+  color: var(--bg-cream);
+  line-height: 1;
+  position: absolute;
+  top: var(--space-xl);
+  right: clamp(32px, 4vw, 64px);
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+/* ─── Project Metadata ──────────────────────────────────── */
+.projectMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.projectCategory {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ochre);
+}
+
+.projectDot {
+  font-size: 12px;
+  color: var(--muted-light);
+}
+
+.projectLocation {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.projectYear {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Project Title ─────────────────────────────────────── */
+.projectTitle {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--fg-dark);
+  margin-bottom: 16px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.spread:hover .projectTitle {
+  color: var(--accent);
+}
+
+/* ─── Project Description ───────────────────────────────── */
+.projectDescription {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 380px;
+  margin-bottom: 32px;
+}
+
+/* ─── Project CTA ───────────────────────────────────────── */
+.projectCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.projectCtaText {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-dark);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.projectCtaArrow {
+  font-size: 16px;
+  color: var(--accent);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.spread:hover .projectCtaArrow {
+  transform: translateX(4px);
+}
+
+.spread:hover .projectCtaText {
+  color: var(--accent);
+}
+
+/* ─── End Slide ─────────────────────────────────────────── */
+.endSlide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40vw;
+  height: 100%;
+  flex-shrink: 0;
+  padding: var(--space-xl);
+}
+
+.endContent {
+  text-align: center;
+}
+
+.endLabel {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+}
+
+.endLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 32px);
+  font-weight: 600;
+  color: var(--fg-dark);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.endLink:hover {
+  color: var(--accent);
+}
+
+.endArrow {
+  font-size: 24px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.endLink:hover .endArrow {
+  transform: translateX(6px);
+}
+
+/* ─── Mobile: Stacked Cards ─────────────────────────────── */
+.mobileStack {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: var(--space-xl) 20px var(--space-lg);
+  }
+
+  .mobileStack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 20px var(--space-xl);
+  }
+
+  .mobileCard {
+    display: block;
+    text-decoration: none;
+    color: var(--fg-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-cream);
+  }
+
+  .mobileCardImage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .mobileCardImage .image {
+    object-fit: cover;
+  }
+
+  .mobileCardContent {
+    padding: 20px;
+  }
+
+  .mobileCardMeta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .mobileCardTitle {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .mobileCardDescription {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .mobileCardArrow {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  .mobileViewAll {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-lg) 0;
+  }
+
+  .endLink {
+    font-size: 18px;
+  }
+}

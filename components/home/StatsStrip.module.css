@@ -1,0 +1,176 @@
+/* ─── Story Stats — Scattered Biographical Facts ──────────── */
+.section {
+  background: var(--bg-cream);
+  color: var(--fg-dark);
+  padding: var(--space-3xl) 48px;
+  overflow: hidden;
+}
+
+/* Scattered layout — not a neat grid */
+.scattered {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: var(--space-xl) var(--space-md);
+  min-height: 420px;
+  align-items: start;
+}
+
+/* ─── Tile base ──────────────────────────────────────────── */
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-md);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--fg-dark);
+}
+
+.context {
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.4;
+  color: var(--muted);
+  max-width: 200px;
+  font-weight: 400;
+}
+
+/* ─── Scattered positions — staggered, not aligned ───────── */
+.pos0 {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.pos1 {
+  grid-column: 5 / span 3;
+  grid-row: 1;
+  margin-top: var(--space-xl);
+}
+
+.pos2 {
+  grid-column: 9 / span 4;
+  grid-row: 1;
+  margin-top: var(--space-sm);
+}
+
+.pos3 {
+  grid-column: 2 / span 3;
+  grid-row: 2;
+  margin-top: calc(-1 * var(--space-md));
+}
+
+.pos4 {
+  grid-column: 6 / span 4;
+  grid-row: 2;
+  margin-top: var(--space-lg);
+}
+
+.pos5 {
+  grid-column: 10 / span 3;
+  grid-row: 2;
+}
+
+/* ─── Accent colors for specific values ──────────────────── */
+.pos0 .value {
+  color: var(--ochre);
+}
+
+.pos2 .value {
+  color: var(--accent);
+}
+
+.pos5 .value {
+  color: var(--ink-blue);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .section {
+    padding: var(--space-2xl) 32px;
+  }
+
+  .scattered {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto auto auto;
+    min-height: auto;
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .pos0 {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  .pos1 {
+    grid-column: 4 / span 3;
+    grid-row: 1;
+    margin-top: var(--space-lg);
+  }
+
+  .pos2 {
+    grid-column: 1 / span 3;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .pos3 {
+    grid-column: 4 / span 3;
+    grid-row: 2;
+    margin-top: var(--space-md);
+  }
+
+  .pos4 {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+    margin-top: 0;
+  }
+
+  .pos5 {
+    grid-column: 4 / span 3;
+    grid-row: 3;
+    margin-top: var(--space-sm);
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: var(--space-xl) 20px;
+  }
+
+  .scattered {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .pos0,
+  .pos1,
+  .pos2,
+  .pos3,
+  .pos4,
+  .pos5 {
+    grid-column: auto;
+    grid-row: auto;
+    margin-top: 0;
+  }
+
+  /* Alternate slight indentation for visual interest on mobile */
+  .pos1,
+  .pos3,
+  .pos5 {
+    padding-top: var(--space-sm);
+  }
+
+  .value {
+    font-size: clamp(32px, 10vw, 48px);
+  }
+}

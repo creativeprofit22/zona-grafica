@@ -1,0 +1,113 @@
+/* ─── Post Card ──────────────────────────────────────────── */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0;
+  text-decoration: none;
+  color: var(--fg-dark);
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: var(--space-xl);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateX(4px);
+}
+
+/* ─── Gradient Accent ────────────────────────────────────── */
+.gradient {
+  width: 100%;
+  height: 200px;
+  border-radius: 6px;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.card:hover .gradient {
+  opacity: 0.85;
+}
+
+/* ─── Content ────────────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-top: var(--space-lg);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.category {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-sm);
+  color: var(--fg-dark);
+}
+
+.excerpt {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 460px;
+  flex: 1;
+}
+
+/* ─── Meta ───────────────────────────────────────────────── */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted-light);
+}
+
+.dot {
+  opacity: 0.5;
+}
+
+/* ─── Read More ──────────────────────────────────────────── */
+.readMore {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: var(--space-md);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.card:hover .readMore {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gradient {
+    height: 160px;
+  }
+
+  .readMore {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

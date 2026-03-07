@@ -1,0 +1,96 @@
+/* ─── Values — Editorial Annotations ─────────────────────── */
+.section {
+  padding: var(--space-2xl) 48px;
+  background: var(--bg-paper);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Section Label ──────────────────────────────────────── */
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: var(--space-xl);
+}
+
+.number {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ochre);
+  letter-spacing: 0.02em;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+/* ─── Values List ────────────────────────────────────────── */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--stone);
+  align-items: start;
+}
+
+.item:last-child {
+  border-bottom: 1px solid var(--stone);
+}
+
+.itemNumber {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-light);
+  padding-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+.itemContent {
+  max-width: 640px;
+}
+
+.itemTitle {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-dark);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+
+.itemDescription {
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 520px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-xl) 20px;
+  }
+
+  .item {
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-sm);
+  }
+}

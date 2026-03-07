@@ -1,0 +1,120 @@
+/* ─── Related Projects — Editorial Cards ─────────────────── */
+.section {
+  padding: var(--space-3xl) 48px;
+  background: var(--bg-paper);
+  border-top: 1px solid var(--border-light);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  margin-bottom: var(--space-xl);
+}
+
+.label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: var(--space-sm);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--fg-dark);
+}
+
+/* ─── Grid ───────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+/* ─── Card — Image above, text below ────────────────────── */
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-cream);
+}
+
+.image {
+  object-fit: cover;
+  filter: saturate(0.9);
+  transition: transform var(--duration-slow) var(--ease-out),
+    filter var(--duration-slow) var(--ease-out);
+}
+
+.card:hover .image {
+  transform: scale(1.04);
+  filter: saturate(1);
+}
+
+/* ─── Card Content ───────────────────────────────────────── */
+.cardContent {
+  padding: var(--space-md) 0 0;
+}
+
+.cardCategory {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ochre);
+  font-style: italic;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--fg-dark);
+  margin-top: 6px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.card:hover .cardTitle {
+  color: var(--accent);
+}
+
+.cardYear {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--muted-light);
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}

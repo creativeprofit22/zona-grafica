@@ -1,0 +1,78 @@
+/* ─── Post Header ────────────────────────────────────────── */
+.header {
+  padding: 160px 48px 0;
+  background: var(--bg-paper);
+  color: var(--fg-dark);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Breadcrumb ─────────────────────────────────────────── */
+.breadcrumb {
+  margin-bottom: var(--space-xl);
+}
+
+.breadcrumbLink {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.breadcrumbLink:hover {
+  color: var(--accent);
+}
+
+/* ─── Category ───────────────────────────────────────────── */
+.category {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+}
+
+/* ─── Title ──────────────────────────────────────────────── */
+.title {
+  font-size: clamp(32px, 6vw, 64px);
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  line-height: 1.1;
+  max-width: 800px;
+  color: var(--fg-dark);
+}
+
+/* ─── Meta ───────────────────────────────────────────────── */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-lg);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.dot {
+  opacity: 0.5;
+}
+
+/* ─── Accent Bar ─────────────────────────────────────────── */
+.accent {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  margin-top: var(--space-xl);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .header {
+    padding: 120px 20px 0;
+  }
+}

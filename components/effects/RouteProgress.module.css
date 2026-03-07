@@ -1,0 +1,37 @@
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--accent) 0px,
+    var(--accent) 7px,
+    transparent 7px,
+    transparent 8px
+  );
+  image-rendering: pixelated;
+  z-index: 99999;
+  pointer-events: none;
+  will-change: width, opacity;
+  box-shadow: 0 1px 0 rgba(212, 41, 24, 0.35);
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.bar[data-state="idle"] {
+  width: 0%;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s, width 0s 0.5s;
+}
+
+.bar[data-state="loading"] {
+  width: 80%;
+  opacity: 1;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.1s ease;
+}
+
+.bar[data-state="complete"] {
+  width: 100%;
+  opacity: 0;
+  transition: width 0.15s ease-out, opacity 0.3s ease 0.15s;
+}

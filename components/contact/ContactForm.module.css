@@ -1,0 +1,250 @@
+/* ─── Conversational Contact Form ────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  padding: var(--space-2xl) 0;
+}
+
+/* ─── Sentence Flow ──────────────────────────────────────── */
+.sentence {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3em;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--fg-dark);
+}
+
+.text {
+  white-space: nowrap;
+}
+
+/* ─── Inline Inputs ──────────────────────────────────────── */
+.fieldWrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 180px;
+}
+
+.inlineInput,
+.inlineSelect,
+.inlineTextarea {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--fg-dark);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--stone);
+  padding: 0 0 4px;
+  width: 100%;
+  transition:
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.inlineInput::placeholder,
+.inlineTextarea::placeholder {
+  color: var(--muted-light);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.inlineInput:focus,
+.inlineSelect:focus,
+.inlineTextarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.inputError {
+  border-bottom-color: var(--accent) !important;
+}
+
+/* ─── Inline Select ──────────────────────────────────────── */
+.inlineSelect {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none'%3E%3Cpath d='M1 1.5l6 6 6-6' stroke='%23C45D3E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px bottom 10px;
+  padding-right: 28px;
+  cursor: pointer;
+}
+
+.inlineSelect option {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  background: var(--bg-paper);
+  color: var(--fg-dark);
+}
+
+/* ─── Inline Textarea ────────────────────────────────────── */
+.inlineTextarea {
+  resize: none;
+  min-height: 1.4em;
+  overflow: hidden;
+  field-sizing: content;
+}
+
+/* ─── Error Messages ─────────────────────────────────────── */
+.error {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.errorGlobal {
+  font-size: 14px;
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* ─── Actions ────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding-left: 2px;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 48px;
+  background: var(--accent);
+  color: var(--fg-light);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.submit:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submitArrow {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.submit:hover .submitArrow {
+  transform: translateX(3px);
+}
+
+/* ─── Success State ──────────────────────────────────────── */
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-3xl) 0;
+  gap: var(--space-md);
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--fg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.successTitle {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.successText {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.resetButton {
+  margin-top: var(--space-md);
+  padding: 14px 32px;
+  background: transparent;
+  border: 1.5px solid var(--stone);
+  border-radius: 100px;
+  color: var(--fg-dark);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.resetButton:hover {
+  border-color: var(--fg-dark);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .form {
+    gap: var(--space-xl);
+    padding: var(--space-xl) 0;
+  }
+
+  .sentence {
+    gap: var(--space-lg);
+  }
+
+  .line {
+    flex-direction: column;
+    gap: 0.15em;
+  }
+
+  .fieldWrap {
+    min-width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .submit {
+    width: 100%;
+    justify-content: center;
+  }
+}

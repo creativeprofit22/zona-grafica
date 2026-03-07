@@ -1,0 +1,17 @@
+/* ─── Services List ──────────────────────────────────────── */
+.section {
+  padding: 0 48px var(--space-3xl);
+  background: var(--bg-paper);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: 0 20px var(--space-2xl);
+  }
+}

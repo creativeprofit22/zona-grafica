@@ -1,0 +1,36 @@
+.wrapper {
+  overflow: hidden;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  user-select: none;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+
+.track span {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.track span::after {
+  content: "·";
+  margin-left: 2rem;
+  color: var(--accent);
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}

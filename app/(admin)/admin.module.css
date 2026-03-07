@@ -1,0 +1,558 @@
+/* Login */
+.loginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #fafafa;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  padding: 40px;
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 12px;
+}
+
+.loginTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.loginSubtitle {
+  margin: 0 0 8px;
+  color: #888;
+  font-size: 14px;
+}
+
+.loginError {
+  margin: 0;
+  padding: 8px 12px;
+  background: #2d1515;
+  border: 1px solid #5c2020;
+  border-radius: 6px;
+  color: #f87171;
+  font-size: 14px;
+}
+
+.loginInput {
+  padding: 10px 14px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fafafa;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.loginInput:focus {
+  border-color: #3b82f6;
+}
+
+.loginButton {
+  padding: 10px 14px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.loginButton:hover {
+  background: #2563eb;
+}
+
+.loginButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Admin Shell */
+.adminShell {
+  display: flex;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #fafafa;
+}
+
+.sidebar {
+  width: 240px;
+  padding: 24px 16px;
+  background: #111;
+  border-right: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebarBrand {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 24px 12px;
+  color: #ccc;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 450;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navLink:hover {
+  background: #1a1a1a;
+  color: #fafafa;
+}
+
+.navLinkActive {
+  background: #1a1a1a;
+  color: #fafafa;
+  font-weight: 500;
+}
+
+.sidebarSpacer {
+  flex: 1;
+}
+
+.logoutButton {
+  padding: 10px 14px;
+  background: none;
+  border: 1px solid #262626;
+  border-radius: 8px;
+  color: #666;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  width: 100%;
+}
+
+.logoutButton:hover {
+  color: #f87171;
+  border-color: #5c2020;
+}
+
+.content {
+  flex: 1;
+  padding: 32px 40px;
+  overflow-y: auto;
+  max-width: 1200px;
+}
+
+/* Page Header */
+.pageHeader {
+  margin-bottom: 32px;
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.pageDesc {
+  margin: 6px 0 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  color: #444;
+}
+
+/* Dashboard Cards */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.card {
+  padding: 20px;
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 10px;
+}
+
+.cardLabel {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardValue {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.cardTrend {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.cardTrendUp {
+  color: #22c55e;
+}
+
+.cardTrendDown {
+  color: #f87171;
+}
+
+.cardSub {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Content Cards */
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.contentCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fafafa;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.contentCard:hover {
+  border-color: #3b82f6;
+  background: #181818;
+}
+
+.contentCardInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.contentCardName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contentCardMeta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.contentCardArrow {
+  color: #444;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* Section Groups */
+.sectionGroup {
+  margin-bottom: 36px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #ccc;
+}
+
+.sectionCount {
+  font-size: 12px;
+  color: #555;
+}
+
+/* Chart Cards */
+.chartCard {
+  padding: 20px;
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 10px;
+}
+
+.chartRow {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chartRow2 {
+  composes: chartRow;
+  grid-template-columns: 2fr 1fr;
+}
+
+.chartRow3 {
+  composes: chartRow;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.chartCardTitle {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Analytics Tables */
+.section {
+  margin-bottom: 32px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid #333;
+  color: #888;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* Form Elements */
+.formField {
+  margin-bottom: 20px;
+}
+
+.formLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 6px;
+}
+
+.formHint {
+  font-size: 12px;
+  color: #555;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.formInput {
+  width: 100%;
+  padding: 10px 14px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fafafa;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.formInput:focus {
+  border-color: #3b82f6;
+}
+
+.formTextarea {
+  composes: formInput;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.formGroup {
+  padding: 20px;
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.formGroupTitle {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+}
+
+/* Array Items */
+.arrayItem {
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.arrayItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.arrayItemTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+}
+
+.arrayItemNumber {
+  font-size: 12px;
+  color: #555;
+  margin-right: 8px;
+}
+
+.removeButton {
+  background: none;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #888;
+  font-size: 12px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.removeButton:hover {
+  color: #f87171;
+  border-color: #5c2020;
+}
+
+.addButton {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: none;
+  border: 1px dashed #333;
+  border-radius: 10px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  margin-bottom: 20px;
+}
+
+.addButton:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+/* Image Preview */
+.imagePreview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.imagePreviewThumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #262626;
+  background: #111;
+}
+
+.imagePreviewPath {
+  font-size: 12px;
+  color: #555;
+}
+
+/* Actions Bar */
+.actionsBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.savedMsg {
+  font-size: 14px;
+  color: #22c55e;
+}

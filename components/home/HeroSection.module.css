@@ -1,0 +1,252 @@
+/* ─── Hero — Poster Composition ─────────────────────────── */
+/* Asymmetric typographic layout inspired by Jesús's poster  */
+/* designs. Words at different scales, weights, positions.   */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 48px;
+  overflow: hidden;
+  background: var(--bg-paper);
+  color: var(--fg-dark);
+}
+
+/* Subtle film grain overlay */
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Composition Container ─────────────────────────────── */
+.composition {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.line {
+  display: block;
+  font-family: var(--font-display);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+/* ─── Line 1: "zona" — lighter weight, pushed right ────── */
+.lineZona {
+  text-align: right;
+  padding-right: 12%;
+}
+
+.zona {
+  display: inline-block;
+  font-size: clamp(42px, 8vw, 120px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--fg-dark);
+}
+
+/* ─── Line 2: "GRÁFICA" — massive, dominant ────────────── */
+.lineGrafica {
+  text-align: left;
+  margin-top: -0.05em;
+  padding-left: 4%;
+}
+
+.grafica {
+  display: inline-block;
+  font-size: clamp(72px, 18vw, 260px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: var(--fg-dark);
+}
+
+/* ─── Line 3: "(estudio creativo)" — annotation ──────── */
+.lineAnnotation {
+  text-align: right;
+  padding-right: 8%;
+  margin-top: 0.2em;
+}
+
+.annotation {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.6vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* ─── Line 4: "diseño que" — medium display ──────────── */
+.lineDiseno {
+  margin-top: clamp(24px, 4vw, 56px);
+  padding-left: 8%;
+}
+
+.diseno {
+  display: inline-block;
+  font-size: clamp(32px, 5.5vw, 80px);
+  font-weight: 400;
+  color: var(--fg-dark);
+  letter-spacing: -0.02em;
+}
+
+/* ─── Line 5: "habla →" — with accent arrow ──────────── */
+.lineHabla {
+  padding-left: 28%;
+  margin-top: -0.1em;
+}
+
+.habla {
+  display: inline-block;
+  font-size: clamp(36px, 6vw, 90px);
+  font-weight: 700;
+  color: var(--fg-dark);
+  letter-spacing: -0.03em;
+}
+
+.arrow {
+  color: var(--accent);
+  margin-left: 0.15em;
+  font-weight: 400;
+}
+
+/* ─── Footnotes — asterisk style at bottom left ──────── */
+.footnotes {
+  position: absolute;
+  bottom: 48px;
+  left: 48px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footnote {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.asterisk {
+  color: var(--ochre);
+  margin-right: 4px;
+  font-weight: 700;
+}
+
+/* ─── Scroll prompt — bottom right ───────────────────── */
+.prompt {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.promptText {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+.chevron {
+  color: var(--muted);
+}
+
+/* ─── Animation helper ──────────────────────────────── */
+.animItem {
+  will-change: transform, opacity;
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .lineZona {
+    padding-right: 8%;
+  }
+
+  .lineGrafica {
+    padding-left: 2%;
+  }
+
+  .lineHabla {
+    padding-left: 20%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 0 20px;
+    justify-content: center;
+    padding-bottom: 100px;
+  }
+
+  /* Tighter poster on mobile — more centered */
+  .lineZona {
+    text-align: left;
+    padding-right: 0;
+    padding-left: 10%;
+  }
+
+  .lineGrafica {
+    padding-left: 0;
+  }
+
+  .lineAnnotation {
+    text-align: left;
+    padding-right: 0;
+    padding-left: 2%;
+    margin-top: 0.4em;
+  }
+
+  .lineDiseno {
+    padding-left: 0;
+    margin-top: clamp(20px, 6vw, 40px);
+  }
+
+  .lineHabla {
+    padding-left: 15%;
+  }
+
+  /* Footnotes stack at bottom on mobile */
+  .footnotes {
+    left: 20px;
+    bottom: 32px;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .prompt {
+    right: 20px;
+    bottom: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footnotes {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lineHabla {
+    padding-left: 10%;
+  }
+}

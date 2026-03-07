@@ -1,0 +1,66 @@
+/* ─── Services Hero ──────────────────────────────────────── */
+.hero {
+  padding: 160px 48px 80px;
+  background: var(--bg-paper);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.topRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: var(--space-md);
+}
+
+.count {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ochre);
+  letter-spacing: 0.02em;
+}
+
+.annotation {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.title {
+  font-size: clamp(48px, 10vw, 120px);
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  line-height: 0.95;
+  color: var(--fg-dark);
+}
+
+.titleAccent {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-size: clamp(17px, 2vw, 22px);
+  color: var(--muted);
+  max-width: 520px;
+  margin-top: var(--space-xl);
+  line-height: 1.6;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 20px 48px;
+  }
+
+  .subtitle {
+    margin-top: var(--space-lg);
+  }
+}

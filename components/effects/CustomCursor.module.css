@@ -1,0 +1,71 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fg-dark);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  mix-blend-mode: difference;
+  will-change: transform, width, height, opacity;
+  transition:
+    width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    background 0.3s ease,
+    mix-blend-mode 0.3s ease;
+}
+
+.cursor.visible {
+  opacity: 1;
+}
+
+.cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: var(--fg-light);
+  mix-blend-mode: difference;
+}
+
+.cursor.project {
+  width: 80px;
+  height: 80px;
+  background: var(--accent);
+  mix-blend-mode: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--fg-light);
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.label.visible {
+  opacity: 1;
+}
+
+/* Hide on touch / small screens */
+@media (hover: none), (max-width: 768px) {
+  .cursor,
+  .label {
+    display: none !important;
+  }
+}

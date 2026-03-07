@@ -1,0 +1,109 @@
+/* ─── Services Process — Editorial Numbered List ─────────── */
+.section {
+  background: var(--bg-cream);
+  color: var(--fg-dark);
+  padding: var(--space-2xl) 48px;
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  margin-bottom: var(--space-xl);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: var(--ochre);
+}
+
+.title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-top: var(--space-sm);
+  color: var(--fg-dark);
+}
+
+/* ─── Steps List ─────────────────────────────────────────── */
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  counter-reset: step;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: baseline;
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.step:first-child {
+  border-top: 1px solid var(--border-light);
+}
+
+/* ─── Step Header (Number + Title) ───────────────────────── */
+.stepHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.stepNumber {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.stepTitle {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-dark);
+}
+
+/* ─── Step Description ───────────────────────────────────── */
+.stepDescription {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 440px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-xl) 20px;
+  }
+
+  .step {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+  }
+
+  .stepDescription {
+    padding-left: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepDescription {
+    padding-left: 0;
+  }
+}

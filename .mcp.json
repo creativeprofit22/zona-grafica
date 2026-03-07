@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/Users/danielisakov/.claude/mcp-servers/chrome-devtools-mcp/build/src/index.js"
+      ],
+      "env": {}
+    }
+  }
+}

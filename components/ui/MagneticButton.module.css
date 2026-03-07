@@ -1,0 +1,8 @@
+.wrap {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.inner {
+  will-change: transform;
+}

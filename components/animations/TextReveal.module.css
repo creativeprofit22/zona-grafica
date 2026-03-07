@@ -1,0 +1,19 @@
+/* Each word is wrapped in an overflow-hidden clip so the translateY slide
+   looks like the word is rising up from behind a mask edge. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  /* Preserve the baseline — vertical-align keeps inline-blocks from
+     collapsing the line-height of the parent element. */
+  vertical-align: bottom;
+  /* Small right gap so words don't slam together after splitting on spaces. */
+  margin-right: 0.25em;
+  /* Extra space so italic serif glyphs don't clip */
+  padding: 0.15em 0.1em;
+}
+
+/* The actual element that GSAP moves. Sits inside the clip container above. */
+.wordInner {
+  display: inline-block;
+  will-change: transform;
+}

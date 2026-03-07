@@ -1,0 +1,136 @@
+/* ─── Contact Info — Editorial Footnotes ─────────────────── */
+.section {
+  padding: var(--space-3xl) 48px;
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--stone);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Footnote Grid ──────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
+
+.footnote {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.marker {
+  font-size: 18px;
+  color: var(--accent);
+  font-weight: 600;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.footnoteContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footnoteLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─── Links ──────────────────────────────────────────────── */
+.link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-dark);
+  transition: color var(--duration-fast) var(--ease-out);
+  word-break: break-all;
+}
+
+.link:hover {
+  color: var(--accent);
+}
+
+/* ─── Location ───────────────────────────────────────────── */
+.locationText {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-dark);
+  line-height: 1.5;
+}
+
+.coords {
+  font-size: 12px;
+  font-family: var(--font-mono, monospace);
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Social Links ───────────────────────────────────────── */
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.socialLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-dark);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.socialLink:hover {
+  color: var(--accent);
+}
+
+/* ─── Closing ────────────────────────────────────────────── */
+.closing {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--stone);
+}
+
+.closingText {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}

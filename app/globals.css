@@ -1,0 +1,501 @@
+/* ─── Local Fonts ─────────────────────────────────────────── */
+/* Clash Display: bold geometric display sans — headlines      */
+/* Satoshi: clean readable sans — body, UI                     */
+/* Both from Indian Type Foundry (free for web)                */
+
+@font-face {
+  font-family: "Clash Display";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/clash-display.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/satoshi.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/satoshi-italic.woff2") format("woff2");
+}
+
+/* ─── Design Tokens — San Miguel Editorial ──────────────── */
+:root {
+  /* Paper & ink — light dominant */
+  --bg-paper:     #FAF9F6;   /* warm white, aged paper */
+  --bg-cream:     #F2EDE7;   /* cream for alternating sections */
+  --bg-ink:       #1A1714;   /* deep ink for hero, footer, accents */
+
+  /* SMA palette */
+  --accent:       #C45D3E;   /* terracotta — primary CTA */
+  --accent-hover: #D4714F;
+  --ochre:        #D4893F;   /* SMA façade ochre — section numbers, highlights */
+  --ink-blue:     #2A3F5F;   /* colonial blue doors — secondary accent */
+  --stone:        #C4B9A8;   /* cantera stone — borders, subtle fills */
+
+  /* Foreground */
+  --fg-dark:      #1A1714;   /* primary text on light */
+  --fg-light:     #FAF9F6;   /* text on dark sections */
+  --muted:        #7A756E;   /* secondary text, captions */
+  --muted-light:  #B0A99F;   /* tertiary, timestamps */
+
+  /* Borders */
+  --border-light: rgba(26, 23, 20, 0.1);
+  --border-dark:  rgba(250, 249, 246, 0.12);
+
+  /* Default: light mode (paper bg, dark text) */
+  --bg: var(--bg-paper);
+  --fg: var(--fg-dark);
+  --border: var(--border-light);
+
+  /* Typography */
+  --font-display: "Clash Display", system-ui, sans-serif;
+  --font-sans: "Satoshi", system-ui, sans-serif;
+
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 64px;
+  --space-2xl: 96px;
+  --space-3xl: 128px;
+
+  /* Max content width */
+  --max-width: 1440px;
+
+  /* Transition defaults */
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.8s;
+}
+
+/* Cream section — alternating backgrounds */
+[data-theme="cream"] {
+  --bg: var(--bg-cream);
+  --fg: var(--fg-dark);
+  --border: var(--border-light);
+  --muted: #7A756E;
+}
+
+/* Dark section — hero, footer, CTA */
+[data-theme="dark"] {
+  --bg: var(--bg-ink);
+  --fg: var(--fg-light);
+  --border: var(--border-dark);
+  --muted: rgba(250, 249, 246, 0.55);
+}
+
+/* ─── Page-level responsive padding ────────────────────────── */
+.page-padding {
+  padding-left: 48px;
+  padding-right: 48px;
+}
+
+@media (max-width: 768px) {
+  .page-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* ─── Reset ──────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ─── Section Number Labels (01 ———) ─────────────────────── */
+.section-number {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ochre);
+}
+
+/* ─── Scroll-reveal animations ───────────────────────────── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger variant */
+[data-animate][data-stagger] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+[data-animate][data-stagger].is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate][data-stagger].is-visible > *:nth-child(1) { transition-delay: 0.00s; }
+[data-animate][data-stagger].is-visible > *:nth-child(2) { transition-delay: 0.10s; }
+[data-animate][data-stagger].is-visible > *:nth-child(3) { transition-delay: 0.15s; }
+[data-animate][data-stagger].is-visible > *:nth-child(4) { transition-delay: 0.20s; }
+[data-animate][data-stagger].is-visible > *:nth-child(5) { transition-delay: 0.25s; }
+[data-animate][data-stagger].is-visible > *:nth-child(6) { transition-delay: 0.30s; }
+[data-animate][data-stagger].is-visible > *:nth-child(7) { transition-delay: 0.35s; }
+[data-animate][data-stagger].is-visible > *:nth-child(8) { transition-delay: 0.40s; }
+
+/* ─── Prose (MDX content) ───────────────────────────────── */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--fg);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose h1 { font-size: 36px; line-height: 1.2; }
+.prose h2 { font-size: 28px; line-height: 1.3; }
+.prose h3 { font-size: 22px; line-height: 1.3; }
+.prose h4 { font-size: 18px; line-height: 1.4; }
+
+.prose p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--accent-hover);
+}
+
+.prose strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.prose code {
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.prose figure[data-rehype-pretty-code-figure] {
+  margin: 0 0 1.5rem;
+}
+
+.prose figure[data-rehype-pretty-code-figure] > pre {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.prose figure[data-rehype-pretty-code-figure] > pre > code {
+  font-size: 14px;
+  line-height: 1.7;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--shiki-dark, inherit);
+}
+
+.prose figure[data-rehype-pretty-code-figure] [data-line] {
+  display: block;
+  padding: 0 0.25rem;
+  border-left: 2px solid transparent;
+}
+
+.prose figure[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  background: rgba(255, 255, 255, 0.06);
+  border-left-color: var(--accent);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.prose ul,
+.prose ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+}
+
+.prose li {
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.prose img {
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+/* ─── Texture Overlays ─────────────────────────────────────── */
+/* Usage: add .texture-grain or .texture-stone to any section.   */
+/* The ::after pseudo-element tiles the texture at low opacity.  */
+/* Both are pointer-events: none so they don't interfere with    */
+/* clicks/hovers. Combine with position: relative on the parent. */
+
+.texture-grain {
+  position: relative;
+}
+
+.texture-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/images/textures/paper-grain.png") repeat;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+.texture-stone {
+  position: relative;
+}
+
+.texture-stone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/images/textures/cantera-stone.png") repeat;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+/* Dark sections: use overlay blend instead of multiply */
+[data-theme="dark"] .texture-grain::after,
+[data-theme="dark"].texture-grain::after {
+  mix-blend-mode: overlay;
+  opacity: 0.25;
+}
+
+[data-theme="dark"] .texture-stone::after,
+[data-theme="dark"].texture-stone::after {
+  mix-blend-mode: overlay;
+  opacity: 0.2;
+}
+
+/* ─── Skeleton Loading ─────────────────────────────────────── */
+@keyframes skeleton-pulse {
+  0% { opacity: 0.06; }
+  50% { opacity: 0.12; }
+  100% { opacity: 0.06; }
+}
+
+.skeleton-bone {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+/* ─── Accessibility ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Skip to Content ───────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: var(--fg-light);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ─── Initial Page Load ─────────────────────────────────────── */
+@keyframes initialFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  animation: initialFadeIn 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+/* ─── Page Transitions (View Transitions API) ──────────────── */
+
+/* Scope transitions to page content only — navbar/footer stay put */
+::view-transition-group(page-content) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Old content fades out upward — like turning a page */
+::view-transition-old(page-content) {
+  animation: pageOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* New content fades in from below — like the next page appearing */
+::view-transition-new(page-content) {
+  animation: pageIn 0.45s cubic-bezier(0.0, 0, 0.2, 1) 0.05s both;
+}
+
+@keyframes pageOut {
+  0%   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-30px); filter: blur(2px); }
+}
+
+@keyframes pageIn {
+  0%   { opacity: 0; transform: translateY(40px); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Fallback entrance animation for browsers without View Transitions */
+@keyframes pageEnter {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Prevent the root snapshot from animating (keeps navbar/footer stable) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Ensure smooth layering during transition */
+::view-transition-image-pair(page-content) {
+  isolation: auto;
+}
+
+/* Disable page transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

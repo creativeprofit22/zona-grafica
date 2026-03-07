@@ -1,0 +1,131 @@
+/* ─── Case Study Narrative — Editorial Sections ─────────── */
+.section {
+  padding: var(--space-3xl) 48px;
+  background: var(--bg-paper);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2xl);
+}
+
+/* ─── Block ──────────────────────────────────────────────── */
+.block {
+  display: flex;
+  flex-direction: column;
+}
+
+.numberLine {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-lg);
+}
+
+.number {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ochre);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rule {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: var(--border-light);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--fg-dark);
+  margin-bottom: var(--space-md);
+}
+
+.text {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 420px;
+}
+
+/* ─── Stats ──────────────────────────────────────────────── */
+.statsSection {
+  padding: var(--space-xl) 48px var(--space-2xl);
+  background: var(--bg-cream);
+}
+
+.statsInner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.stat {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.statValue {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .text {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 20px;
+  }
+
+  .statsSection {
+    padding: var(--space-lg) 20px var(--space-xl);
+  }
+
+  .statsInner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .stat {
+    padding: var(--space-md);
+  }
+}
