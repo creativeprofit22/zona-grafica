@@ -1,10 +1,15 @@
 "use client";
 
 import type { Service } from "@/types/content";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./ServiceAccordion.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
   services: Service[];
@@ -67,6 +72,32 @@ export default function ServiceAccordion({ services }: Props) {
     };
   }, []);
 
+  useGSAP(
+    () => {
+      const el = sectionRef.current;
+      if (!el) return;
+
+      const items = el.querySelectorAll<HTMLElement>(`.${styles.item}`);
+
+      gsap.fromTo(
+        items,
+        { clipPath: "inset(0 100% 0 0)" },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.06,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+    },
+    { scope: sectionRef },
+  );
+
   const activeImage = services.find((s) => s.id === hoveredId)?.image;
 
   return (
@@ -100,10 +131,10 @@ export default function ServiceAccordion({ services }: Props) {
                 <div className={styles.rowLeft}>
                   <span className={styles.number}>{service.number}</span>
                   <span className={styles.name}>{service.title}</span>
+                  <span className={styles.oneliner}>
+                    {service.description.split(".")[0]}.
+                  </span>
                 </div>
-                <span className={styles.oneliner}>
-                  {service.description.split(".")[0]}.
-                </span>
                 <span className={styles.arrow} aria-hidden="true">
                   →
                 </span>

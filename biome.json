@@ -1,7 +1,15 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
-    "ignore": ["node_modules", ".next", "bun.lock", ".claude", ".mcp.json"]
+    "ignore": [
+      "node_modules",
+      ".next",
+      "bun.lock",
+      ".claude",
+      ".mcp.json",
+      "test-results",
+      "playwright-report"
+    ]
   },
   "formatter": {
     "enabled": true,

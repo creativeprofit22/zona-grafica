@@ -113,11 +113,10 @@ export default function Navbar() {
       </nav>
 
       {/* ── Mobile Overlay ── */}
-      <div
+      <dialog
         className={`${styles.overlay} ${menuOpen ? styles.overlayOpen : ""}`}
-        role="dialog"
-        aria-modal="true"
         aria-label="Menú de navegación"
+        open={menuOpen}
       >
         <div className={styles.overlayContent}>
           {navigation.map((link, i) => (
@@ -149,7 +148,7 @@ export default function Navbar() {
             {siteConfig.contact.email}
           </a>
         </div>
-      </div>
+      </dialog>
     </>
   );
 }

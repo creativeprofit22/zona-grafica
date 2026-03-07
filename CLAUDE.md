@@ -48,3 +48,16 @@ Light default. `data-theme="dark"` for ink sections. `data-theme="cream"` for al
 4. Real content only — no placeholders
 5. Spanish with personality — conversational, not corporate
 6. Rooted in SMA — Jesús's real story, cultural references
+
+## Last Session
+
+Full codebase audit against current best practices and official docs. Verified every file, dependency version, and API pattern. Only 2 actionable findings across the entire project — both fixed:
+- `priority` → `preload` on `<Image>` in CaseStudyHero.tsx and ServiceAccordion.tsx (deprecated in Next.js 16)
+- `drizzle(pool, {schema})` → `drizzle({connection, schema})` in lib/db.ts (outdated init pattern)
+- TypeScript and Biome lint pass clean after fixes.
+
+**Phase:** ServiceAccordion Editorial Upgrade — Chunk 0/5
+
+## Next Steps
+
+1. Review production build (`npx next build`) for any warnings
