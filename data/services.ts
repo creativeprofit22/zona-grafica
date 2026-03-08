@@ -91,4 +91,19 @@ export const services: Service[] = [
     ],
     image: "/images/portfolio/carteleria-hero.jpg",
   },
+  {
+    id: "video",
+    slug: "video",
+    number: "07",
+    title: "Video & Producción Audiovisual",
+    description:
+      "Videos promocionales, cobertura de eventos, contenido para redes sociales y video corporativo. Producción audiovisual que cuenta tu historia con imagen en movimiento.",
+    process: [
+      "Pre-producción y guion",
+      "Filmación y dirección",
+      "Edición y post-producción",
+      "Entrega y distribución",
+    ],
+    image: "/images/portfolio/giff-thumb.jpg",
+  },
 ];

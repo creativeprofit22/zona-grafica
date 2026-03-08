@@ -4,13 +4,14 @@ import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import styles from "./CustomCursor.module.css";
 
-type CursorState = "default" | "hover" | "project";
+type CursorState = "default" | "hover" | "project" | "section";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const posRef = useRef({ x: -100, y: -100 });
   const [cursorState, setCursorState] = useState<CursorState>("default");
+  const [labelText, setLabelText] = useState("Ver →");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -37,9 +38,16 @@ export default function CustomCursor() {
       const closestLink = target.closest(
         'a, button, [role="button"], input, textarea, select, label[for]',
       );
+      const closestSection = target.closest("[data-cursor-label]");
 
       if (closestProject) {
         setCursorState("project");
+        setLabelText("Ver →");
+      } else if (closestSection) {
+        const sectionLabel = (closestSection as HTMLElement).dataset
+          .cursorLabel;
+        setCursorState("section");
+        setLabelText(sectionLabel || "");
       } else if (closestLink) {
         setCursorState("hover");
       } else {
@@ -76,13 +84,16 @@ export default function CustomCursor() {
     visible && styles.visible,
     cursorState === "hover" && styles.hover,
     cursorState === "project" && styles.project,
+    cursorState === "section" && styles.section,
   ]
     .filter(Boolean)
     .join(" ");
 
   const labelClasses = [
     styles.label,
-    visible && cursorState === "project" && styles.visible,
+    visible &&
+      (cursorState === "project" || cursorState === "section") &&
+      styles.visible,
   ]
     .filter(Boolean)
     .join(" ");
@@ -91,7 +102,7 @@ export default function CustomCursor() {
     <>
       <div ref={cursorRef} className={cursorClasses} aria-hidden="true" />
       <span ref={labelRef} className={labelClasses} aria-hidden="true">
-        Ver →
+        {labelText}
       </span>
     </>
   );

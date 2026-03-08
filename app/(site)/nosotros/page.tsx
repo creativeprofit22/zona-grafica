@@ -42,7 +42,7 @@ export default function NosotrosPage() {
 
       <AboutHero headline={story.headline} intro={story.intro} />
 
-      <AboutStory body={story.body} />
+      <AboutStory segments={story.bodySegments} />
 
       <ValuesGrid values={values} />
 

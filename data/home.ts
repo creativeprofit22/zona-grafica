@@ -1,3 +1,4 @@
+import type { PullQuoteData } from "@/components/ui/PullQuote";
 import type { HomeData, Stat } from "@/types/content";
 
 export const homeData: HomeData = {
@@ -57,3 +58,10 @@ export const stats: Stat[] = [
 /* Testimonials removed — better to have zero than fake ones.
    Will add real testimonials when available from clients. */
 export const testimonials: never[] = [];
+
+export const pullQuotes: PullQuoteData[] = [
+  {
+    text: "No hacemos diseño bonito. Hacemos diseño que mueve — que comunica, que conecta, que deja marca.",
+    accentPhrase: "diseño que mueve",
+  },
+];

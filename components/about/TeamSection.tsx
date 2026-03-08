@@ -23,25 +23,27 @@ export default function TeamSection({ members }: Props) {
         </div>
 
         <div className={styles.portrait}>
-          <ImageReveal
-            direction="left"
-            duration={1.4}
-            className={styles.imageWrap}
-          >
-            <ParallaxDrift
-              distance={20}
-              className={styles.parallaxWrap}
-              style={{ height: "100%" }}
+          {member.image && (
+            <ImageReveal
+              direction="left"
+              duration={1.4}
+              className={styles.imageWrap}
             >
-              <Image
-                src={member.image}
-                alt={member.name}
-                width={480}
-                height={600}
-                className={styles.image}
-              />
-            </ParallaxDrift>
-          </ImageReveal>
+              <ParallaxDrift
+                distance={20}
+                className={styles.parallaxWrap}
+                style={{ height: "100%" }}
+              >
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={480}
+                  height={600}
+                  className={styles.image}
+                />
+              </ParallaxDrift>
+            </ImageReveal>
+          )}
 
           <div className={styles.info}>
             <h2 className={styles.name}>{member.name}</h2>

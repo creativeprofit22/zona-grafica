@@ -60,6 +60,13 @@
   opacity: 1;
 }
 
+.cursor.section {
+  width: 60px;
+  height: 60px;
+  background: var(--accent);
+  mix-blend-mode: normal;
+}
+
 /* Hide on touch / small screens */
 @media (hover: none), (max-width: 768px) {
   .cursor,

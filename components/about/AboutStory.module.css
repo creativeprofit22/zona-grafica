@@ -89,6 +89,20 @@
   max-width: 540px;
 }
 
+/* ─── Story Word Illuminate ─────────────────────────────── */
+.storyWord {
+  color: var(--muted-light);
+  transition: color 0.3s ease;
+}
+
+.storyWord.accent {
+  color: var(--accent);
+}
+
+.storyWord.ochre {
+  color: var(--ochre);
+}
+
 /* ─── Milestones ─────────────────────────────────────────── */
 .milestones {
   display: grid;

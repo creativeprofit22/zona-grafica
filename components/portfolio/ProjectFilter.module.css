@@ -42,10 +42,15 @@
   color: var(--fg);
 }
 
-/* Active — underline in terracotta */
+/* Active — underline in accent */
 .filter.active {
   color: var(--fg);
   border-bottom-color: var(--accent);
+}
+
+/* Category-specific active colors */
+.filter.active[data-category="cartelería"] {
+  border-bottom-color: var(--purple);
 }
 
 /* ─── Count ──────────────────────────────────────────────── */

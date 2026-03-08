@@ -44,6 +44,10 @@
 .titleAccent {
   font-style: italic;
   color: var(--accent);
+  background: var(--gradient-teal-ochre);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {

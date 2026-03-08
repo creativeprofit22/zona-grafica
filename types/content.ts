@@ -48,6 +48,7 @@ export interface Project {
   description: string;
   tags: string[];
   featured: boolean;
+  videoUrl?: string;
 }
 
 export interface CaseStudy extends Project {
@@ -86,7 +87,7 @@ export interface Service {
 export interface TeamMember {
   name: string;
   role: string;
-  image: string;
+  image?: string;
   bio: string;
 }
 

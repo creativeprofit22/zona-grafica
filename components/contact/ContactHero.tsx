@@ -33,7 +33,7 @@ export default function ContactHero() {
   );
 
   return (
-    <section ref={sectionRef} className={styles.hero}>
+    <section ref={sectionRef} className={styles.hero} data-cursor-label="Hola">
       <div className={styles.inner}>
         <span className={`${styles.label} ${styles.animItem}`}>(contacto)</span>
         <h1 className={styles.title}>

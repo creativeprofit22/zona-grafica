@@ -1,4 +1,5 @@
 import { navigation, siteConfig } from "@/data/site";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./Footer.module.css";
 
@@ -11,6 +12,13 @@ export default function Footer() {
         {/* ── Column 1: Brand + Coordinates ── */}
         <div className={styles.brand}>
           <Link href="/" className={styles.logo}>
+            <Image
+              src="/images/chameleon-logo.png"
+              alt=""
+              width={115}
+              height={30}
+              className={styles.logoImage}
+            />
             {siteConfig.name}
           </Link>
           <p className={styles.tagline}>{siteConfig.tagline}</p>

@@ -34,12 +34,31 @@
   --bg-cream: #f2ede7; /* cream for alternating sections */
   --bg-ink: #1a1714; /* deep ink for hero, footer, accents */
 
-  /* SMA palette */
-  --accent: #c45d3e; /* terracotta — primary CTA */
-  --accent-hover: #d4714f;
-  --ochre: #d4893f; /* SMA façade ochre — section numbers, highlights */
-  --ink-blue: #2a3f5f; /* colonial blue doors — secondary accent */
+  /* Chameleon palette */
+  --accent: #2aa876; /* teal-green — primary CTA, chameleon body */
+  --accent-hover: #34b67a;
+  --ochre: #f5a623; /* golden yellow — section numbers, highlights, chameleon head */
+  --ink-blue: #1d8a5f; /* deep green-teal — secondary accent */
+  --purple: #7b2fbe; /* chameleon tail purple — secondary accent */
   --stone: #c4b9a8; /* cantera stone — borders, subtle fills */
+
+  /* Chameleon gradients */
+  --gradient-chameleon: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--ochre) 50%,
+    var(--purple) 100%
+  );
+  --gradient-teal-ochre: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--ochre) 100%
+  );
+  --gradient-ochre-purple: linear-gradient(
+    135deg,
+    var(--ochre) 0%,
+    var(--purple) 100%
+  );
 
   /* Foreground */
   --fg-dark: #1a1714; /* primary text on light */
@@ -71,6 +90,9 @@
 
   /* Max content width */
   --max-width: 1440px;
+
+  /* Section accent — chameleon color that shifts per section */
+  --section-accent: var(--accent);
 
   /* Transition defaults */
   --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);

@@ -43,16 +43,15 @@
   color: var(--fg-dark);
   white-space: nowrap;
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   transition: color var(--duration-normal) var(--ease-out);
 }
 
-.logoMonogram {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
+.logoImage {
+  height: 40px;
+  width: auto;
+  display: block;
 }
 
 .logoFull {

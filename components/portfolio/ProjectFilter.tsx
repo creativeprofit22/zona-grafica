@@ -31,6 +31,7 @@ export default function ProjectFilter({
               key={cat.slug}
               type="button"
               className={`${styles.filter} ${isActive ? styles.active : ""}`}
+              data-category={cat.label.toLowerCase()}
               onClick={() => onSelect(cat.slug)}
               aria-pressed={isActive}
             >

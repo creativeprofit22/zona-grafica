@@ -68,6 +68,7 @@
   text-transform: uppercase;
   letter-spacing: -0.05em;
   color: var(--fg-dark);
+  perspective: 600px;
 }
 
 /* ─── Line 3: "(estudio creativo)" — annotation ──────── */

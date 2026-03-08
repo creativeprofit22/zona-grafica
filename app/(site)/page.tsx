@@ -1,5 +1,5 @@
 import { homeFAQ } from "@/data/faq";
-import { homeData, stats, testimonials } from "@/data/home";
+import { homeData, pullQuotes, stats, testimonials } from "@/data/home";
 import { services } from "@/data/services";
 import { siteConfig } from "@/data/site";
 import { projects } from "@/data/work";
@@ -14,6 +14,8 @@ import ManifestoSection from "@/components/home/ManifestoSection";
 import ServiceAccordion from "@/components/home/ServiceAccordion";
 import StatsStrip from "@/components/home/StatsStrip";
 import TestimonialCarousel from "@/components/home/TestimonialCarousel";
+import PullQuote from "@/components/ui/PullQuote";
+import SectionNumber from "@/components/ui/SectionNumber";
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} — Estudio Creativo en ${siteConfig.location.city}`,
@@ -57,15 +59,29 @@ export default function Home() {
       <main id="main-content">
         <HeroSection />
 
-        <ManifestoSection />
+        <div style={{ position: "relative" }}>
+          <SectionNumber n={1} />
+          <ManifestoSection />
+        </div>
 
         <ClientMarquee />
 
-        <ServiceAccordion services={services} />
+        <div style={{ position: "relative" }}>
+          <SectionNumber n={2} />
+          <ServiceAccordion services={services} />
+        </div>
 
-        <FeaturedShowcase projects={featuredProjects} />
+        <PullQuote data={pullQuotes[0]} />
 
-        <StatsStrip stats={stats} />
+        <div style={{ position: "relative" }}>
+          <SectionNumber n={3} />
+          <FeaturedShowcase projects={featuredProjects} />
+        </div>
+
+        <div style={{ position: "relative" }}>
+          <SectionNumber n={4} />
+          <StatsStrip stats={stats} />
+        </div>
 
         <TestimonialCarousel testimonials={testimonials} />
 

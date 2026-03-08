@@ -1,11 +1,33 @@
-/* ─── Editorial Project Grid — Clean 2-Column ───────────── */
+/* ─── Editorial Project Grid — Bento 12-Column ──────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   gap: 48px 32px;
   padding: 0 48px var(--space-3xl);
   max-width: calc(var(--max-width) + 96px);
   margin: 0 auto;
+}
+
+/* ─── Featured Card — 8 cols, landscape ─────────────────── */
+.cardFeatured {
+  grid-column: span 8;
+}
+
+.cardFeatured:nth-of-type(2n) {
+  grid-column: 5 / span 8;
+}
+
+.cardFeatured .imageWrap {
+  aspect-ratio: 16 / 9;
+}
+
+/* ─── Standard Card — 4 cols, portrait ──────────────────── */
+.cardStandard {
+  grid-column: span 4;
+}
+
+.cardStandard .imageWrap {
+  aspect-ratio: 3 / 4;
 }
 
 /* ─── Card ───────────────────────────────────────────────── */
@@ -19,7 +41,7 @@
 /* ─── Image Container ────────────────────────────────────── */
 .imageWrap {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 3; /* default, overridden by featured/standard */
   overflow: hidden;
   background: var(--bg-cream);
 }
@@ -86,6 +108,101 @@
   color: var(--muted-light);
 }
 
+/* ─── Category Aspect Ratios (standard cards only) ───────── */
+.cardStandard[data-category="fotografia"] .imageWrap {
+  aspect-ratio: 4 / 5;
+}
+
+.cardStandard[data-category="web"] .imageWrap,
+.cardStandard[data-category="video"] .imageWrap {
+  aspect-ratio: 16 / 9;
+}
+
+.cardStandard[data-category="branding"] .imageWrap {
+  aspect-ratio: 1 / 1;
+}
+
+.cardStandard[data-category="editorial"] .imageWrap {
+  aspect-ratio: 3 / 4;
+}
+
+.cardStandard[data-category="poster"] .imageWrap {
+  aspect-ratio: 2 / 3;
+}
+
+/* ─── Category Color Dots ────────────────────────────────── */
+.category::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  background: var(--muted);
+}
+
+[data-category="branding"] .category::before {
+  background: var(--accent);
+}
+
+[data-category="editorial"] .category::before {
+  background: var(--ochre);
+}
+
+[data-category="web"] .category::before {
+  background: var(--ink-blue);
+}
+
+[data-category="fotografia"] .category::before {
+  background: var(--stone);
+}
+
+[data-category="ilustracion"] .category::before {
+  background: var(--purple);
+}
+
+[data-category="poster"] .category::before {
+  background: #e85d75;
+}
+
+[data-category="video"] .category::before {
+  background: #4a90d9;
+}
+
+/* ─── Category-Specific Hover States ─────────────────────── */
+.card[data-category="fotografia"]:hover .image {
+  filter: grayscale(0.6) contrast(1.1);
+}
+
+.card[data-category="poster"]:hover .image {
+  transform: scale(1.08) rotate(-1deg);
+}
+
+.card[data-category="web"]:hover .image {
+  transform: perspective(800px) rotateY(-3deg);
+}
+
+.card[data-category="branding"]:hover .image {
+  filter: saturate(1.3);
+}
+
+.card[data-category="editorial"]:hover .image {
+  filter: sepia(0.2);
+}
+
+.card[data-category="video"]:hover .image {
+  filter: brightness(1.15);
+}
+
+/* ─── Photography "Film Develop" Reveal ──────────────────── */
+.developReveal {
+  position: relative;
+  overflow: hidden;
+  filter: brightness(3) contrast(0.3) sepia(1);
+  opacity: 0;
+}
+
 /* ─── Empty State ────────────────────────────────────────── */
 .empty {
   grid-column: 1 / -1;
@@ -103,7 +220,15 @@
     padding: 0 20px var(--space-2xl);
   }
 
-  .imageWrap {
+  .cardFeatured,
+  .cardFeatured:nth-of-type(2n),
+  .cardStandard {
+    grid-column: span 1;
+  }
+
+  .imageWrap,
+  .cardFeatured .imageWrap,
+  .cardStandard .imageWrap {
     aspect-ratio: 3 / 2;
   }
 

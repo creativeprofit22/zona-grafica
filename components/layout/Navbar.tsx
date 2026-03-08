@@ -1,6 +1,7 @@
 "use client";
 
 import { navigation, siteConfig } from "@/data/site";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -72,7 +73,14 @@ export default function Navbar() {
       >
         <div className={styles.inner}>
           <Link href="/" className={styles.logo} aria-label="Inicio">
-            <span className={styles.logoMonogram}>ZG</span>
+            <Image
+              src="/images/chameleon-logo.png"
+              alt=""
+              width={153}
+              height={40}
+              className={styles.logoImage}
+              priority
+            />
             <span className={styles.logoFull}>Zona Gráfica</span>
           </Link>
 

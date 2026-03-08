@@ -28,7 +28,7 @@
   font-size: clamp(80px, 12vw, 180px);
   font-weight: 600;
   line-height: 0.8;
-  color: var(--ochre);
+  color: var(--purple);
   opacity: 0.25;
   display: block;
   user-select: none;

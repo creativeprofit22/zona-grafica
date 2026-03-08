@@ -187,6 +187,71 @@ export const projects: Project[] = [
     featured: false,
   },
   {
+    id: "foto-retratos-cine",
+    slug: "foto-retratos-cine",
+    title: "Retratos de Cine",
+    client: "Guanajuato International Film Festival",
+    category: "fotografia",
+    year: 2020,
+    thumbnail: "/images/portfolio/foto-retratos-cine-thumb.jpg",
+    description:
+      "Sesiones de retrato con directores y actores internacionales durante el GIFF. Danny Boyle, Guillermo Arriaga, Amat Escalante entre otros.",
+    tags: ["Retrato", "Cine", "Editorial"],
+    featured: false,
+  },
+  {
+    id: "foto-san-miguel",
+    slug: "foto-san-miguel",
+    title: "San Miguel de Allende",
+    client: "Proyectos Varios",
+    category: "fotografia",
+    year: 2020,
+    thumbnail: "/images/portfolio/foto-san-miguel-thumb.jpg",
+    description:
+      "Fotografía arquitectónica y de paisaje urbano de San Miguel de Allende. La Parroquia, calles empedradas y el patrimonio colonial.",
+    tags: ["Arquitectura", "Paisaje Urbano", "Patrimonio"],
+    featured: false,
+  },
+  {
+    id: "foto-producto",
+    slug: "foto-producto",
+    title: "Producto & Gastro",
+    client: "Clientes Varios",
+    category: "fotografia",
+    year: 2020,
+    thumbnail: "/images/portfolio/foto-producto-thumb.jpg",
+    description:
+      "Fotografía de producto y gastronómica para restaurantes, hoteles y marcas de San Miguel de Allende. Bottega, Lobby, Casa Misha y más.",
+    tags: ["Producto", "Gastronomía", "Comercial"],
+    featured: false,
+  },
+  {
+    id: "foto-tradiciones",
+    slug: "foto-tradiciones",
+    title: "Tradiciones & Cultura",
+    client: "Proyectos Culturales",
+    category: "fotografia",
+    year: 2020,
+    thumbnail: "/images/portfolio/foto-tradiciones-thumb.jpg",
+    description:
+      "Registro fotográfico de las tradiciones y festividades de San Miguel de Allende. Día de Muertos, Semana Santa, fiestas patronales y vida cotidiana.",
+    tags: ["Tradiciones", "Cultura", "Documental"],
+    featured: false,
+  },
+  {
+    id: "foto-lifestyle",
+    slug: "foto-lifestyle",
+    title: "Lifestyle & Hospitalidad",
+    client: "Hoteles y Desarrollos",
+    category: "fotografia",
+    year: 2020,
+    thumbnail: "/images/portfolio/foto-lifestyle-thumb.jpg",
+    description:
+      "Fotografía de lifestyle para hoteles boutique, spas y desarrollos inmobiliarios en San Miguel de Allende y la región del Bajío.",
+    tags: ["Lifestyle", "Hospitalidad", "Inmobiliario"],
+    featured: false,
+  },
+  {
     id: "artes-mexico-editorial",
     slug: "artes-mexico-editorial",
     title: "Artes de México",
@@ -251,6 +316,49 @@ export const projects: Project[] = [
     tags: ["Sitio Web", "Galería", "E-commerce"],
     featured: false,
   },
+  /* ─── Video Projects ──────────────────────────────────── */
+  {
+    id: "giff-promo",
+    slug: "giff-promo",
+    title: "GIFF — Promo",
+    client: "Guanajuato International Film Festival",
+    category: "video",
+    year: 2024,
+    thumbnail: "/images/portfolio/giff-thumb.jpg",
+    description:
+      "Video promocional para la edición 27 del festival internacional de cine de Guanajuato. Motion graphics, edición y postproducción.",
+    tags: ["Motion Graphics", "Promocional", "Cine"],
+    featured: false,
+    videoUrl: "https://www.youtube.com/embed/placeholder-giff-promo",
+  },
+  {
+    id: "cervantino-cobertura",
+    slug: "cervantino-cobertura",
+    title: "Cervantino — Cobertura",
+    client: "Festival Internacional Cervantino",
+    category: "video",
+    year: 2023,
+    thumbnail: "/images/portfolio/cervantino-thumb.jpg",
+    description:
+      "Cobertura audiovisual del Festival Internacional Cervantino. Registro de eventos, entrevistas y cápsulas para redes sociales.",
+    tags: ["Cobertura", "Evento Cultural", "Documental"],
+    featured: false,
+    videoUrl: "https://www.youtube.com/embed/placeholder-cervantino",
+  },
+  {
+    id: "showreel-marca",
+    slug: "showreel-marca",
+    title: "Showreel de Marca",
+    client: "Zona Gráfica",
+    category: "video",
+    year: 2024,
+    thumbnail: "/images/portfolio/duncan-thumb.jpg",
+    description:
+      "Reel de proyectos destacados de Zona Gráfica. Animación de logotipos, transiciones cinematográficas y narrativa visual de marca.",
+    tags: ["Showreel", "Motion", "Branding"],
+    featured: false,
+    videoUrl: "https://www.youtube.com/embed/placeholder-showreel",
+  },
 ];
 
 export const caseStudies: CaseStudy[] = [
@@ -297,4 +405,5 @@ export const portfolioCategories = [
   { slug: "fotografia", label: "Fotografía" },
   { slug: "ilustracion", label: "Ilustración" },
   { slug: "poster", label: "Poster / Cartel" },
+  { slug: "video", label: "Video" },
 ] as const;

@@ -5,10 +5,6 @@ export const contentType = "image/png";
 export const alt = "Zona Gráfica — Estudio Creativo en San Miguel de Allende";
 
 export default async function Image() {
-  const clashData = await fetch(
-    new URL("../../public/fonts/clash-display.woff2", import.meta.url),
-  ).then((res) => res.arrayBuffer());
-
   return new ImageResponse(
     <div
       style={{
@@ -19,7 +15,7 @@ export default async function Image() {
         justifyContent: "center",
         backgroundColor: "#1A1714",
         padding: "60px 80px",
-        fontFamily: "Clash Display",
+        fontFamily: "sans-serif",
         position: "relative",
         overflow: "hidden",
       }}
@@ -220,14 +216,6 @@ export default async function Image() {
     </div>,
     {
       ...size,
-      fonts: [
-        {
-          name: "Clash Display",
-          data: clashData,
-          style: "normal",
-          weight: 600,
-        },
-      ],
     },
   );
 }

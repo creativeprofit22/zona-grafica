@@ -32,6 +32,15 @@
   color: var(--fg-light);
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoImage {
+  height: 30px;
+  width: auto;
+  display: block;
 }
 
 .tagline {
@@ -139,7 +148,7 @@
 }
 
 .social a:hover {
-  color: var(--fg-light);
+  color: var(--purple);
 }
 
 /* ─── Postmark Stamp ─────────────────────────────────────── */

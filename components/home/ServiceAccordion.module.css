@@ -1,9 +1,11 @@
 /* ─── Service List — Hover Image Follow ─────────────────── */
 .section {
+  --section-accent: var(--accent);
   padding: var(--space-3xl) 48px;
   max-width: var(--max-width);
   margin: 0 auto;
   position: relative;
+  background: var(--bg-ink);
 }
 
 /* ─── Header ────────────────────────────────────────────── */
@@ -28,6 +30,10 @@
   letter-spacing: -0.03em;
   line-height: 1.1;
   text-wrap: balance;
+  background: var(--gradient-teal-ochre);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ─── Service List ──────────────────────────────────────── */
@@ -37,7 +43,7 @@
 }
 
 .item {
-  border-bottom: 1px solid color-mix(in srgb, var(--stone) 30%, transparent);
+  border-bottom: 1px solid var(--border-dark);
   position: relative;
   clip-path: inset(0 100% 0 0);
   will-change: clip-path;
@@ -50,8 +56,8 @@
   left: 0;
   top: 50%;
   width: 3px;
-  height: 0%;
-  background: var(--accent);
+  height: var(--slash-h, 0%);
+  background: var(--section-accent);
   border-radius: 2px;
   transform: translateY(-50%);
   transition: height var(--duration-normal) var(--ease-out);
@@ -77,17 +83,17 @@
 }
 
 .row:hover {
-  color: var(--accent);
+  color: var(--section-accent);
 }
 
 .row:hover .number {
-  color: var(--accent);
+  color: var(--section-accent);
   opacity: 0.35;
 }
 
 .row:hover .arrow {
   transform: translate(4px, -2px) rotate(-45deg);
-  color: var(--accent);
+  color: var(--section-accent);
 }
 
 .rowLeft {
@@ -111,8 +117,8 @@
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
-  color: var(--fg);
-  opacity: 0.18;
+  color: var(--fg-light);
+  opacity: 0.12;
   pointer-events: none;
   font-variant-numeric: oldstyle-nums;
   transition: opacity var(--duration-fast) var(--ease-out), color
@@ -128,6 +134,7 @@
   font-variant-ligatures: common-ligatures contextual;
   font-feature-settings: "calt" 1, "liga" 1;
   transition: letter-spacing 300ms var(--ease-out);
+  transform-origin: left center;
 }
 
 .row:hover .name {
@@ -193,8 +200,8 @@
   border-radius: 8px;
   transition: opacity 0.25s var(--ease-out);
   will-change: transform, opacity;
-  box-shadow: 0 8px 20px oklch(0.3 0.01 60 / 0.12), 0 3px 6px
-    oklch(0.3 0.01 60 / 0.06);
+  box-shadow: 0 8px 30px oklch(0.2 0.01 60 / 0.5), 0 4px 12px
+    oklch(0.15 0.01 60 / 0.3), 0 0 40px oklch(0.5 0.08 160 / 0.15);
 }
 
 .cursorVisible {
@@ -257,6 +264,8 @@
     height: auto;
     border-radius: 8px;
     object-fit: cover;
+    border: 1px solid var(--border-dark);
+    box-shadow: 0 4px 16px oklch(0.1 0.01 60 / 0.4);
   }
 
   .row {

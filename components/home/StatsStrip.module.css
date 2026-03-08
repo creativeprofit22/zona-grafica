@@ -1,5 +1,6 @@
 /* ─── Story Stats — Scattered Biographical Facts ──────────── */
 .section {
+  --section-accent: var(--purple);
   background: var(--bg-cream);
   color: var(--fg-dark);
   padding: var(--space-3xl) 48px;
@@ -85,6 +86,10 @@
 
 .pos2 .value {
   color: var(--accent);
+}
+
+.pos4 .value {
+  color: var(--purple);
 }
 
 .pos5 .value {

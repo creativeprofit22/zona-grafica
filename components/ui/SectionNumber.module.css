@@ -1,0 +1,29 @@
+/* ─── Section Number — Editorial knockout numeral ──────── */
+
+.number {
+  position: absolute;
+  top: 0;
+  left: -24px;
+  font-family: var(--font-display);
+  font-size: clamp(80px, 12vw, 180px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--fg-dark);
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Dark sections need light knockout */
+[data-theme="dark"] .number {
+  color: var(--fg-light);
+  opacity: 0.04;
+}
+
+@media (max-width: 768px) {
+  .number {
+    left: -8px;
+  }
+}

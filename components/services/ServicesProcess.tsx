@@ -1,5 +1,12 @@
-import MotionSection from "@/components/animations/MotionSection";
+"use client";
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 import styles from "./ServicesProcess.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
@@ -29,8 +36,53 @@ const steps = [
 ];
 
 export default function ServicesProcess() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const line = section.querySelector(`.${styles.list}`) as HTMLElement;
+      const dots = section.querySelectorAll(`.${styles.step}`);
+
+      // Animate the timeline line (scaleY 0→1) via CSS custom property
+      gsap.fromTo(
+        line,
+        { "--line-scale": 0 },
+        {
+          "--line-scale": 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: line,
+            start: "top 80%",
+            end: "bottom 60%",
+            scrub: 0.5,
+          },
+        },
+      );
+
+      // Sequential dot reveals
+      dots.forEach((dot, i) => {
+        gsap.to(dot, {
+          "--dot-opacity": 1,
+          "--dot-scale": 1,
+          duration: 0.4,
+          ease: "back.out(2)",
+          scrollTrigger: {
+            trigger: dot,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+          delay: i * 0.05,
+        });
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <MotionSection className={styles.section} data-theme="cream" stagger>
+    <section ref={sectionRef} className={styles.section} data-theme="cream">
       <div className={styles.inner}>
         <div className={styles.header}>
           <span className={styles.label}>(proceso)</span>
@@ -49,6 +101,6 @@ export default function ServicesProcess() {
           ))}
         </ol>
       </div>
-    </MotionSection>
+    </section>
   );
 }

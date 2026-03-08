@@ -3,8 +3,11 @@
 import { homeData } from "@/data/home";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 import styles from "./HeroSection.module.css";
+
+gsap.registerPlugin(SplitText);
 
 const { hero } = homeData;
 
@@ -18,8 +21,11 @@ export default function HeroSection() {
 
       const tl = gsap.timeline({ delay: 0.4 });
 
-      // All animatable elements
-      const items = el.querySelectorAll(`.${styles.animItem}`);
+      // All animatable elements (excluding .grafica which gets SplitText)
+      const graficaEl = el.querySelector(`.${styles.grafica}`);
+      const items = el.querySelectorAll(
+        `.${styles.animItem}:not(.${styles.grafica})`,
+      );
       const footnotes = el.querySelectorAll(`.${styles.footnote}`);
       const prompt = el.querySelector(`.${styles.prompt}`);
       const chevron = el.querySelector(`.${styles.chevron}`);
@@ -29,6 +35,14 @@ export default function HeroSection() {
       gsap.set(footnotes, { opacity: 0, y: 20 });
       if (prompt) gsap.set(prompt, { opacity: 0 });
 
+      // SplitText for GRÁFICA — per-character kinetic entrance
+      let split: SplitText | undefined;
+      if (graficaEl) {
+        gsap.set(graficaEl, { opacity: 1 });
+        split = new SplitText(graficaEl, { type: "chars" });
+        gsap.set(split.chars, { opacity: 0, y: 40, rotationX: 90 });
+      }
+
       // Stagger in each typographic element — like being typeset
       tl.to(items, {
         opacity: 1,
@@ -37,6 +51,33 @@ export default function HeroSection() {
         ease: "power3.out",
         stagger: 0.15,
       });
+
+      // GRÁFICA chars enter with 3D rotation
+      if (split) {
+        const colors = [
+          "var(--accent)",
+          "var(--ochre)",
+          "var(--purple, #8B5CF6)",
+        ];
+        tl.to(
+          split.chars,
+          {
+            opacity: 1,
+            y: 0,
+            rotationX: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.05,
+            onComplete: () => {
+              for (let i = 0; i < split!.chars.length; i++) {
+                (split!.chars[i] as HTMLElement).style.color =
+                  colors[i % colors.length];
+              }
+            },
+          },
+          "-=0.6",
+        );
+      }
 
       // Footnotes fade in together
       tl.to(

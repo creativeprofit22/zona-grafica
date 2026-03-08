@@ -1,4 +1,4 @@
-/* ─── Services Process — Editorial Numbered List ─────────── */
+/* ─── Services Process — Vertical Timeline ─────────────── */
 .section {
   background: var(--bg-cream);
   color: var(--fg-dark);
@@ -32,25 +32,57 @@
   color: var(--fg-dark);
 }
 
-/* ─── Steps List ─────────────────────────────────────────── */
+/* ─── Timeline List ──────────────────────────────────────── */
 .list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  counter-reset: step;
+  position: relative;
+  padding-left: 32px;
 }
 
+/* Vertical connecting line — driven by --line-scale custom property */
+.list::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform-origin: top;
+  transform: scaleY(var(--line-scale, 0));
+}
+
+/* ─── Step ───────────────────────────────────────────────── */
 .step {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
   align-items: baseline;
   padding: var(--space-lg) 0;
+  border: none;
+}
+
+.step:not(:last-child) {
   border-bottom: 1px solid var(--border-light);
 }
 
-.step:first-child {
-  border-top: 1px solid var(--border-light);
+/* Timeline dot */
+.step::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: calc(var(--space-lg) + 8px);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-cream);
+  border: 2px solid var(--accent);
+  z-index: 1;
+  opacity: var(--dot-opacity, 0);
+  transform: scale(var(--dot-scale, 0));
 }
 
 /* ─── Step Header (Number + Title) ───────────────────────── */
@@ -93,10 +125,25 @@
     padding: var(--space-xl) 20px;
   }
 
+  .list {
+    padding-left: 28px;
+  }
+
+  .list::before {
+    left: 5px;
+  }
+
   .step {
     grid-template-columns: 1fr;
     gap: var(--space-sm);
     padding: var(--space-md) 0;
+  }
+
+  .step::before {
+    left: -28px;
+    top: calc(var(--space-md) + 6px);
+    width: 12px;
+    height: 12px;
   }
 
   .stepDescription {

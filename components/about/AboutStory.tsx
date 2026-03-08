@@ -1,27 +1,78 @@
 "use client";
 
 import MotionSection from "@/components/animations/MotionSection";
+import type { ManifestoSegment } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./AboutStory.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
-  body: string;
+  segments: ManifestoSegment[];
 }
 
-export default function AboutStory({ body }: Props) {
+export default function AboutStory({ segments }: Props) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
   const milestonesRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Split body into paragraphs at natural break points for editorial flow
-  const sentences = body.split(". ").filter(Boolean);
-  const mid = Math.ceil(sentences.length / 2);
-  const para1 = `${sentences.slice(0, mid).join(". ")}.`;
-  const para2 = `${sentences.slice(mid).join(". ")}`;
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
+  // Plain text for SSR / pre-mount fallback
+  const plainText = segments.map((s) => s.text).join(" ");
+
+  // Split segments into two paragraphs at roughly the midpoint
+  const allWords: { word: string; style?: string }[] = [];
+  for (const seg of segments) {
+    for (const w of seg.text.split(" ")) {
+      if (w) allWords.push({ word: w, style: seg.style });
+    }
+  }
+  const mid = Math.ceil(allWords.length / 2);
+  const para1Words = allWords.slice(0, mid);
+  const para2Words = allWords.slice(mid);
+
+  // Word-by-word illuminate on scroll
+  useGSAP(
+    () => {
+      if (!isMounted) return;
+      const el = textRef.current;
+      if (!el) return;
+
+      const words = el.querySelectorAll<HTMLElement>(`.${styles.storyWord}`);
+      if (!words.length) return;
+
+      gsap.set(words, { color: "var(--muted-light)" });
+
+      for (const word of words) {
+        const finalColor = word.classList.contains(styles.accent)
+          ? "var(--accent)"
+          : word.classList.contains(styles.ochre)
+            ? "var(--ochre)"
+            : "var(--fg-dark)";
+
+        gsap.to(word, {
+          color: finalColor,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: word,
+            start: "top 85%",
+            end: "top 60%",
+            scrub: 0.3,
+          },
+        });
+      }
+    },
+    { scope: textRef, dependencies: [isMounted] },
+  );
+
+  // Milestone counter animation
   useGSAP(
     () => {
       const container = milestonesRef.current;
@@ -55,9 +106,20 @@ export default function AboutStory({ body }: Props) {
     { scope: milestonesRef },
   );
 
+  const renderWords = (words: { word: string; style?: string }[]) =>
+    words.map((w, i) => (
+      <span
+        // biome-ignore lint/suspicious/noArrayIndexKey: stable word order
+        key={i}
+        className={`${styles.storyWord}${w.style === "accent" ? ` ${styles.accent}` : ""}${w.style === "ochre" ? ` ${styles.ochre}` : ""}`}
+      >
+        {w.word}{" "}
+      </span>
+    ));
+
   return (
     <MotionSection className={styles.section} data-theme="cream">
-      <div className={styles.inner}>
+      <div className={styles.inner} ref={sectionRef}>
         <div className={styles.labelRow}>
           <span className={styles.number}>(01)</span>
           <span className={styles.label}>La historia</span>
@@ -72,9 +134,17 @@ export default function AboutStory({ body }: Props) {
             </blockquote>
           </div>
 
-          <div className={styles.text}>
-            <p className={styles.body}>{para1}</p>
-            <p className={styles.body}>{para2}</p>
+          <div className={styles.text} ref={textRef}>
+            {!isMounted ? (
+              <>
+                <p className={styles.body}>{plainText}</p>
+              </>
+            ) : (
+              <>
+                <p className={styles.body}>{renderWords(para1Words)}</p>
+                <p className={styles.body}>{renderWords(para2Words)}</p>
+              </>
+            )}
           </div>
         </div>
 

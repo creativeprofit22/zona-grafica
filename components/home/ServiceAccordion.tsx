@@ -79,21 +79,65 @@ export default function ServiceAccordion({ services }: Props) {
 
       const items = el.querySelectorAll<HTMLElement>(`.${styles.item}`);
 
-      gsap.fromTo(
-        items,
-        { clipPath: "inset(0 100% 0 0)" },
-        {
-          clipPath: "inset(0 0% 0 0)",
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.06,
+      items.forEach((item, i) => {
+        const number = item.querySelector<HTMLElement>(`.${styles.number}`);
+        const name = item.querySelector<HTMLElement>(`.${styles.name}`);
+        const oneliner = item.querySelector<HTMLElement>(`.${styles.oneliner}`);
+
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: el,
             start: "top 85%",
             toggleActions: "play none none none",
           },
-        },
-      );
+          delay: i * 0.08,
+        });
+
+        // Clip-path opens the row
+        tl.fromTo(
+          item,
+          { clipPath: "inset(0 100% 0 0)" },
+          { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power2.out" },
+        );
+
+        // Number scales in
+        if (number) {
+          tl.fromTo(
+            number,
+            { scale: 0.8, opacity: 0 },
+            { scale: 1, opacity: 0.12, duration: 0.4, ease: "back.out(1.7)" },
+            "-=0.35",
+          );
+        }
+
+        // Name slides in with skew
+        if (name) {
+          tl.fromTo(
+            name,
+            { x: -20, skewX: -3, opacity: 0 },
+            { x: 0, skewX: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+            "-=0.3",
+          );
+        }
+
+        // Accent slash flashes full height then settles
+        tl.fromTo(
+          item,
+          { "--slash-h": "100%" },
+          { "--slash-h": "0%", duration: 0.4, ease: "power2.in" },
+          "-=0.4",
+        );
+
+        // Oneliner fades in last
+        if (oneliner) {
+          tl.fromTo(
+            oneliner,
+            { opacity: 0, y: 6 },
+            { opacity: 0, y: 0, duration: 0.3, ease: "power2.out" },
+            "-=0.15",
+          );
+        }
+      });
     },
     { scope: sectionRef },
   );
@@ -104,6 +148,8 @@ export default function ServiceAccordion({ services }: Props) {
     <section
       ref={sectionRef}
       className={styles.section}
+      data-theme="dark"
+      data-cursor-label="→"
       onMouseMove={handleMouseMove}
     >
       <div className={styles.header}>
