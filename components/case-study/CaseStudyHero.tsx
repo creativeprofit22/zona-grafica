@@ -1,12 +1,12 @@
 "use client";
 
-import type { CaseStudy, Project } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import type { CaseStudy, Project } from "@/types/content";
 import styles from "./CaseStudyHero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);

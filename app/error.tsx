@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function ErrorBoundary({
   error,
   reset,
@@ -7,6 +9,10 @@ export default function ErrorBoundary({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    console.error("ErrorBoundary:", error.message, error.digest ?? "");
+  }, [error]);
+
   return (
     <div
       style={{

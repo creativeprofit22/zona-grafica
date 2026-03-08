@@ -1,6 +1,6 @@
+import Image from "next/image";
 import ImageReveal from "@/components/animations/ImageReveal";
 import type { Service } from "@/types/content";
-import Image from "next/image";
 import styles from "./ServiceCard.module.css";
 
 export type ServiceCardLayout = "wide" | "compact" | "centered";

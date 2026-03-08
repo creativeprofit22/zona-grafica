@@ -108,7 +108,9 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--fg-dark);
-  font-feature-settings: "calt" 1, "liga" 1;
+  font-feature-settings:
+    "calt" 1,
+    "liga" 1;
 }
 
 /* ─── Step Description ───────────────────────────────────── */

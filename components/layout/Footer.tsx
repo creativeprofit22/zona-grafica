@@ -1,6 +1,6 @@
-import { navigation, siteConfig } from "@/data/site";
 import Image from "next/image";
 import Link from "next/link";
+import { navigation, siteConfig } from "@/data/site";
 import styles from "./Footer.module.css";
 
 export default function Footer() {

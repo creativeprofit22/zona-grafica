@@ -1,12 +1,14 @@
 "use client";
 
-import type { Project } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import type { Project } from "@/types/content";
+
 // Flip type is globally declared by gsap/types/flip.d.ts
 // Using require to avoid TS1149 casing conflict on case-insensitive filesystems
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const FlipPlugin: typeof Flip = require("gsap/Flip").default;
+
 import { useCallback, useMemo, useRef, useState } from "react";
 import ProjectFilter from "./ProjectFilter";
 import ProjectGrid from "./ProjectGrid";

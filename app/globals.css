@@ -199,8 +199,9 @@ img {
 [data-animate] {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity var(--duration-slow) var(--ease-out), transform
-    var(--duration-slow) var(--ease-out);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
 }
 
 [data-animate].is-visible {
@@ -212,7 +213,9 @@ img {
 [data-animate][data-stagger] > * {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
 }
 
 [data-animate][data-stagger].is-visible > * {
@@ -221,28 +224,28 @@ img {
 }
 
 [data-animate][data-stagger].is-visible > *:nth-child(1) {
-  transition-delay: 0.00s;
+  transition-delay: 0s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(2) {
-  transition-delay: 0.10s;
+  transition-delay: 0.1s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(3) {
   transition-delay: 0.15s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(4) {
-  transition-delay: 0.20s;
+  transition-delay: 0.2s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(5) {
   transition-delay: 0.25s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(6) {
-  transition-delay: 0.30s;
+  transition-delay: 0.3s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(7) {
   transition-delay: 0.35s;
 }
 [data-animate][data-stagger].is-visible > *:nth-child(8) {
-  transition-delay: 0.40s;
+  transition-delay: 0.4s;
 }
 
 /* ─── Prose (MDX content) ───────────────────────────────── */
@@ -520,7 +523,7 @@ body {
 
 /* New content fades in from below — like the next page appearing */
 ::view-transition-new(page-content) {
-  animation: pageIn 0.45s cubic-bezier(0.0, 0, 0.2, 1) 0.05s both;
+  animation: pageIn 0.45s cubic-bezier(0, 0, 0.2, 1) 0.05s both;
 }
 
 @keyframes pageOut {

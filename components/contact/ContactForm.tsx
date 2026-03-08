@@ -66,7 +66,8 @@ export default function ContactForm() {
 
       setStatus("success");
       setForm({ name: "", projectType: "", contact: "", message: "" });
-    } catch {
+    } catch (err) {
+      console.error("Contact form submission error:", err);
       setStatus("error");
     }
   }

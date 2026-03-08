@@ -1,10 +1,10 @@
 "use client";
 
-import { navigation, siteConfig } from "@/data/site";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { navigation, siteConfig } from "@/data/site";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {

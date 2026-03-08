@@ -1,14 +1,13 @@
-import { story, team, values } from "@/data/about";
-import { aboutFAQ } from "@/data/faq";
-import { siteConfig } from "@/data/site";
-import { aboutPageSchema, faqSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
-
 import AboutHero from "@/components/about/AboutHero";
 import AboutStory from "@/components/about/AboutStory";
 import TeamSection from "@/components/about/TeamSection";
 import ValuesGrid from "@/components/about/ValuesGrid";
 import CTASection from "@/components/home/CTASection";
+import { story, team, values } from "@/data/about";
+import { aboutFAQ } from "@/data/faq";
+import { siteConfig } from "@/data/site";
+import { aboutPageSchema, faqSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Nosotros",

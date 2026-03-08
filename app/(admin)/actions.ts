@@ -1,7 +1,7 @@
 "use server";
 
-import { login, logout } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { login, logout } from "@/lib/auth";
 
 export async function loginAction(_prev: unknown, formData: FormData) {
   const password = formData.get("password") as string;

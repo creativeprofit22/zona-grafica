@@ -1,13 +1,13 @@
 "use client";
 
-import ImageReveal from "@/components/animations/ImageReveal";
-import type { Project } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import ImageReveal from "@/components/animations/ImageReveal";
+import type { Project } from "@/types/content";
 import styles from "./FeaturedShowcase.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -186,7 +186,7 @@ export default function FeaturedShowcase({ projects }: Props) {
 
       {/* Mobile: stacked cards */}
       <div className={styles.mobileStack}>
-        {projects.map((project, i) => (
+        {projects.map((project) => (
           <Link
             key={project.id}
             href={`/portafolio/${project.slug}`}

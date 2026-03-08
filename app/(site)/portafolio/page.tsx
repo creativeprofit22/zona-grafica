@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
 import PortfolioClient from "@/components/portfolio/PortfolioClient";
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import { portfolioCategories, projects } from "@/data/work";
 import { webPageSchema } from "@/lib/jsonld";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Portafolio",

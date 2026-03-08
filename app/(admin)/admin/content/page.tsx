@@ -1,5 +1,5 @@
-import { listContent } from "@/lib/content";
 import Link from "next/link";
+import { listContent } from "@/lib/content";
 import styles from "../../admin.module.css";
 
 export const metadata = { title: "Content — Zona Gráfica Admin" };

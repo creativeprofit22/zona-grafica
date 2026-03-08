@@ -1,10 +1,9 @@
-import { getAllPosts, getPostBySlug } from "@/lib/blog";
-import { articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
 import PostContent from "@/components/blog/PostContent";
 import PostHeader from "@/components/blog/PostHeader";
+import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;

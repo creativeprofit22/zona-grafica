@@ -106,7 +106,7 @@ function StringField({
       )}
       {isImg && value && (
         <div className={styles.imagePreview}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* biome-ignore lint/performance/noImgElement: admin preview thumbnail, no optimization needed */}
           <img
             src={value}
             alt=""

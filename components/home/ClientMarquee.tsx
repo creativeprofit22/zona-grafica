@@ -1,7 +1,7 @@
 "use client";
 
-import { clients } from "@/data/clients";
 import { useEffect, useRef } from "react";
+import { clients } from "@/data/clients";
 import styles from "./ClientMarquee.module.css";
 
 const FEATURED_CLIENTS = clients.slice(0, 6).map((c) => c.name);

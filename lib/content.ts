@@ -1,6 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { contentBlocks } from "@/lib/schema";
-import { eq } from "drizzle-orm";
 
 export async function getContent<T = unknown>(key: string): Promise<T | null> {
   const [row] = await db

@@ -1,11 +1,11 @@
 "use client";
 
-import MotionSection from "@/components/animations/MotionSection";
-import type { ManifestoSegment } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
+import MotionSection from "@/components/animations/MotionSection";
+import type { ManifestoSegment } from "@/types/content";
 import styles from "./AboutStory.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -136,9 +136,7 @@ export default function AboutStory({ segments }: Props) {
 
           <div className={styles.text} ref={textRef}>
             {!isMounted ? (
-              <>
-                <p className={styles.body}>{plainText}</p>
-              </>
+              <p className={styles.body}>{plainText}</p>
             ) : (
               <>
                 <p className={styles.body}>{renderWords(para1Words)}</p>

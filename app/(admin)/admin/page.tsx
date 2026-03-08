@@ -1,9 +1,9 @@
+import { count, desc, sql } from "drizzle-orm";
 import DeviceDonutChart from "@/components/admin/charts/DeviceDonutChart";
 import TopPagesBarChart from "@/components/admin/charts/TopPagesBarChart";
 import ViewsLineChart from "@/components/admin/charts/ViewsLineChart";
 import { db } from "@/lib/db";
 import { pageViews } from "@/lib/schema";
-import { count, desc, sql } from "drizzle-orm";
 import styles from "../admin.module.css";
 
 export const metadata = {

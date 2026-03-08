@@ -1,6 +1,6 @@
-import { getContent } from "@/lib/content";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getContent } from "@/lib/content";
 import styles from "../../../admin.module.css";
 import ContentEditor from "./ContentEditor";
 

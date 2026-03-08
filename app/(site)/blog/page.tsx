@@ -1,9 +1,8 @@
-import { getAllPosts } from "@/lib/blog";
-import { webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
-
 import BlogHero from "@/components/blog/BlogHero";
 import PostGrid from "@/components/blog/PostGrid";
+import { getAllPosts } from "@/lib/blog";
+import { webPageSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Blog",

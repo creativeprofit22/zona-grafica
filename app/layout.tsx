@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import Analytics from "@/components/Analytics";
 import { siteConfig } from "@/data/site";
 import { organizationSchema, webSiteSchema } from "@/lib/jsonld";
-import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {

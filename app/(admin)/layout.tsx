@@ -1,8 +1,8 @@
 import { verifySession } from "@/lib/auth";
 import AdminNav from "./AdminNav";
-import LoginForm from "./LoginForm";
 import { logoutAction } from "./actions";
 import styles from "./admin.module.css";
+import LoginForm from "./LoginForm";
 
 export default async function AdminLayout({
   children,

@@ -1,16 +1,13 @@
-import { db } from "@/lib/db";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { contactSubmissions } from "@/lib/schema";
 import { type NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { contactSubmissions } from "@/lib/schema";
 
 const MAX_LENGTH = 5000;
 
 export async function POST(request: NextRequest) {
   try {
-    const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      request.headers.get("x-real-ip") ??
-      "unknown";
+    const ip = getClientIp(request);
 
     if (!checkRateLimit(`contact:${ip}`, 3, 60_000)) {
       return NextResponse.json(
@@ -58,7 +55,8 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("Contact form error:", err);
     return NextResponse.json(
       { error: "Algo salió mal. Intenta de nuevo o escríbenos por WhatsApp." },
       { status: 500 },

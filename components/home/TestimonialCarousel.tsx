@@ -1,8 +1,8 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import MotionSection from "@/components/animations/MotionSection";
 import type { Testimonial } from "@/types/content";
-import { useCallback, useState } from "react";
 import styles from "./TestimonialCarousel.module.css";
 
 interface Props {

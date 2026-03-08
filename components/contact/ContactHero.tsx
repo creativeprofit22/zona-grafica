@@ -1,9 +1,9 @@
 "use client";
 
-import { siteConfig } from "@/data/site";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import { siteConfig } from "@/data/site";
 import styles from "./ContactHero.module.css";
 
 export default function ContactHero() {

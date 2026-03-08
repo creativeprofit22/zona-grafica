@@ -1,9 +1,8 @@
-import { webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
-
 import ContactForm from "@/components/contact/ContactForm";
 import ContactHero from "@/components/contact/ContactHero";
 import ContactInfo from "@/components/contact/ContactInfo";
+import { webPageSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Contacto",

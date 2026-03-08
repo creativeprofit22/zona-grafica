@@ -1,7 +1,7 @@
+import Image from "next/image";
 import ImageReveal from "@/components/animations/ImageReveal";
 import MotionSection from "@/components/animations/MotionSection";
 import type { CaseStudyImage } from "@/types/content";
-import Image from "next/image";
 import styles from "./CaseStudyGallery.module.css";
 
 interface Props {

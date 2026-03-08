@@ -1,14 +1,11 @@
-import { db } from "@/lib/db";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { newsletterSubscribers } from "@/lib/schema";
 import { type NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { newsletterSubscribers } from "@/lib/schema";
 
 export async function POST(request: NextRequest) {
   try {
-    const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      request.headers.get("x-real-ip") ??
-      "unknown";
+    const ip = getClientIp(request);
 
     if (!checkRateLimit(`newsletter:${ip}`, 5, 60_000)) {
       return NextResponse.json(
@@ -38,7 +35,8 @@ export async function POST(request: NextRequest) {
       .onConflictDoNothing({ target: newsletterSubscribers.email });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("Newsletter subscription error:", err);
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 },

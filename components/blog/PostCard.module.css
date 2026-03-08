@@ -61,7 +61,9 @@
   margin-bottom: var(--space-sm);
   color: var(--fg-dark);
   font-variant-ligatures: common-ligatures contextual;
-  font-feature-settings: "calt" 1, "liga" 1;
+  font-feature-settings:
+    "calt" 1,
+    "liga" 1;
 }
 
 .excerpt {
@@ -97,8 +99,9 @@
   margin-top: var(--space-md);
   opacity: 0;
   transform: translateX(-8px);
-  transition: opacity var(--duration-normal) var(--ease-out), transform
-    var(--duration-normal) var(--ease-out);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
 }
 
 .card:hover .readMore {

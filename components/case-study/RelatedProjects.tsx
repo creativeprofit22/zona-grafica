@@ -1,8 +1,8 @@
+import Image from "next/image";
+import Link from "next/link";
 import ImageReveal from "@/components/animations/ImageReveal";
 import MotionSection from "@/components/animations/MotionSection";
 import type { Project } from "@/types/content";
-import Image from "next/image";
-import Link from "next/link";
 import styles from "./RelatedProjects.module.css";
 
 interface Props {

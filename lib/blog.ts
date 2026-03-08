@@ -1,6 +1,6 @@
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
+import path from "path";
 import { cache } from "react";
 
 export interface BlogPostMeta {

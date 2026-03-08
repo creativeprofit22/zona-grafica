@@ -1,10 +1,10 @@
 "use client";
 
-import { homeData } from "@/data/home";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
+import { homeData } from "@/data/home";
 import styles from "./HeroSection.module.css";
 
 gsap.registerPlugin(SplitText);

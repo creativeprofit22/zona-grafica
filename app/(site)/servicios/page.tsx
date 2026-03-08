@@ -1,12 +1,11 @@
-import { services } from "@/data/services";
-import { siteConfig } from "@/data/site";
-import { webPageSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
-
 import CTASection from "@/components/home/CTASection";
 import ServicesHero from "@/components/services/ServicesHero";
 import ServicesList from "@/components/services/ServicesList";
 import ServicesProcess from "@/components/services/ServicesProcess";
+import { services } from "@/data/services";
+import { siteConfig } from "@/data/site";
+import { webPageSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Servicios",

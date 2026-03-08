@@ -1,10 +1,10 @@
 "use client";
 
-import MagneticButton from "@/components/ui/MagneticButton";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
+import MagneticButton from "@/components/ui/MagneticButton";
 import styles from "./CTASection.module.css";
 
 gsap.registerPlugin(ScrollTrigger);

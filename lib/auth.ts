@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { cookies } from "next/headers";
 
@@ -51,10 +52,20 @@ export async function login(password: string): Promise<boolean> {
   const adminPassword = process.env.ADMIN_PASSWORD;
   if (!adminPassword) return false;
 
-  // Constant-time comparison via hashing (handles different lengths safely)
-  const pwHash = crypto.createHash("sha256").update(password).digest();
-  const adminHash = crypto.createHash("sha256").update(adminPassword).digest();
-  if (!crypto.timingSafeEqual(pwHash, adminHash)) return false;
+  // Bcrypt hash detected (starts with $2b$) — use bcrypt.compare
+  // Otherwise fall back to constant-time SHA-256 comparison for plain passwords
+  const isBcrypt = adminPassword.startsWith("$2b$");
+  if (isBcrypt) {
+    const match = await bcrypt.compare(password, adminPassword);
+    if (!match) return false;
+  } else {
+    const pwHash = crypto.createHash("sha256").update(password).digest();
+    const adminHash = crypto
+      .createHash("sha256")
+      .update(adminPassword)
+      .digest();
+    if (!crypto.timingSafeEqual(pwHash, adminHash)) return false;
+  }
 
   const payload = crypto.randomBytes(32).toString("hex");
   const sig = signToken(payload);

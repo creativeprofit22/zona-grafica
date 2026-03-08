@@ -1,7 +1,7 @@
+import type { MetadataRoute } from "next";
 import { siteConfig } from "@/data/site";
 import { projects } from "@/data/work";
 import { getAllPosts } from "@/lib/blog";
-import type { MetadataRoute } from "next";
 
 const BASE_URL = siteConfig.url;
 

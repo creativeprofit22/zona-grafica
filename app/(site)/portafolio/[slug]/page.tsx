@@ -1,14 +1,13 @@
-import { caseStudies, projects } from "@/data/work";
-import { breadcrumbSchema } from "@/lib/jsonld";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
 import CaseStudyGallery from "@/components/case-study/CaseStudyGallery";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import CaseStudyNarrative from "@/components/case-study/CaseStudyNarrative";
 import CaseStudyTestimonial from "@/components/case-study/CaseStudyTestimonial";
 import ProjectDetail from "@/components/case-study/ProjectDetail";
 import RelatedProjects from "@/components/case-study/RelatedProjects";
+import { caseStudies, projects } from "@/data/work";
+import { breadcrumbSchema } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;

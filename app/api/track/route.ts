@@ -1,5 +1,5 @@
-import { checkRateLimit } from "@/lib/rate-limit";
 import { type NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 function parseUserAgent(ua: string) {
   let device = "desktop";
@@ -17,10 +17,7 @@ function parseUserAgent(ua: string) {
 
 export async function POST(request: NextRequest) {
   try {
-    const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      request.headers.get("x-real-ip") ??
-      "unknown";
+    const ip = getClientIp(request);
 
     if (!checkRateLimit(`track:${ip}`, 30, 60_000)) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
@@ -56,7 +53,8 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("Tracking error:", err);
     return NextResponse.json({ error: "tracking failed" }, { status: 500 });
   }
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import type { Stat } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
+import type { Stat } from "@/types/content";
 import styles from "./StatsStrip.module.css";
 
 gsap.registerPlugin(ScrollTrigger);

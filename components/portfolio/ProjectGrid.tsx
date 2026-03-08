@@ -1,7 +1,5 @@
 "use client";
 
-import ImageReveal from "@/components/animations/ImageReveal";
-import type { Project } from "@/types/content";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,6 +12,8 @@ import {
   useRef,
   useState,
 } from "react";
+import ImageReveal from "@/components/animations/ImageReveal";
+import type { Project } from "@/types/content";
 import styles from "./ProjectGrid.module.css";
 import VideoEmbed, { PlayOverlay } from "./VideoEmbed";
 
@@ -23,7 +23,10 @@ gsap.registerPlugin(ScrollTrigger);
 function DevelopReveal({
   children,
   className,
-}: { children: ReactNode; className?: string }) {
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -61,7 +64,10 @@ function DevelopReveal({
 function CenterReveal({
   children,
   className,
-}: { children: ReactNode; className?: string }) {
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -102,7 +108,10 @@ function CenterReveal({
 function DiagonalReveal({
   children,
   className,
-}: { children: ReactNode; className?: string }) {
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(

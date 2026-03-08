@@ -1,10 +1,10 @@
 "use client";
 
-import { homeData } from "@/data/home";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
+import { homeData } from "@/data/home";
 import styles from "./ManifestoSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
