@@ -3,9 +3,19 @@ import { cookies } from "next/headers";
 
 const SESSION_COOKIE = "dd_admin_session";
 
+function getSigningSecret(): string {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) {
+    throw new Error("SESSION_SECRET environment variable is required");
+  }
+  return secret;
+}
+
 function signToken(payload: string): string {
-  const secret = process.env.SESSION_SECRET ?? process.env.ADMIN_PASSWORD!;
-  return crypto.createHmac("sha256", secret).update(payload).digest("hex");
+  return crypto
+    .createHmac("sha256", getSigningSecret())
+    .update(payload)
+    .digest("hex");
 }
 
 export async function verifySession(): Promise<boolean> {
@@ -20,8 +30,11 @@ export async function verifySession(): Promise<boolean> {
   const sig = session.value.slice(dotIdx + 1);
   if (!payload || !sig) return false;
 
-  const secret = process.env.SESSION_SECRET ?? process.env.ADMIN_PASSWORD;
-  if (!secret) return false;
+  try {
+    getSigningSecret();
+  } catch {
+    return false;
+  }
 
   const expected = signToken(payload);
   try {
@@ -43,7 +56,7 @@ export async function login(password: string): Promise<boolean> {
   const adminHash = crypto.createHash("sha256").update(adminPassword).digest();
   if (!crypto.timingSafeEqual(pwHash, adminHash)) return false;
 
-  const payload = Date.now().toString();
+  const payload = crypto.randomBytes(32).toString("hex");
   const sig = signToken(payload);
   const token = `${payload}.${sig}`;
 
