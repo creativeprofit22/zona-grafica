@@ -60,6 +60,8 @@
   color: var(--muted-light);
   padding-top: 6px;
   letter-spacing: 0.02em;
+  font-variant-numeric: oldstyle-nums;
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
 .itemContent {
@@ -74,6 +76,15 @@
   color: var(--fg-dark);
   margin-bottom: 12px;
   line-height: 1.15;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.item:hover .itemNumber {
+  color: var(--accent);
+}
+
+.item:hover .itemTitle {
+  color: var(--accent);
 }
 
 .itemDescription {

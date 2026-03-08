@@ -1,7 +1,15 @@
+"use client";
+
 import type { CaseStudy, Project } from "@/types/content";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 import styles from "./CaseStudyHero.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
   project: Project | CaseStudy;
@@ -10,10 +18,69 @@ interface Props {
 export default function CaseStudyHero({ project }: Props) {
   const heroImage =
     "heroImage" in project ? project.heroImage : project.thumbnail;
+  const sectionRef = useRef<HTMLElement>(null);
+  const imageWrapRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      const imageWrap = imageWrapRef.current;
+      if (!section || !imageWrap) return;
+
+      // Parallax — desktop only
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 769px)", () => {
+        gsap.to(imageWrap, {
+          y: -60,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+
+      // Content stagger entrance on load
+      const items = section.querySelectorAll(`.${styles.animItem}`);
+      if (items.length) {
+        gsap.fromTo(
+          items,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+          },
+        );
+      }
+
+      // Tags stagger (faster cascade)
+      const tags = section.querySelectorAll(`.${styles.tag}`);
+      if (tags.length) {
+        gsap.fromTo(
+          tags,
+          { y: 15, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.05,
+            delay: 0.6,
+          },
+        );
+      }
+    },
+    { scope: sectionRef },
+  );
 
   return (
-    <section className={styles.hero}>
-      <div className={styles.imageWrap}>
+    <section ref={sectionRef} className={styles.hero}>
+      <div ref={imageWrapRef} className={styles.imageWrap}>
         <Image
           src={heroImage}
           alt={project.title}
@@ -26,7 +93,10 @@ export default function CaseStudyHero({ project }: Props) {
       </div>
 
       <div className={styles.content}>
-        <Link href="/portafolio" className={styles.backLink}>
+        <Link
+          href="/portafolio"
+          className={`${styles.backLink} ${styles.animItem}`}
+        >
           <svg
             width={14}
             height={14}
@@ -45,7 +115,7 @@ export default function CaseStudyHero({ project }: Props) {
           Portafolio
         </Link>
 
-        <div className={styles.titleBlock}>
+        <div className={`${styles.titleBlock} ${styles.animItem}`}>
           <h1 className={styles.title}>{project.title}</h1>
 
           <div className={styles.annotation}>
@@ -55,7 +125,9 @@ export default function CaseStudyHero({ project }: Props) {
           </div>
         </div>
 
-        <p className={styles.description}>{project.description}</p>
+        <p className={`${styles.description} ${styles.animItem}`}>
+          {project.description}
+        </p>
 
         <div className={styles.tags}>
           {project.tags.map((tag) => (

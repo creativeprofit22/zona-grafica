@@ -60,6 +60,8 @@
   line-height: 1.2;
   margin-bottom: var(--space-sm);
   color: var(--fg-dark);
+  font-variant-ligatures: common-ligatures contextual;
+  font-feature-settings: "calt" 1, "liga" 1;
 }
 
 .excerpt {
@@ -77,6 +79,10 @@
   gap: 6px;
   font-size: 12px;
   color: var(--muted-light);
+}
+
+.meta time {
+  font-variant-numeric: oldstyle-nums;
 }
 
 .dot {

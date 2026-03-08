@@ -4,13 +4,15 @@ import ImageReveal from "@/components/animations/ImageReveal";
 import type { Project } from "@/types/content";
 import Image from "next/image";
 import Link from "next/link";
+import type { RefObject } from "react";
 import styles from "./ProjectGrid.module.css";
 
 interface Props {
   projects: Project[];
+  gridRef?: RefObject<HTMLDivElement | null>;
 }
 
-export default function ProjectGrid({ projects }: Props) {
+export default function ProjectGrid({ projects, gridRef }: Props) {
   if (projects.length === 0) {
     return (
       <div className={styles.empty}>
@@ -20,12 +22,13 @@ export default function ProjectGrid({ projects }: Props) {
   }
 
   return (
-    <div className={styles.grid}>
+    <div className={styles.grid} ref={gridRef}>
       {projects.map((project, i) => (
         <Link
           key={project.id}
           href={`/portafolio/${project.slug}`}
           className={styles.card}
+          data-flip-id={project.id}
           data-cursor-project
         >
           <ImageReveal

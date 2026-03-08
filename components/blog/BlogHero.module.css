@@ -34,11 +34,18 @@
   line-height: 1.6;
 }
 
+/* ─── Animation ──────────────────────────────────────────── */
+.animItem {
+  opacity: 0;
+}
+
 .rule {
   width: 100%;
   height: 1px;
   background: var(--border-light);
   margin-top: var(--space-xl);
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */

@@ -4,10 +4,9 @@ set -eo pipefail
 PROJECT_DIR="/mnt/e/Projects/zona-grafica"
 LOG_DIR="$PROJECT_DIR/.claude/logs"
 CHECK_CMD="npx tsc --noEmit && bun run lint"
-FEATURE_NAME="ServiceAccordion Editorial Upgrade"
-TOTAL_CHUNKS=5
+FEATURE_NAME="Site-Wide Animation & Visual Upgrade"
+TOTAL_CHUNKS=10
 
-# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -15,11 +14,9 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-# Defaults
 START_CHUNK=1
 SKIP_FINAL_CHECK=false
 
-# Parse args
 while [[ $# -gt 0 ]]; do
   case $1 in
     --start) START_CHUNK="$2"; shift 2 ;;
@@ -36,7 +33,6 @@ echo -e "${BLUE}  $TOTAL_CHUNKS chunks, starting from $START_CHUNK${NC}"
 echo -e "${BLUE}══════════════════════════════════════════════════════${NC}"
 echo ""
 
-# Context bridge — captures what previous chunk produced
 PREV_CONTEXT=""
 
 capture_context() {
@@ -44,7 +40,6 @@ capture_context() {
   PREV_CONTEXT=$(git diff --stat HEAD 2>/dev/null || echo "")
 }
 
-# Quality gate — typecheck + lint between chunks
 run_quality_gate() {
   local num=$1
   local gate_log="$LOG_DIR/gate-${num}.log"
@@ -89,22 +84,56 @@ FIXPROMPT
   fi
 }
 
+refresh_claude_md() {
+  local refresh_log="$LOG_DIR/refresh-claude-md.log"
+  echo -e "${CYAN}  Refreshing CLAUDE.md...${NC}"
+  cd "$PROJECT_DIR"
+
+  claude --dangerously-skip-permissions --max-turns 30 \
+    -p "$(cat <<'REFRESHPROMPT'
+Update CLAUDE.md for zona-grafica at /mnt/e/Projects/zona-grafica
+
+Steps:
+1. Read the current CLAUDE.md
+2. Read package.json for current scripts/deps
+3. Glob the top-level directory structure (components/*, app/*, lib/*, data/*, types/*)
+4. Check if any new directories, components, or patterns were added recently (git diff --stat HEAD~5 to see what changed)
+5. Update CLAUDE.md:
+   - Keep all custom sections (Design Tokens, Principles, Animation Patterns, Current Phase)
+   - Update the Structure section if new folders appeared
+   - Update Animation Patterns if new pattern files were created or existing ones changed
+   - Keep it under 100 lines total
+   - Do NOT remove any section — only update or add
+
+Rules:
+- Do NOT refactor or modify any code files
+- ONLY update CLAUDE.md
+- Do NOT ask questions
+REFRESHPROMPT
+)" < /dev/null 2>&1 | tee "$refresh_log"
+
+  echo -e "${GREEN}  ✓ CLAUDE.md refreshed${NC}"
+}
+
+REFRESH_INTERVAL=4
+
 # ══════════════════════════════════════════════════════
-# CHUNK PROMPTS — baked in from plan file
+# CHUNK FUNCTIONS
 # ══════════════════════════════════════════════════════
 
 run_chunk_1() {
   local log="$LOG_DIR/chunk-1.log"
-  echo -e "${YELLOW}▶ Chunk 1/$TOTAL_CHUNKS: Oversized Knockout Numbers + Vertical Accent Slash${NC}"
+  echo -e "${YELLOW}▶ Chunk 1/$TOTAL_CHUNKS: Portfolio Hero — GSAP Split-Line Text Reveal${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
+
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
 \`\`\`
-Do NOT modify these files unless they're in YOUR file lists."
+Do NOT modify these files unless they are in YOUR file lists."
   fi
 
   cd "$PROJECT_DIR"
@@ -112,45 +141,49 @@ Do NOT modify these files unless they're in YOUR file lists."
     -p "$(cat <<'CHUNK_1_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
 Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
-Check: npx tsc --noEmit && bun run lint
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 1/5: Oversized Knockout Numbers + Vertical Accent Slash
+## Chunk 1/10: Portfolio Hero — GSAP Split-Line Text Reveal
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.module.css` — current styles, class names, responsive breakpoints
-- `components/home/ServiceAccordion.tsx` — current markup structure for `.number`, `.rowLeft`, `.item`
-- `app/globals.css` — design tokens: `--accent`, `--ochre`, `--stone`, `--border`, `--font-display`, spacing vars
+- `components/portfolio/PortfolioHero.tsx` — current markup, MotionSection wrapper, props
+- `components/portfolio/PortfolioHero.module.css` — current styles, breakpoints
+- `components/home/HeroSection.tsx` — reference for useGSAP timeline + animItem stagger pattern
+
+**Create:** (none)
 
 **Modify:**
-- `components/home/ServiceAccordion.module.css` — restyle `.number` to oversized knockout (48-80px, display font, low opacity, absolute positioned behind title), replace `.item` horizontal borders with left-edge vertical accent slash via `::before` pseudo-element, adjust `.rowLeft` to relative positioning with padding clearance
+- `components/portfolio/PortfolioHero.tsx` — convert to client component, replace MotionSection with useGSAP timeline. Wrap annotation, title, and description in animItem spans. Stagger each element in with y:40→0 + opacity, 0.15s stagger. Use sectionRef + useGSAP scope pattern from HeroSection.
+- `components/portfolio/PortfolioHero.module.css` — add `.animItem` class with initial `opacity: 0`. Remove any MotionSection dependency.
 
 **What to Build:**
-Scale service numbers from 13px to clamp(48px, 6vw, 80px) in Clash Display at 0.18 opacity, absolutely positioned behind the title. On row hover, numbers brighten to 0.35 opacity and shift to accent color. Replace top/bottom border separators with a vertical accent bar (3px, --accent) on the left that grows from 0% to 60% height on hover. Keep subtle 1px bottom border between items using --stone at 30% opacity.
+Replace generic MotionSection fade+slide with a choreographed GSAP timeline: annotation slides in first, then title (heavier, y:60), then description (lighter, y:30). Each element staggers at 0.15s. Triggered on page load (no ScrollTrigger — it's the hero, above the fold). Match the HeroSection pattern.
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: npx tsc --noEmit && bun run lint
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** npx tsc --noEmit && bun run lint passes. Numbers visually layer behind titles. Vertical slash appears on hover. No layout shift on hover.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Portfolio hero elements animate in sequentially on page load. No flash of unstyled content.
 CHUNK_1_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_2() {
   local log="$LOG_DIR/chunk-2.log"
-  echo -e "${YELLOW}▶ Chunk 2/$TOTAL_CHUNKS: Description Reveal Accordion + Letter-Spacing Animation${NC}"
+  echo -e "${YELLOW}▶ Chunk 2/$TOTAL_CHUNKS: Servicios Hero — GSAP Split-Line + Accent Word Reveal${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
+
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
 \`\`\`
-Do NOT modify these files unless they're in YOUR file lists."
+Do NOT modify these files unless they are in YOUR file lists."
   fi
 
   cd "$PROJECT_DIR"
@@ -158,45 +191,49 @@ Do NOT modify these files unless they're in YOUR file lists."
     -p "$(cat <<'CHUNK_2_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
 Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
-Check: npx tsc --noEmit && bun run lint
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 2/5: Description Reveal Accordion + Letter-Spacing Animation
+## Chunk 2/10: Servicios Hero — GSAP Split-Line + Accent Word Reveal
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.module.css` — current `.oneliner`, `.name`, `.row` styles and responsive rules
-- `components/home/ServiceAccordion.tsx` — current `.oneliner` markup position and content rendering
+- `components/services/ServicesHero.tsx` — current markup (topRow, title with accent span, subtitle)
+- `components/services/ServicesHero.module.css` — current styles
+- `components/home/HeroSection.tsx` — reference for useGSAP timeline pattern
+
+**Create:** (none)
 
 **Modify:**
-- `components/home/ServiceAccordion.module.css` — move `.oneliner` below title (full width), hide by default with `max-height: 0; opacity: 0; overflow: hidden`, reveal on `.row:hover` with `max-height: 80px; opacity: 1` transition (300ms). Add letter-spacing transition to `.name` from -0.02em to 0.01em on hover. Make `.row` wrap with `flex-wrap: wrap`. Align `.oneliner` padding-left with title position.
-- `components/home/ServiceAccordion.tsx` — move `.oneliner` span inside `.rowLeft` div (after `.name`) so it sits below the title, not floating right. Remove the `display: -webkit-box` line clamping since the reveal handles visibility.
+- `components/services/ServicesHero.tsx` — convert to client component, replace MotionSection with useGSAP timeline. Wrap count, annotation, "Lo que", accent "hacemos", and subtitle each in animItem spans. Stagger in with y:40→0 at 0.12s intervals. The accent word "hacemos" gets a slight x:-20→0 in addition to y movement for diagonal entrance.
+- `components/services/ServicesHero.module.css` — add `.animItem` with initial `opacity: 0`.
 
 **What to Build:**
-Hide service descriptions by default. On hover, smoothly expand them below the title (300ms, ease-out). The title's letter-spacing animates from -0.02em to 0.01em on hover — text "opens up" as the description reveals. On mobile (<=768px), descriptions stay hidden (tap-to-expand image behavior unchanged).
+Choreographed hero entrance: count and annotation fade in together, then "Lo que" slides up, then "hacemos" enters diagonally (x+y), then subtitle fades. Total sequence ~0.7s. Page-load trigger (above the fold).
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: npx tsc --noEmit && bun run lint
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** npx tsc --noEmit && bun run lint passes. Descriptions hidden by default, reveal smoothly on hover. Letter-spacing shift visible on title hover. Mobile behavior unchanged.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Services hero animates in with staggered timing. Accent word has distinct diagonal entrance.
 CHUNK_2_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_3() {
   local log="$LOG_DIR/chunk-3.log"
-  echo -e "${YELLOW}▶ Chunk 3/$TOTAL_CHUNKS: Arrow Diagonal Rotation + Brand-Hued Shadow + OpenType${NC}"
+  echo -e "${YELLOW}▶ Chunk 3/$TOTAL_CHUNKS: About Hero — GSAP Split-Line + Sector List Stagger${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
+
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
 \`\`\`
-Do NOT modify these files unless they're in YOUR file lists."
+Do NOT modify these files unless they are in YOUR file lists."
   fi
 
   cd "$PROJECT_DIR"
@@ -204,45 +241,49 @@ Do NOT modify these files unless they're in YOUR file lists."
     -p "$(cat <<'CHUNK_3_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
 Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
-Check: npx tsc --noEmit && bun run lint
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 3/5: Arrow Diagonal Rotation + Brand-Hued Shadow + OpenType
+## Chunk 3/10: About Hero — GSAP Split-Line + Sector List Stagger
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.module.css` — current `.arrow`, `.cursorImage` styles
-- `app/globals.css` — current font-feature-settings, any existing OpenType rules
+- `components/about/AboutHero.tsx` — current markup (topRow, split headline, introWrap with sectors)
+- `components/about/AboutHero.module.css` — current styles, responsive rules
+- `components/home/HeroSection.tsx` — reference for useGSAP timeline
+
+**Create:** (none)
 
 **Modify:**
-- `components/home/ServiceAccordion.module.css` — change `.arrow` hover from `translateX(6px)` to `translate(4px, -2px) rotate(-45deg)` with spring easing `cubic-bezier(0.34, 1.2, 0.64, 1)`. Replace `.cursorImage` box-shadow from `rgba(0,0,0,0.15)` to warm hue-tinted multi-layer shadow: `0 8px 20px oklch(0.3 0.01 60 / 0.12), 0 3px 6px oklch(0.3 0.01 60 / 0.06)`. Add `font-variant-ligatures: common-ligatures contextual` and `font-feature-settings: "calt" 1, "liga" 1` to `.name`. Add `font-variant-numeric: oldstyle-nums` to `.number`.
-- `components/home/ServiceAccordion.tsx` — ensure `.arrow` span has `display: inline-block` (needed for transform on inline elements), or handle via CSS
+- `components/about/AboutHero.tsx` — convert to client component, replace MotionSection with useGSAP timeline. Wrap annotation, since, mainLine, locationLine, intro, sectorsLabel, and each sector in animItem spans. Timeline: annotations first, then mainLine (y:60), locationLine (y:40, slight delay), intro (y:30), then sectors stagger in (y:20, 0.08s each).
+- `components/about/AboutHero.module.css` — add `.animItem` with initial `opacity: 0`.
 
 **What to Build:**
-Three quick polish wins: (1) Arrow rotates to 45-degree diagonal on hover with spring easing overshoot instead of sliding right. (2) Cursor-following image preview gets warm brand-hued shadows from editorial-spa elevation system instead of generic gray rgba. (3) OpenType features enabled — contextual ligatures on display titles, oldstyle numerals on service numbers.
+Most complex hero entrance: 7+ elements stagger in with varied y-offsets reflecting visual weight. Main headline enters heaviest (y:60), location line lighter (y:40, italic accent color already styled). Sector pills stagger in rapidly at 0.08s intervals, creating a quick cascade effect.
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: npx tsc --noEmit && bun run lint
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** npx tsc --noEmit && bun run lint passes. Arrow rotates diagonally on hover. Cursor image shadow feels warmer. OpenType features render if font supports them.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. About hero elements animate sequentially with varied offsets. Sectors cascade in.
 CHUNK_3_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_4() {
   local log="$LOG_DIR/chunk-4.log"
-  echo -e "${YELLOW}▶ Chunk 4/$TOTAL_CHUNKS: GSAP ScrollTrigger Clip-Path Entrance${NC}"
+  echo -e "${YELLOW}▶ Chunk 4/$TOTAL_CHUNKS: Contact Hero + Blog Hero — GSAP Text Reveals${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
+
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
 \`\`\`
-Do NOT modify these files unless they're in YOUR file lists."
+Do NOT modify these files unless they are in YOUR file lists."
   fi
 
   cd "$PROJECT_DIR"
@@ -250,47 +291,53 @@ Do NOT modify these files unless they're in YOUR file lists."
     -p "$(cat <<'CHUNK_4_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
 Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
-Check: npx tsc --noEmit && bun run lint
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 4/5: GSAP ScrollTrigger Clip-Path Entrance
+## Chunk 4/10: Contact Hero + Blog Hero — GSAP Text Reveals
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.tsx` — full component, need to add useGSAP hook + ScrollTrigger
-- `components/home/ServiceAccordion.module.css` — `.item` class for clip-path initial state
-- `components/home/FeaturedShowcase.tsx` — reference for useGSAP + ScrollTrigger pattern used in this project (lines 34-115)
-- `components/home/StatsStrip.tsx` — another reference for GSAP scroll animation pattern
+- `components/contact/ContactHero.tsx` — current markup (label, title with line1/line2, subtitle, WhatsApp button)
+- `components/contact/ContactHero.module.css` — current styles
+- `components/blog/BlogHero.tsx` — current markup (annotation, title, subtitle, rule)
+- `components/blog/BlogHero.module.css` — current styles
+- `components/home/HeroSection.tsx` — reference for useGSAP pattern
+
+**Create:** (none)
 
 **Modify:**
-- `components/home/ServiceAccordion.tsx` — import `useGSAP` from `@gsap/react`, `gsap` and `ScrollTrigger`. Add `gsap.registerPlugin(ScrollTrigger)`. Add `useGSAP` hook that: queries all `.item` elements within the section ref, applies `gsap.from()` with `clipPath: "inset(0 100% 0 0)"` to `"inset(0 0 0 0)"`, staggered at 60ms per item, triggered when section enters viewport at `top 85%`.
-- `components/home/ServiceAccordion.module.css` — add `will-change: clip-path` to `.item` for performance hint. Add `.item { clip-path: inset(0 100% 0 0); }` as initial state (GSAP will animate from this).
+- `components/contact/ContactHero.tsx` — convert to client component, replace MotionSection with useGSAP. Stagger: label, line1, line2 (with em), subtitle, WhatsApp button. WhatsApp button enters with y:20 + opacity last.
+- `components/contact/ContactHero.module.css` — add `.animItem` with initial `opacity: 0`.
+- `components/blog/BlogHero.tsx` — convert to client component, add useGSAP. Stagger: annotation, title, subtitle, rule. Rule element draws from width:0 to width:100% via GSAP.
+- `components/blog/BlogHero.module.css` — add `.animItem` with initial `opacity: 0`. Add rule initial state `transform: scaleX(0); transform-origin: left`.
 
 **What to Build:**
-Add a scroll-triggered entrance animation: service rows wipe in from left-to-right using clip-path, staggered at 60ms per item (total cascade ~360ms for 6 items). Uses the same `useGSAP` + ScrollTrigger pattern as FeaturedShowcase and StatsStrip. Easing: `power2.out`. Duration: 0.6s per item. Trigger: section top at 85% viewport.
+Two simpler hero animations. Contact: "Platiquemos" enters with y:50 (big, bold), "sobre tu proyecto" follows. WhatsApp CTA enters last as a call-to-action reveal. Blog: annotation, title, subtitle stagger, then the horizontal rule draws itself from left to right (scaleX 0→1, 0.6s).
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: npx tsc --noEmit && bun run lint
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** npx tsc --noEmit && bun run lint passes. Service rows are invisible until scrolled into view, then wipe in left-to-right with stagger. No flash of unstyled content.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Contact hero elements stagger in. Blog hero rule draws on load. Both pages have unique entrance choreography.
 CHUNK_4_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_5() {
   local log="$LOG_DIR/chunk-5.log"
-  echo -e "${YELLOW}▶ Chunk 5/$TOTAL_CHUNKS: Text-Wrap Balance + Staggered Row Padding + Playwright Test${NC}"
+  echo -e "${YELLOW}▶ Chunk 5/$TOTAL_CHUNKS: About Milestones — GSAP Counter Animation${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
+
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
 \`\`\`
-Do NOT modify these files unless they're in YOUR file lists."
+Do NOT modify these files unless they are in YOUR file lists."
   fi
 
   cd "$PROJECT_DIR"
@@ -298,30 +345,293 @@ Do NOT modify these files unless they're in YOUR file lists."
     -p "$(cat <<'CHUNK_5_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
 Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
-Check: npx tsc --noEmit && bun run lint
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 5/5: Text-Wrap Balance + Staggered Row Padding + Playwright Test
+## Chunk 5/10: About Milestones — GSAP Counter Animation
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.module.css` — `.title`, `.item .row` padding values
-- `e2e/pages.spec.ts` — existing test patterns for consistency
+- `components/about/AboutStory.tsx` — current markup for milestones section (values: 22, 33, 475, 5)
+- `components/about/AboutStory.module.css` — milestone styles
+- `components/home/StatsStrip.tsx` — reference for GSAP number counter pattern in this project
+
+**Create:** (none)
 
 **Modify:**
-- `components/home/ServiceAccordion.module.css` — add `text-wrap: balance` to `.title`. Apply staggered vertical padding via `:nth-child`: items 1,4 get 32px, items 2,3 get 24px, items 5,6 get 22px. This breaks metronomic rhythm and weights "hero" services.
-- `e2e/pages.spec.ts` — add a test: navigate to `/`, scroll to "Lo que hacemos" section, verify all 6 service titles are visible (Branding, Editorial, Web, Fotografía, Ilustración, Cartelería).
+- `components/about/AboutStory.tsx` — convert to client component. Add useGSAP hook with ScrollTrigger targeting the milestones container. For each `.milestoneValue` element, use `gsap.from()` with a textContent tween (snap to integers) counting from 0 to final value. Parse innerText as number. Stagger 0.1s per milestone. Trigger: milestones enter viewport at `top 80%`.
+- `components/about/AboutStory.module.css` — add `font-variant-numeric: tabular-nums` to `.milestoneValue` to prevent layout shift during counting.
 
 **What to Build:**
-Final polish: (1) `text-wrap: balance` on section heading prevents awkward line breaks at mid-widths. (2) Staggered row padding creates editorial rhythm — weighted services get more breathing room. (3) Playwright test ensures all 6 services render correctly on the homepage.
+Milestone numbers (22, 33, 475, 5) count up from 0 when scrolled into view. Uses GSAP's `snap` to keep integers. Each counter starts 0.1s after the previous. Duration 1.2s with `power2.out` easing (fast start, slow finish). Trigger once on scroll entry.
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: npx tsc --noEmit && bun run lint
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** npx tsc --noEmit && bun run lint passes. bunx playwright test e2e/pages.spec.ts passes including new service accordion test. Heading wraps balanced. Row padding varies visually.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Milestone numbers count up from 0 on scroll. No layout shift during animation. Numbers are final values after animation completes.
 CHUNK_5_PROMPT
+)$context_section" < /dev/null 2>&1 | tee "$log"
+}
+
+run_chunk_6() {
+  local log="$LOG_DIR/chunk-6.log"
+  echo -e "${YELLOW}▶ Chunk 6/$TOTAL_CHUNKS: Service Cards — Image Panels with ImageReveal${NC}"
+
+  local context_section=""
+  if [[ -n "$PREV_CONTEXT" ]]; then
+    context_section="
+
+### Previous Chunk Changes
+\`\`\`
+$PREV_CONTEXT
+\`\`\`
+Do NOT modify these files unless they are in YOUR file lists."
+  fi
+
+  cd "$PROJECT_DIR"
+  claude --dangerously-skip-permissions --max-turns 50 \
+    -p "$(cat <<'CHUNK_6_PROMPT'
+[Project] zona-grafica at /mnt/e/Projects/zona-grafica
+Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
+Check: `npx tsc --noEmit && bun run lint`
+
+## Chunk 6/10: Service Cards — Image Panels with ImageReveal
+
+**Read these files first** (do NOT explore beyond this list):
+- `components/services/ServiceCard.tsx` — current text-only card markup, props (service.image exists)
+- `components/services/ServiceCard.module.css` — current grid layout (80px | 1fr), responsive rules
+- `components/services/ServicesList.tsx` — parent wrapper, reversed prop logic
+- `components/animations/ImageReveal.tsx` — API: direction, delay, duration, scaleReveal props
+- `data/services.ts` — confirms image field exists for all 6 services
+
+**Create:** (none)
+
+**Modify:**
+- `components/services/ServiceCard.tsx` — add Image import from next/image. Add ImageReveal wrapper. Render service.image as a panel after the numberCol and before content. Grid becomes 3-column: `80px 1fr 1fr` on desktop. Image uses `aspect-ratio: 4/5`, fill, cover. ImageReveal direction alternates based on reversed prop. On mobile, image stacks above content.
+- `components/services/ServiceCard.module.css` — update grid to 3-column desktop layout. Add `.imageCol` with aspect-ratio 4/5, overflow hidden, border-radius 6px. Reversed: swap image column order via `order` property. Mobile: image spans full width, grid becomes single column.
+
+**What to Build:**
+Add the service hero images (already defined in data but never rendered) to each service card. Desktop: number | image | text in a 3-column grid. Reversed cards flip image to the right. Each image reveals via ImageReveal clip-path wipe. Mobile: image stacks between number and text.
+
+**Rules:**
+- Read ONLY the files listed above. Do NOT explore the codebase.
+- Implement ONLY what's described. No extras, no refactoring.
+- After implementing: `npx tsc --noEmit && bun run lint`
+- Fix ALL errors before finishing.
+- Do NOT ask questions.
+
+**Gate:** `npx tsc --noEmit && bun run lint` passes. All 6 service cards show images. Images reveal with clip-path on scroll. Reversed layout alternates image position. Mobile layout stacks cleanly.
+CHUNK_6_PROMPT
+)$context_section" < /dev/null 2>&1 | tee "$log"
+}
+
+run_chunk_7() {
+  local log="$LOG_DIR/chunk-7.log"
+  echo -e "${YELLOW}▶ Chunk 7/$TOTAL_CHUNKS: Portfolio Grid — GSAP Flip on Filter Change${NC}"
+
+  local context_section=""
+  if [[ -n "$PREV_CONTEXT" ]]; then
+    context_section="
+
+### Previous Chunk Changes
+\`\`\`
+$PREV_CONTEXT
+\`\`\`
+Do NOT modify these files unless they are in YOUR file lists."
+  fi
+
+  cd "$PROJECT_DIR"
+  claude --dangerously-skip-permissions --max-turns 50 \
+    -p "$(cat <<'CHUNK_7_PROMPT'
+[Project] zona-grafica at /mnt/e/Projects/zona-grafica
+Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
+Check: `npx tsc --noEmit && bun run lint`
+
+## Chunk 7/10: Portfolio Grid — GSAP Flip on Filter Change
+
+**Read these files first** (do NOT explore beyond this list):
+- `components/portfolio/PortfolioClient.tsx` — state management, filter + grid composition
+- `components/portfolio/ProjectGrid.tsx` — current grid rendering, ImageReveal usage
+- `components/portfolio/ProjectGrid.module.css` — grid layout, card styles
+- `components/portfolio/ProjectFilter.tsx` — filter buttons, onSelect handler
+
+**Create:** (none)
+
+**Modify:**
+- `components/portfolio/PortfolioClient.tsx` — add `useRef` for grid container. Import `gsap`, `Flip` from gsap. Register Flip plugin. On filter change: capture Flip state before setActive, then after React renders, run `Flip.from()` with stagger 0.05s, duration 0.5s, ease `power2.inOut`, absolute positioning during animation. Use `useLayoutEffect` or `flushSync` to capture state correctly.
+- `components/portfolio/ProjectGrid.tsx` — accept `gridRef` prop (forwarded ref) and attach to grid div. Add `data-flip-id={project.id}` to each card for Flip tracking.
+
+**Research Before Building:**
+Before implementing, search the codebase for any existing GSAP Flip usage. Then search GitHub for `"Flip.from" "gsap" "react" "useState"` to learn correct React state + GSAP Flip integration pattern (timing of state capture vs render). Also search for `"gsap.registerPlugin" "Flip" "next"` to verify Flip plugin import path and SSR compatibility with Next.js.
+
+**What to Build:**
+When user clicks a filter category, cards animate to their new positions using GSAP Flip instead of instant swap. Cards leaving fade out, remaining cards reflow smoothly, new cards fade in. Staggered at 0.05s. This is the highest-visibility UX improvement on the portfolio page.
+
+**Rules:**
+- Read ONLY the files listed above. Do NOT explore the codebase beyond what's listed (except for research queries).
+- Implement ONLY what's described. No extras, no refactoring.
+- After implementing: `npx tsc --noEmit && bun run lint`
+- Fix ALL errors before finishing.
+- Do NOT ask questions.
+
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Clicking filter categories causes smooth card reflow animation. Cards don't jump. Exiting cards fade out, entering cards fade in.
+CHUNK_7_PROMPT
+)$context_section" < /dev/null 2>&1 | tee "$log"
+}
+
+run_chunk_8() {
+  local log="$LOG_DIR/chunk-8.log"
+  echo -e "${YELLOW}▶ Chunk 8/$TOTAL_CHUNKS: Case Study Hero — Parallax Background Image${NC}"
+
+  local context_section=""
+  if [[ -n "$PREV_CONTEXT" ]]; then
+    context_section="
+
+### Previous Chunk Changes
+\`\`\`
+$PREV_CONTEXT
+\`\`\`
+Do NOT modify these files unless they are in YOUR file lists."
+  fi
+
+  cd "$PROJECT_DIR"
+  claude --dangerously-skip-permissions --max-turns 50 \
+    -p "$(cat <<'CHUNK_8_PROMPT'
+[Project] zona-grafica at /mnt/e/Projects/zona-grafica
+Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
+Check: `npx tsc --noEmit && bun run lint`
+
+## Chunk 8/10: Case Study Hero — Parallax Background Image
+
+**Read these files first** (do NOT explore beyond this list):
+- `components/case-study/CaseStudyHero.tsx` — current markup (imageWrap with Image + overlay, content block)
+- `components/case-study/CaseStudyHero.module.css` — current styles (90vh hero, absolute image, gradient overlay)
+- `components/animations/ParallaxDrift.tsx` — reference for GSAP scroll-linked parallax pattern
+
+**Create:** (none)
+
+**Modify:**
+- `components/case-study/CaseStudyHero.tsx` — convert to client component. Add useGSAP + ScrollTrigger. Apply parallax to `.imageWrap`: `y: -60` over full scroll through the section, `scrub: true`. Apply stagger entrance to content elements (backLink, title, annotation, description, tags) with y+opacity timeline triggered on load. Tags stagger at 0.05s each.
+- `components/case-study/CaseStudyHero.module.css` — add `will-change: transform` to `.imageWrap`. Add `.animItem` with initial `opacity: 0`.
+
+**What to Build:**
+Two effects: (1) Hero background image scrolls at 0.7x speed (parallax via GSAP scrub), creating depth. Image shifts y:-60px over the section scroll. (2) Content elements (title, annotation, description, tags) stagger in on page load like other heroes. Tags cascade in quickly. Desktop-only parallax (disable on <=768px via matchMedia).
+
+**Rules:**
+- Read ONLY the files listed above. Do NOT explore the codebase.
+- Implement ONLY what's described. No extras, no refactoring.
+- After implementing: `npx tsc --noEmit && bun run lint`
+- Fix ALL errors before finishing.
+- Do NOT ask questions.
+
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Case study hero image scrolls slower than content (parallax). Content elements stagger in on load. Mobile has no parallax jank.
+CHUNK_8_PROMPT
+)$context_section" < /dev/null 2>&1 | tee "$log"
+}
+
+run_chunk_9() {
+  local log="$LOG_DIR/chunk-9.log"
+  echo -e "${YELLOW}▶ Chunk 9/$TOTAL_CHUNKS: Case Study Narrative — Scroll-Triggered Block Stagger${NC}"
+
+  local context_section=""
+  if [[ -n "$PREV_CONTEXT" ]]; then
+    context_section="
+
+### Previous Chunk Changes
+\`\`\`
+$PREV_CONTEXT
+\`\`\`
+Do NOT modify these files unless they are in YOUR file lists."
+  fi
+
+  cd "$PROJECT_DIR"
+  claude --dangerously-skip-permissions --max-turns 50 \
+    -p "$(cat <<'CHUNK_9_PROMPT'
+[Project] zona-grafica at /mnt/e/Projects/zona-grafica
+Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
+Check: `npx tsc --noEmit && bun run lint`
+
+## Chunk 9/10: Case Study Narrative — Scroll-Triggered Block Stagger
+
+**Read these files first** (do NOT explore beyond this list):
+- `components/case-study/CaseStudyNarrative.tsx` — current markup (3 blocks: El reto, El enfoque, El resultado + optional stats)
+- `components/case-study/CaseStudyNarrative.module.css` — current styles, 3-column grid
+- `components/home/CTASection.tsx` — reference for useGSAP + ScrollTrigger line stagger pattern
+
+**Create:** (none)
+
+**Modify:**
+- `components/case-study/CaseStudyNarrative.tsx` — convert to client component. Replace MotionSection with native section + useGSAP. Add ScrollTrigger: each `.block` enters with clipPath `inset(0 0 100% 0)` → `inset(0 0 0 0)` (wipe from top), staggered 0.15s, triggered at `top 80%`. Stats section: each `.statValue` counts from 0 (same pattern as AboutStory milestones).
+- `components/case-study/CaseStudyNarrative.module.css` — add `will-change: clip-path` to `.block`. Add `clip-path: inset(0 0 100% 0)` initial state. Add `font-variant-numeric: tabular-nums` to `.statValue`.
+
+**What to Build:**
+Narrative blocks (El reto, El enfoque, El resultado) wipe in from bottom via clip-path, staggered at 0.15s. Creates a "revealing the story" effect. Stats section numbers count up from 0 on scroll entry (same counter pattern as milestones). Both triggered by ScrollTrigger.
+
+**Rules:**
+- Read ONLY the files listed above. Do NOT explore the codebase.
+- Implement ONLY what's described. No extras, no refactoring.
+- After implementing: `npx tsc --noEmit && bun run lint`
+- Fix ALL errors before finishing.
+- Do NOT ask questions.
+
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Narrative blocks wipe in sequentially on scroll. Stat numbers count up. No flash of unstyled content.
+CHUNK_9_PROMPT
+)$context_section" < /dev/null 2>&1 | tee "$log"
+}
+
+run_chunk_10() {
+  local log="$LOG_DIR/chunk-10.log"
+  echo -e "${YELLOW}▶ Chunk 10/$TOTAL_CHUNKS: Blog Cards Scroll Reveal + OpenType Polish${NC}"
+
+  local context_section=""
+  if [[ -n "$PREV_CONTEXT" ]]; then
+    context_section="
+
+### Previous Chunk Changes
+\`\`\`
+$PREV_CONTEXT
+\`\`\`
+Do NOT modify these files unless they are in YOUR file lists."
+  fi
+
+  cd "$PROJECT_DIR"
+  claude --dangerously-skip-permissions --max-turns 50 \
+    -p "$(cat <<'CHUNK_10_PROMPT'
+[Project] zona-grafica at /mnt/e/Projects/zona-grafica
+Stack: Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger
+Check: `npx tsc --noEmit && bun run lint`
+
+## Chunk 10/10: Blog Cards Scroll Reveal + OpenType Polish
+
+**Read these files first** (do NOT explore beyond this list):
+- `components/blog/PostGrid.tsx` — current grid wrapper, maps PostCard
+- `components/blog/PostCard.tsx` — current card markup
+- `components/blog/PostCard.module.css` — current card styles, hover effects
+- `components/animations/MotionSection.tsx` — wrapper API for scroll reveal
+
+**Create:** (none)
+
+**Modify:**
+- `components/blog/PostGrid.tsx` — wrap each PostCard in a MotionSection with stagger to add scroll-triggered entrance. Alternate stagger delay: even cards 0s, odd cards 0.12s.
+- `components/blog/PostCard.module.css` — add `font-variant-ligatures: common-ligatures contextual` and `font-feature-settings: "calt" 1, "liga" 1` to `.title`. Add `font-variant-numeric: oldstyle-nums` to `.meta time`.
+- `components/services/ServicesProcess.module.css` — add `font-variant-numeric: oldstyle-nums` to `.stepNumber`. Add `font-feature-settings: "calt" 1, "liga" 1` to `.stepTitle`.
+- `components/about/ValuesGrid.module.css` — add `font-variant-numeric: oldstyle-nums` to `.itemNumber`. Add hover state: `.item:hover .itemNumber { color: var(--accent) }` and `.item:hover .itemTitle { color: var(--accent) }` with transition.
+- `components/about/AboutStory.module.css` — add `font-variant-numeric: oldstyle-nums tabular-nums` to `.milestoneValue`.
+
+**What to Build:**
+Two things: (1) Blog cards animate in on scroll via MotionSection wrapper with alternating stagger delays. (2) OpenType polish sweep across remaining components: oldstyle numerals on all editorial numbers (blog meta, service process numbers, values numbers, milestone values), contextual ligatures on display-font titles. Values grid gets subtle hover states (number + title shift to accent color).
+
+**Rules:**
+- Read ONLY the files listed above. Do NOT explore the codebase.
+- Implement ONLY what's described. No extras, no refactoring.
+- After implementing: `npx tsc --noEmit && bun run lint`
+- Fix ALL errors before finishing.
+- Do NOT ask questions.
+
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Blog cards animate in on scroll with stagger. OpenType features render where fonts support them. Values items respond to hover.
+CHUNK_10_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
@@ -329,13 +639,29 @@ CHUNK_5_PROMPT
 # MAIN LOOP
 # ══════════════════════════════════════════════════════
 
-CHUNK_FUNCTIONS=( run_chunk_1 run_chunk_2 run_chunk_3 run_chunk_4 run_chunk_5 )
+CHUNK_FUNCTIONS=(
+  run_chunk_1
+  run_chunk_2
+  run_chunk_3
+  run_chunk_4
+  run_chunk_5
+  run_chunk_6
+  run_chunk_7
+  run_chunk_8
+  run_chunk_9
+  run_chunk_10
+)
 CHUNK_NAMES=(
-  "Oversized Knockout Numbers + Vertical Accent Slash"
-  "Description Reveal Accordion + Letter-Spacing Animation"
-  "Arrow Diagonal Rotation + Brand-Hued Shadow + OpenType"
-  "GSAP ScrollTrigger Clip-Path Entrance"
-  "Text-Wrap Balance + Staggered Row Padding + Playwright Test"
+  "Portfolio Hero — GSAP Split-Line Text Reveal"
+  "Servicios Hero — GSAP Split-Line + Accent Word Reveal"
+  "About Hero — GSAP Split-Line + Sector List Stagger"
+  "Contact Hero + Blog Hero — GSAP Text Reveals"
+  "About Milestones — GSAP Counter Animation"
+  "Service Cards — Image Panels with ImageReveal"
+  "Portfolio Grid — GSAP Flip on Filter Change"
+  "Case Study Hero — Parallax Background Image"
+  "Case Study Narrative — Scroll-Triggered Block Stagger"
+  "Blog Cards Scroll Reveal + OpenType Polish"
 )
 
 for i in "${!CHUNK_FUNCTIONS[@]}"; do
@@ -346,14 +672,14 @@ for i in "${!CHUNK_FUNCTIONS[@]}"; do
     continue
   fi
 
-  # Run the chunk
   ${CHUNK_FUNCTIONS[$i]}
-
-  # Quality gate
   run_quality_gate "$num"
-
-  # Capture context for next chunk
   capture_context
+
+  # Refresh CLAUDE.md every N chunks so subprocesses stay current
+  if (( num % REFRESH_INTERVAL == 0 && num < TOTAL_CHUNKS )); then
+    refresh_claude_md
+  fi
 
   echo ""
 done
@@ -373,5 +699,4 @@ if [[ "$SKIP_FINAL_CHECK" != "true" ]]; then
   fi
 fi
 
-echo ""
 echo -e "${GREEN}Done! Review changes: git diff${NC}"

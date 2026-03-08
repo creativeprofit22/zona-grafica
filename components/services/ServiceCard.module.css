@@ -1,7 +1,7 @@
 /* ─── Service Card — Editorial Row ───────────────────────── */
 .card {
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 80px 1fr 1fr;
   gap: var(--space-lg);
   padding: var(--space-xl) 0;
   border-bottom: 1px solid var(--border-light);
@@ -26,6 +26,14 @@
   letter-spacing: -0.03em;
   line-height: 1;
   opacity: 0.6;
+}
+
+/* ─── Image Column ──────────────────────────────────────── */
+.imageCol {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
 /* ─── Text Content ───────────────────────────────────────── */
@@ -84,6 +92,10 @@
 }
 
 /* ─── Reversed layout (visual variety, no RTL hack) ──────── */
+.reversed .imageCol {
+  order: 3;
+}
+
 .reversed .content {
   margin-left: auto;
 }
@@ -91,22 +103,21 @@
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .card {
-    grid-template-columns: 48px 1fr;
+    grid-template-columns: 1fr;
     gap: var(--space-md);
     padding: var(--space-lg) 0;
+  }
+
+  .numberCol {
+    justify-content: flex-start;
   }
 
   .number {
     font-size: 28px;
   }
-}
 
-@media (max-width: 480px) {
-  .card {
-    grid-template-columns: 1fr;
-  }
-
-  .numberCol {
-    justify-content: flex-start;
+  .imageCol {
+    order: 0 !important;
+    aspect-ratio: 16 / 9;
   }
 }

@@ -24,6 +24,10 @@
   line-height: 1.6;
 }
 
+.animItem {
+  opacity: 0;
+}
+
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero {

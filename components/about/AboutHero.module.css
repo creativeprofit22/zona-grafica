@@ -110,6 +110,18 @@
   font-size: 14px;
 }
 
+/* ─── Animation initial state ────────────────────────────── */
+.annotation,
+.since,
+.mainLine,
+.locationLine,
+.intro,
+.sectorsLabel,
+.sector,
+.sectorDot {
+  opacity: 0;
+}
+
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero {

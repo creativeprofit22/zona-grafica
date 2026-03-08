@@ -111,6 +111,7 @@
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--accent);
+  font-variant-numeric: oldstyle-nums tabular-nums;
 }
 
 .milestoneLabel {

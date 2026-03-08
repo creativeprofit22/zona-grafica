@@ -1,21 +1,50 @@
-import MotionSection from "@/components/animations/MotionSection";
+"use client";
+
 import { siteConfig } from "@/data/site";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef } from "react";
 import styles from "./ContactHero.module.css";
 
 export default function ContactHero() {
   const { contact } = siteConfig;
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const el = sectionRef.current;
+      if (!el) return;
+
+      const tl = gsap.timeline({ delay: 0.4 });
+
+      const items = el.querySelectorAll(`.${styles.animItem}`);
+
+      gsap.set(items, { opacity: 0, y: 50 });
+
+      tl.to(items, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        stagger: 0.15,
+      });
+    },
+    { scope: sectionRef },
+  );
 
   return (
-    <MotionSection className={styles.hero}>
+    <section ref={sectionRef} className={styles.hero}>
       <div className={styles.inner}>
-        <span className={styles.label}>(contacto)</span>
+        <span className={`${styles.label} ${styles.animItem}`}>(contacto)</span>
         <h1 className={styles.title}>
-          <span className={styles.line1}>Platiquemos</span>
-          <span className={styles.line2}>
+          <span className={`${styles.line1} ${styles.animItem}`}>
+            Platiquemos
+          </span>
+          <span className={`${styles.line2} ${styles.animItem}`}>
             sobre tu <em>proyecto</em>
           </span>
         </h1>
-        <p className={styles.subtitle}>
+        <p className={`${styles.subtitle} ${styles.animItem}`}>
           Escríbenos directo o llena el formulario. Te respondemos en menos de
           24 horas.
         </p>
@@ -24,7 +53,7 @@ export default function ContactHero() {
           href={contact.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className={styles.whatsapp}
+          className={`${styles.whatsapp} ${styles.animItem}`}
         >
           <svg
             width={20}
@@ -39,6 +68,6 @@ export default function ContactHero() {
           <span className={styles.arrow}>→</span>
         </a>
       </div>
-    </MotionSection>
+    </section>
   );
 }

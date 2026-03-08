@@ -1,6 +1,13 @@
-import MotionSection from "@/components/animations/MotionSection";
+"use client";
+
 import type { CaseStudyStat } from "@/types/content";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 import styles from "./CaseStudyNarrative.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
   brief: string;
@@ -21,11 +28,74 @@ export default function CaseStudyNarrative({
   result,
   stats,
 }: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const texts = [brief, approach, result];
+
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const blockEls = section.querySelectorAll(`.${styles.block}`);
+
+      gsap.from(blockEls, {
+        clipPath: "inset(0 0 100% 0)",
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
+
+  useGSAP(
+    () => {
+      const container = statsRef.current;
+      if (!container) return;
+
+      const values = container.querySelectorAll<HTMLElement>(
+        `.${styles.statValue}`,
+      );
+
+      values.forEach((el, i) => {
+        const raw = el.textContent || "";
+        const match = raw.match(/^([^\d]*)(\d+)([^\d]*)$/);
+        if (!match) return;
+
+        const prefix = match[1];
+        const target = Number.parseInt(match[2], 10);
+        const suffix = match[3];
+        const obj = { val: 0 };
+
+        gsap.to(obj, {
+          val: target,
+          duration: 1.2,
+          ease: "power2.out",
+          delay: i * 0.1,
+          snap: { val: 1 },
+          scrollTrigger: {
+            trigger: container,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+          onUpdate() {
+            el.textContent = `${prefix}${Math.round(obj.val)}${suffix}`;
+          },
+        });
+      });
+    },
+    { scope: statsRef },
+  );
 
   return (
     <>
-      <MotionSection className={styles.section} data-theme="light">
+      <section ref={sectionRef} className={styles.section} data-theme="light">
         <div className={styles.inner}>
           {blocks.map((block, i) => (
             <article key={block.number} className={styles.block}>
@@ -38,14 +108,10 @@ export default function CaseStudyNarrative({
             </article>
           ))}
         </div>
-      </MotionSection>
+      </section>
 
       {stats && stats.length > 0 && (
-        <MotionSection
-          as="div"
-          className={styles.statsSection}
-          data-theme="light"
-        >
+        <div ref={statsRef} className={styles.statsSection} data-theme="light">
           <div className={styles.statsInner}>
             {stats.map((stat) => (
               <div key={stat.label} className={styles.stat}>
@@ -54,7 +120,7 @@ export default function CaseStudyNarrative({
               </div>
             ))}
           </div>
-        </MotionSection>
+        </div>
       )}
     </>
   );

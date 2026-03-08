@@ -68,6 +68,7 @@
   letter-spacing: -0.03em;
   line-height: 1;
   opacity: 0.5;
+  font-variant-numeric: oldstyle-nums;
 }
 
 .stepTitle {
@@ -75,6 +76,7 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--fg-dark);
+  font-feature-settings: "calt" 1, "liga" 1;
 }
 
 /* ─── Step Description ───────────────────────────────────── */

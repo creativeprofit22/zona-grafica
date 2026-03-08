@@ -4,7 +4,7 @@ Creative agency website for Jesús Herrera. San Miguel de Allende, Mexico. Sales
 
 ## Stack
 
-Next.js 16 · React 19 · TypeScript · Bun · CSS Modules · GSAP + ScrollTrigger · Lenis · Drizzle + PostgreSQL · MDX
+Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger · Lenis · Drizzle + PostgreSQL · MDX · Playwright
 
 ## Commands
 
@@ -21,10 +21,11 @@ bun run lint         # Biome
 app/(site)/        — pages: home, portafolio, servicios, nosotros, contacto, blog
 app/(admin)/admin/ — admin panel (CMS, analytics)
 app/api/           — endpoints (content, newsletter, track)
-components/        — by domain (home/, portfolio/, layout/, about/, contact/, etc.)
-data/              — static content (home.ts, work.ts, services.ts, about.ts, site.ts, clients.ts)
-lib/               — utils, db, auth, blog, content adapter
-types/content.ts   — content interfaces
+components/        — by domain: home/, portfolio/, services/, about/, contact/, blog/,
+                     case-study/, layout/, animations/, effects/, ui/, admin/ (charts/)
+data/              — static content (home, work, services, about, site, clients, blog, faq)
+lib/               — utils, db, auth, blog, content adapter, jsonld, rate-limit, schema
+types/             — content.ts, webkit-fullscreen.d.ts
 public/fonts/      — Clash Display + Satoshi
 ```
 
@@ -49,15 +50,20 @@ Light default. `data-theme="dark"` for ink sections. `data-theme="cream"` for al
 5. Spanish with personality — conversational, not corporate
 6. Rooted in SMA — Jesús's real story, cultural references
 
-## Last Session
+## Animation Patterns
 
-Full codebase audit against current best practices and official docs. Verified every file, dependency version, and API pattern. Only 2 actionable findings across the entire project — both fixed:
-- `priority` → `preload` on `<Image>` in CaseStudyHero.tsx and ServiceAccordion.tsx (deprecated in Next.js 16)
-- `drizzle(pool, {schema})` → `drizzle({connection, schema})` in lib/db.ts (outdated init pattern)
-- TypeScript and Biome lint pass clean after fixes.
+The codebase already has established GSAP patterns — follow these, don't invent new ones:
 
-**Phase:** ServiceAccordion Editorial Upgrade — Chunk 0/5
+- **useGSAP scope pattern**: `components/home/HeroSection.tsx` — sectionRef + useGSAP with timeline, `.animItem` class for stagger targets
+- **ScrollTrigger counters**: `components/home/StatsStrip.tsx` — GSAP textContent tween with snap for integer counting
+- **ImageReveal**: `components/animations/ImageReveal.tsx` — clip-path wipe with direction, delay, duration, scaleReveal props
+- **ParallaxDrift**: `components/animations/ParallaxDrift.tsx` — scroll-linked parallax via GSAP scrub
+- **MotionSection**: `components/animations/MotionSection.tsx` — simple scroll reveal wrapper
+- **Effects layer**: `components/effects/` — CustomCursor, PageTransition, RouteProgress, ScrollColorTransition, ScrollProgress, SmoothScroll (Lenis)
+- **MagneticButton**: `components/ui/MagneticButton.tsx` — hover-magnetic interaction
 
-## Next Steps
+CSS convention: `.animItem { opacity: 0; }` as initial state, GSAP sets final values.
 
-1. Review production build (`npx next build`) for any warnings
+## Current Phase
+
+Site-Wide Animation & Visual Upgrade — 10 chunks, executed via `scripts/run-plan.sh`
