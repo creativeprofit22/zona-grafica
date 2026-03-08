@@ -54,6 +54,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
+    const cause = (err as { cause?: { code?: string } })?.cause;
+    if (cause?.code === "ECONNREFUSED" || cause?.code === "ENOTFOUND") {
+      return NextResponse.json({ ok: true, skipped: true });
+    }
     console.error("Tracking error:", err);
     return NextResponse.json({ error: "tracking failed" }, { status: 500 });
   }
