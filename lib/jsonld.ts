@@ -83,11 +83,13 @@ export function articleSchema({
   description,
   datePublished,
   url,
+  image,
 }: {
   headline: string;
   description: string;
   datePublished: string;
   url: string;
+  image?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -97,6 +99,7 @@ export function articleSchema({
     datePublished,
     url: `${SITE_URL}${url}`,
     inLanguage: siteConfig.locale,
+    ...(image ? { image: `${SITE_URL}${image}` } : {}),
     author: {
       "@type": "Organization",
       name: SITE_NAME,

@@ -11,20 +11,28 @@ export interface BlogPostMeta {
   date: string;
   isoDate: string;
   readingTime: string;
-  featured: boolean;
   gradientFrom: string;
   gradientTo: string;
-  image?: string;
 }
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
+const WORDS_PER_MINUTE = 200;
+
+function estimateReadingTime(content: string): string {
+  const words = content
+    .replace(/---[\s\S]*?---/, "")
+    .trim()
+    .split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+  return `${minutes} min`;
+}
 
 export const getAllPosts = cache((): BlogPostMeta[] => {
   if (!fs.existsSync(BLOG_DIR)) return [];
   const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".mdx"));
   const posts = files.map((file) => {
     const raw = fs.readFileSync(path.join(BLOG_DIR, file), "utf-8");
-    const { data } = matter(raw);
+    const { data, content } = matter(raw);
     return {
       slug: file.replace(/\.mdx$/, ""),
       title: data.title ?? "",
@@ -32,11 +40,9 @@ export const getAllPosts = cache((): BlogPostMeta[] => {
       category: (data.category as string) ?? "",
       date: data.date ?? "",
       isoDate: data.isoDate ?? "",
-      readingTime: data.readingTime ?? "",
-      featured: data.featured === true,
+      readingTime: (data.readingTime as string) || estimateReadingTime(content),
       gradientFrom: data.gradientFrom ?? "#1a1a2e",
       gradientTo: data.gradientTo ?? "#16213e",
-      ...(data.image ? { image: data.image as string } : {}),
     } satisfies BlogPostMeta;
   });
   return posts.sort(
@@ -59,11 +65,10 @@ export const getPostBySlug = cache(
         category: (data.category as string) ?? "",
         date: data.date ?? "",
         isoDate: data.isoDate ?? "",
-        readingTime: data.readingTime ?? "",
-        featured: data.featured === true,
+        readingTime:
+          (data.readingTime as string) || estimateReadingTime(content),
         gradientFrom: data.gradientFrom ?? "#1a1a2e",
         gradientTo: data.gradientTo ?? "#16213e",
-        ...(data.image ? { image: data.image as string } : {}),
       },
       content,
     };

@@ -11,19 +11,6 @@ export async function getContent<T = unknown>(key: string): Promise<T | null> {
   return (row?.value as T) ?? null;
 }
 
-export async function getContentWithFallback<T>(
-  key: string,
-  fallback: T,
-): Promise<T> {
-  try {
-    const value = await getContent<T>(key);
-    return value ?? fallback;
-  } catch {
-    // DB unavailable (e.g. during static build) — use static fallback
-    return fallback;
-  }
-}
-
 export async function setContent(key: string, value: unknown) {
   const [row] = await db
     .insert(contentBlocks)

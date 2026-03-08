@@ -1,19 +1,20 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { verifySession } from "@/lib/auth";
-import { listContent, setContent } from "@/lib/content";
+import { setContent } from "@/lib/content";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-  const authenticated = await verifySession();
-  if (!authenticated) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-  const blocks = await listContent();
-  return NextResponse.json(blocks);
-}
-
 export async function PUT(request: NextRequest) {
+  const ip = getClientIp(request);
+
+  if (!checkRateLimit(`content:${ip}`, 20, 60_000)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 },
+    );
+  }
+
   const authenticated = await verifySession();
   if (!authenticated) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

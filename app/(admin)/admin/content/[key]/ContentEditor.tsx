@@ -451,6 +451,11 @@ export default function ContentEditor({
         body: JSON.stringify({ key: contentKey, value }),
       });
 
+      if (res.status === 401) {
+        router.push("/admin");
+        return;
+      }
+
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || "Save failed");

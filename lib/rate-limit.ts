@@ -21,20 +21,20 @@ export function getClientIp(request: NextRequest): string {
   return request.headers.get("x-real-ip") ?? "unknown";
 }
 
-const rateLimit = new Map<string, number[]>();
+const rateLimit = new Map<string, { windowMs: number; timestamps: number[] }>();
 let lastCleanup = Date.now();
 const CLEANUP_INTERVAL = 60_000; // prune stale keys every 60s
 
-function cleanup(windowMs: number) {
+function cleanup() {
   const now = Date.now();
   if (now - lastCleanup < CLEANUP_INTERVAL) return;
   lastCleanup = now;
-  for (const [key, timestamps] of rateLimit) {
-    const valid = timestamps.filter((t) => now - t < windowMs);
+  for (const [key, entry] of rateLimit) {
+    const valid = entry.timestamps.filter((t) => now - t < entry.windowMs);
     if (valid.length === 0) {
       rateLimit.delete(key);
     } else {
-      rateLimit.set(key, valid);
+      entry.timestamps = valid;
     }
   }
 }
@@ -44,17 +44,18 @@ export function checkRateLimit(
   limit: number,
   windowMs: number,
 ): boolean {
-  cleanup(windowMs);
+  cleanup();
   const now = Date.now();
-  const timestamps = rateLimit.get(key) ?? [];
+  const entry = rateLimit.get(key);
+  const timestamps = entry?.timestamps ?? [];
   const valid = timestamps.filter((t) => now - t < windowMs);
 
   if (valid.length >= limit) {
-    rateLimit.set(key, valid);
+    rateLimit.set(key, { windowMs, timestamps: valid });
     return false;
   }
 
   valid.push(now);
-  rateLimit.set(key, valid);
+  rateLimit.set(key, { windowMs, timestamps: valid });
   return true;
 }

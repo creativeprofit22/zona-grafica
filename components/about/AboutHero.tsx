@@ -8,9 +8,10 @@ import styles from "./AboutHero.module.css";
 interface Props {
   headline: string;
   intro: string;
+  sectors: string[];
 }
 
-export default function AboutHero({ headline, intro }: Props) {
+export default function AboutHero({ headline, intro, sectors }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
 
   // Split headline for editorial treatment
@@ -138,13 +139,14 @@ export default function AboutHero({ headline, intro }: Props) {
           <div className={styles.sectors}>
             <span className={styles.sectorsLabel}>Nuestros sectores</span>
             <div className={styles.sectorList}>
-              <span className={styles.sector}>Cultura y Educación</span>
-              <span className={styles.sectorDot}>·</span>
-              <span className={styles.sector}>Iniciativa Privada</span>
-              <span className={styles.sectorDot}>·</span>
-              <span className={styles.sector}>Turismo</span>
-              <span className={styles.sectorDot}>·</span>
-              <span className={styles.sector}>Arte</span>
+              {sectors.map((sector, i) => (
+                <span key={sector}>
+                  <span className={styles.sector}>{sector}</span>
+                  {i < sectors.length - 1 && (
+                    <span className={styles.sectorDot}>·</span>
+                  )}
+                </span>
+              ))}
             </div>
           </div>
         </div>

@@ -39,7 +39,11 @@ export default function NosotrosPage() {
         }}
       />
 
-      <AboutHero headline={story.headline} intro={story.intro} />
+      <AboutHero
+        headline={story.headline}
+        intro={story.intro}
+        sectors={story.sectors}
+      />
 
       <AboutStory segments={story.bodySegments} />
 

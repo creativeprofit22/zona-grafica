@@ -90,7 +90,7 @@ export default function ManifestoSection() {
             )}
           </p>
         </blockquote>
-        <cite className={styles.attribution}>— Jesús Herrera, fundador</cite>
+        <cite className={styles.attribution}>{manifesto.attribution}</cite>
       </div>
     </section>
   );

@@ -9,7 +9,7 @@
 
 .inner {
   display: grid;
-  grid-template-columns: 1.4fr 0.8fr 1fr;
+  grid-template-columns: 1.4fr 0.8fr 1fr 1fr;
   gap: var(--space-lg);
   max-width: var(--max-width);
   margin: 0 auto;
@@ -149,6 +149,91 @@
 
 .social a:hover {
   color: var(--purple);
+}
+
+/* ─── Newsletter Column ─────────────────────────────────── */
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.newsletterLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(250, 249, 246, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.newsletterDesc {
+  font-size: 12px;
+  color: rgba(250, 249, 246, 0.35);
+  line-height: 1.45;
+  max-width: 220px;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 0;
+  margin-top: 4px;
+  position: relative;
+}
+
+.newsletterInput {
+  flex: 1;
+  background: rgba(250, 249, 246, 0.06);
+  border: 1px solid rgba(250, 249, 246, 0.12);
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--fg-light);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.newsletterInput::placeholder {
+  color: rgba(250, 249, 246, 0.25);
+}
+
+.newsletterInput:focus {
+  border-color: var(--accent);
+}
+
+.newsletterButton {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  color: var(--fg-light);
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.newsletterButton:hover {
+  background: var(--accent-hover);
+}
+
+.newsletterButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.newsletterSuccess {
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.newsletterError {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  font-size: 11px;
+  color: var(--ochre);
 }
 
 /* ─── Postmark Stamp ─────────────────────────────────────── */

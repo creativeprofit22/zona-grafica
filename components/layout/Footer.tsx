@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { navigation, siteConfig } from "@/data/site";
 import styles from "./Footer.module.css";
+import NewsletterForm from "./NewsletterForm";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -95,6 +96,15 @@ export default function Footer() {
               </a>
             )}
           </div>
+        </div>
+
+        {/* ── Column 4: Newsletter ── */}
+        <div className={styles.newsletter}>
+          <p className={styles.newsletterLabel}>Newsletter</p>
+          <p className={styles.newsletterDesc}>
+            Tips de diseño y branding directo a tu inbox.
+          </p>
+          <NewsletterForm />
         </div>
 
         {/* ── Postmark Stamp ── */}
