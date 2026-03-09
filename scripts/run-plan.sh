@@ -3,8 +3,8 @@ set -eo pipefail
 
 PROJECT_DIR="/mnt/e/Projects/zona-grafica"
 LOG_DIR="$PROJECT_DIR/.claude/logs"
-CHECK_CMD="npx tsc --noEmit"
-FEATURE_NAME="Site Refresh v2 — Full Creative Overhaul"
+CHECK_CMD="npx tsc --noEmit && bun run lint"
+FEATURE_NAME="v3 Polish Pass"
 TOTAL_CHUNKS=16
 
 RED='\033[0;31m'
@@ -99,17 +99,16 @@ run_cleanup() {
 }
 
 # ══════════════════════════════════════════════════════
-# CHUNK FUNCTIONS — one per chunk, prompt baked in
+# CHUNK FUNCTIONS — one per chunk, prompt baked in as heredoc
 # ══════════════════════════════════════════════════════
 
 run_chunk_1() {
   local log="$LOG_DIR/chunk-1.log"
-  echo -e "${YELLOW}▶ Chunk 1/$TOTAL_CHUNKS: Chameleon Gradient Typography${NC}"
+  echo -e "${YELLOW}▶ Chunk 1/$TOTAL_CHUNKS: Google Maps Fix${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -121,64 +120,62 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_1_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
 ## Research Findings
 
-### Gradient Text (CSS)
-```css
-.gradientText {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--ochre) 50%, var(--purple) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-```
-Source: Angular, ToolJet, Stripe patterns. Pure CSS, no JS needed.
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
+- CSS custom properties as animation targets: `gsap.to(el, { "--prop": value })`
+- `.animItem { opacity: 0 }` initial state convention, GSAP sets final values
+- ParallaxDrift: `scrub: true`, desktop-only via `gsap.matchMedia()`
+- MagneticButton: `gsap.quickTo()` with `elastic.out(1, 0.4)` easing
 
-## Chunk 1/16: Chameleon Gradient Typography
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+- Timing: `--duration-fast: 0.2s`, `--duration-normal: 0.4s`, `--duration-slow: 0.8s`
+- Spacing: `--space-xs` through `--space-3xl` (4px to 128px)
+
+## Chunk 1/16: Google Maps Fix
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/HeroSection.tsx` — find `.grafica` class and how headline[1] renders
-- `components/home/HeroSection.module.css` — current `.grafica` styles (72-260px, weight 700, uppercase)
-- `components/services/ServicesHero.tsx` — find `.titleAccent` ("hacemos")
-- `components/services/ServicesHero.module.css` — current accent styling
-- `components/home/ServiceAccordion.tsx` — find `.title` ("Lo que hacemos")
-- `components/home/ServiceAccordion.module.css` — current title styles
-- `app/globals.css` — verify `--purple` exists, confirm gradient tokens don't exist yet
-
-**Create:** (none)
+- `components/contact/ContactInfo.tsx` — current iframe embed URL
+- `next.config.ts` — current CSP headers
 
 **Modify:**
-- `app/globals.css` — add `--gradient-chameleon`, `--gradient-teal-ochre`, `--gradient-ochre-purple` custom properties
-- `components/home/HeroSection.module.css` — add gradient to `.grafica`
-- `components/services/ServicesHero.module.css` — add gradient to `.titleAccent`
-- `components/home/ServiceAccordion.module.css` — add gradient to `.title`
+- `components/contact/ContactInfo.tsx` — update embed URL with fresh timestamp
+- `next.config.ts` — add `maps.gstatic.com` to `connect-src`
 
 **What to Build:**
-Add chameleon gradient CSS custom properties to globals.css. Apply full 3-color gradient (teal→ochre→purple) to "GRÁFICA" in hero. Apply 2-color gradient (teal→ochre) to "hacemos" in ServicesHero and "Lo que hacemos" in ServiceAccordion title. No JS needed — pure CSS `background-clip: text`.
+Replace the stale Google Maps embed URL timestamp (`4v1709900000000`, circa 2021) with a current one. The embed URL structure stays the same — only the `4v` parameter changes to current epoch milliseconds. Also add `maps.gstatic.com` to `connect-src` in CSP for tile loading.
+
+**Code to Adapt:**
+Current URL ends with `!4v1709900000000`. Replace with `!4v` + current epoch ms (e.g., `!4v1741484400000` for March 2026).
+
+CSP connect-src: change `'self' https://maps.googleapis.com` to `'self' https://maps.googleapis.com https://maps.gstatic.com`.
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. "GRÁFICA" shows teal-to-ochre-to-purple gradient. "hacemos" shows teal-to-ochre. No gradient on body text.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Map iframe URL has current timestamp. CSP connect-src includes maps.gstatic.com.
 CHUNK_1_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_2() {
   local log="$LOG_DIR/chunk-2.log"
-  echo -e "${YELLOW}▶ Chunk 2/$TOTAL_CHUNKS: ServiceAccordion Dark Background + Adjusted Styles${NC}"
+  echo -e "${YELLOW}▶ Chunk 2/$TOTAL_CHUNKS: Navbar — Asymmetric Layout & Structure${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -190,46 +187,88 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_2_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 2/16: ServiceAccordion Dark Background + Adjusted Styles
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
+- CSS custom properties as animation targets: `gsap.to(el, { "--prop": value })`
+- `.animItem { opacity: 0 }` initial state convention, GSAP sets final values
+- ParallaxDrift: `scrub: true`, desktop-only via `gsap.matchMedia()`
+- MagneticButton: `gsap.quickTo()` with `elastic.out(1, 0.4)` easing
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+- Timing: `--duration-fast: 0.2s`, `--duration-normal: 0.4s`, `--duration-slow: 0.8s`
+- Spacing: `--space-xs` through `--space-3xl` (4px to 128px)
+
+## Chunk 2/16: Navbar — Asymmetric Layout & Structure
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.tsx` — current section wrapper, no data-theme
-- `components/home/ServiceAccordion.module.css` — border colors, text colors, number opacity
-- `app/(site)/page.tsx` — section order on home page
-- `app/globals.css` — `[data-theme="dark"]` token overrides
-
-**Create:** (none)
+- `components/layout/Navbar.tsx` — current structure (167 lines)
+- `components/layout/Navbar.module.css` — current styling (422 lines)
+- `data/site.ts` — navigation array (6 items, skips "Inicio" on desktop)
 
 **Modify:**
-- `components/home/ServiceAccordion.tsx` — add `data-theme="dark"` to section element
-- `components/home/ServiceAccordion.module.css` — adjust `.item` border to `var(--border-dark)`, `.number` color to `var(--fg-light)`, `.name`/`.oneliner` to light text, `.cursorImage` box-shadow for dark bg, `.mobileImage` border treatment
+- `components/layout/Navbar.tsx` — restructure link rendering: dot separators between links, logo text conditional on scroll
+- `components/layout/Navbar.module.css` — asymmetric layout: links grouped left (after logo), CTA far right. Replace pill hover with dot-separated links. Update active state to bracket marks.
 
 **What to Build:**
-Flip ServiceAccordion to dark background. Homepage flow becomes: light hero → cream manifesto → DARK services → light portfolio → cream stats. Adjust all text/border colors for dark context. The cursor-following image should pop with a subtle glow shadow against dark.
+Restructure desktop nav from evenly-spaced pills to asymmetric editorial layout. Links are grouped together with centered dot (·) separators between them (not pills). Active link gets mini bracket marks (same design language as CTA). Logo "Zona Gráfica" text fades out on scroll (just chameleon icon remains). Remove border-radius:100px pills.
+
+**Code to Adapt:**
+Active link bracket marks — reuse the CTA's `background-image` gradient technique but at smaller scale:
+```css
+.navLink.active {
+  background-image: /* 8 gradients for 4 corner brackets */;
+  background-size: 6px 1px, 1px 6px, /* ... */;
+  background-position: 0 0, 0 0, /* ... */;
+}
+```
+
+Dot separator via CSS `::after` on links (not last-child):
+```css
+.navLink:not(:last-child)::after {
+  content: "·";
+  margin-left: 8px;
+  color: var(--muted-light);
+  pointer-events: none;
+}
+```
+
+Logo text fade on scroll:
+```css
+.nav.scrolled .logoFull {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 0.3s, width 0.3s;
+}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. ServiceAccordion renders on dark background. All text legible. Cursor image visible and dramatic against dark. Mobile image cards visible.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Desktop nav shows dot-separated links grouped left. Active link has bracket marks. Logo text hides on scroll.
 CHUNK_2_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_3() {
   local log="$LOG_DIR/chunk-3.log"
-  echo -e "${YELLOW}▶ Chunk 3/$TOTAL_CHUNKS: Section-Specific Accent Colors${NC}"
+  echo -e "${YELLOW}▶ Chunk 3/$TOTAL_CHUNKS: Navbar — Scroll Hide/Reveal${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -241,60 +280,73 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_3_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
 ## Research Findings
 
-### Section Accent Color Pattern
-```css
-.servicesSection { --section-accent: var(--accent); }
-.portfolioSection { --section-accent: var(--ochre); }
-/* Then use var(--section-accent) instead of var(--accent) within section CSS */
-```
-Source: Obys Agency — accent appears only in typography per page.
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
 
-## Chunk 3/16: Section-Specific Accent Colors (CSS Custom Properties)
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+
+## Chunk 3/16: Navbar — Scroll Hide/Reveal
 
 **Read these files first** (do NOT explore beyond this list):
-- `app/globals.css` — current `--accent` usage in theme variants
-- `components/home/ServiceAccordion.module.css` — all `var(--accent)` references
-- `components/home/FeaturedShowcase.module.css` — all `var(--accent)` and `var(--ochre)` references
-- `components/home/StatsStrip.module.css` — position-based color assignments
-- `components/home/CTASection.module.css` — accent usage
-
-**Create:** (none)
+- `components/layout/Navbar.tsx` — current scroll detection (scrollY > 60 threshold)
+- `components/layout/Navbar.module.css` — scrolled state styles
 
 **Modify:**
-- `app/globals.css` — add `--section-accent` property defaulting to `var(--accent)`
-- `components/home/ServiceAccordion.module.css` — set `--section-accent: var(--accent)` on `.section`, replace `var(--accent)` with `var(--section-accent)`
-- `components/home/FeaturedShowcase.module.css` — set `--section-accent: var(--ochre)` on `.section`, replace accent refs
-- `components/home/StatsStrip.module.css` — set `--section-accent: var(--purple)` on `.section`
-- `components/home/CTASection.module.css` — set `--section-accent: var(--accent)` on `.section`
+- `components/layout/Navbar.tsx` — add scroll direction tracking (store lastScrollY, compare to determine up/down), add `hidden` state when scrolling down past threshold, show when scrolling up
+- `components/layout/Navbar.module.css` — add `.hidden` class with `transform: translateY(-100%)` and transition
 
 **What to Build:**
-Each home page section gets its own accent color via CSS custom property `--section-accent`. Services = teal, Portfolio showcase = ochre, Stats = purple, CTA = teal. Replace hardcoded `var(--accent)` within each section's CSS module with `var(--section-accent)`. The chameleon palette shifts as user scrolls.
+Replace simple "scrolled > 60px" with scroll-direction-aware hide/reveal. When user scrolls down past 80px, nav slides up out of view. When user scrolls up (any amount), nav slides back down with frosted glass. Always visible when near top (scrollY < 80). The inverted state (dark hero) logic remains unchanged.
+
+**Code to Adapt:**
+```typescript
+const [hidden, setHidden] = useState(false);
+const lastScrollY = useRef(0);
+
+useEffect(() => {
+  const onScroll = () => {
+    const y = window.scrollY;
+    setScrolled(y > 60);
+    setHidden(y > 80 && y > lastScrollY.current);
+    lastScrollY.current = y;
+  };
+  // ...
+}, []);
+```
+
+```css
+.nav.hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Services section uses teal accents. Featured showcase uses ochre accents. Stats section uses purple accents. CTA remains teal.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Nav hides on scroll-down, reveals on scroll-up. Still shows at top of page. Inverted mode unaffected.
 CHUNK_3_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_4() {
   local log="$LOG_DIR/chunk-4.log"
-  echo -e "${YELLOW}▶ Chunk 4/$TOTAL_CHUNKS: Purple Gets a Home${NC}"
+  echo -e "${YELLOW}▶ Chunk 4/$TOTAL_CHUNKS: Navbar — Magnetic Links & Hover Animations${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -306,49 +358,88 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_4_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 4/16: Purple Gets a Home
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- MagneticButton: `gsap.quickTo()` with `elastic.out(1, 0.4)` easing
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+
+## Chunk 4/16: Navbar — Magnetic Links & Hover Animations
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/StatsStrip.module.css` — `.pos0`-`.pos5` value color assignments
-- `components/home/ManifestoSection.module.css` — `.quoteMark` color (currently ochre)
-- `components/home/FeaturedShowcase.module.css` — `.projectIndex` last slide
-- `components/layout/Footer.module.css` — `.social` links hover
-- `components/portfolio/ProjectFilter.module.css` — active filter styling
-
-**Create:** (none)
+- `components/layout/Navbar.tsx` — current link rendering
+- `components/layout/Navbar.module.css` — current hover states
+- `components/ui/MagneticButton.tsx` — MagneticButton implementation (strength prop, quickTo pattern, elastic easing)
 
 **Modify:**
-- `components/home/StatsStrip.module.css` — change `.pos4 .value` to `var(--purple)` (was no color override)
-- `components/home/ManifestoSection.module.css` — change `.quoteMark` from ochre to purple
-- `components/layout/Footer.module.css` — add `.social a:hover { color: var(--purple) }` for social links
-- `components/portfolio/ProjectFilter.module.css` — add category-specific active colors for poster filter
+- `components/layout/Navbar.tsx` — wrap each nav link in MagneticButton (strength 0.25, lighter than default 0.35). Add GSAP hover animation for number↔label interaction.
+- `components/layout/Navbar.module.css` — number hover: scale 1.4x + shift color to accent. Label hover: underline wipe animation (scaleX 0→1, left origin). Remove ghost pill background on hover.
 
 **What to Build:**
-Purple (#7B2FBE) currently appears zero times in component CSS. Place it in 4 strategic locations: stats "5" value, manifesto quote mark, footer social hover, and poster category filter. These are small, high-visibility touchpoints that complete the chameleon palette.
+Each desktop nav link gets MagneticButton wrapper (subtle pull, strength 0.25). On hover, the ochre number scales up 1.4x and shifts color to accent green. The label gets an underline that wipes in from left (transform-origin: left, scaleX 0→1). Remove the rgba background-color hover effect — replace with these dynamic interactions.
+
+**Code to Adapt:**
+```tsx
+<MagneticButton strength={0.25} className={styles.navLinkWrap}>
+  <Link href={link.href} className={`${styles.navLink} ${active}`}>
+    <span className={styles.navNumber}>{link.number}</span>
+    {link.label}
+  </Link>
+</MagneticButton>
+```
+
+Number hover animation (CSS):
+```css
+.navLink:hover .navNumber {
+  transform: scale(1.4);
+  color: var(--accent);
+}
+.navNumber {
+  transition: transform 0.3s var(--ease-out), color 0.3s var(--ease-out);
+  display: inline-block; /* needed for transform */
+}
+```
+
+Underline wipe (CSS):
+```css
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--fg-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.navLink:hover::after { transform: scaleX(1); }
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Purple visible in stats, manifesto quote mark, footer social hover. Palette feels complete across all three chameleon colors.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Nav links have magnetic pull on hover. Number scales up + changes color. Underline wipes in from left.
 CHUNK_4_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_5() {
   local log="$LOG_DIR/chunk-5.log"
-  echo -e "${YELLOW}▶ Chunk 5/$TOTAL_CHUNKS: Portfolio Bento Grid Layout${NC}"
+  echo -e "${YELLOW}▶ Chunk 5/$TOTAL_CHUNKS: Navbar — Scroll Progress & Section Tracking${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -360,56 +451,88 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_5_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
 ## Research Findings
 
-### Bento Grid (CSS Grid + nth-child)
-```css
-.grid { grid-template-columns: repeat(12, 1fr); }
-.cardFeatured { grid-column: span 8; }
-.cardStandard { grid-column: span 4; }
-```
-Source: react-bits MagicBento, Shopify Dawn collage, kevin-powell portfolio.
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
 
-## Chunk 5/16: Portfolio Bento Grid Layout
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+
+## Chunk 5/16: Navbar — Scroll Progress & Section Tracking
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/portfolio/ProjectGrid.tsx` — current 2-col grid, card structure, ImageReveal usage, VideoCard
-- `components/portfolio/ProjectGrid.module.css` — `.grid` (repeat(2, 1fr)), `.card`, `.imageWrap` (aspect 4/3)
-- `data/work.ts` — projects array, `featured` field on each project
-- `types/content.ts` — Project interface (has `featured` boolean)
-
-**Create:** (none)
+- `components/layout/Navbar.tsx` — current nav structure
+- `components/layout/Navbar.module.css` — current styles
+- `components/effects/ScrollProgress.tsx` — existing ScrollProgress implementation (scaleX bar with ScrollTrigger)
+- `data/site.ts` — navigation hrefs for section matching
 
 **Modify:**
-- `components/portfolio/ProjectGrid.module.css` — change to 12-col grid, add `.cardFeatured` (span 8) and `.cardStandard` (span 4), alternate featured position via nth-of-type, responsive fallback to 1-col
-- `components/portfolio/ProjectGrid.tsx` — conditionally apply featured/standard class based on `project.featured`, add `data-category={project.category}` to each card
+- `components/layout/Navbar.tsx` — add scroll progress bar element at bottom of nav. Add section-aware active tracking: use IntersectionObserver on page sections matching nav hrefs to highlight current section.
+- `components/layout/Navbar.module.css` — add `.progressBar` style (1px accent line at bottom of nav, scaleX driven by scroll). Active link tracking overrides pathname-based active.
 
 **What to Build:**
-Replace equal 2-column grid with asymmetric 12-column bento layout. Featured projects (project.featured=true) span 8 columns with landscape aspect ratio. Standard projects span 4 columns with portrait 3:4 ratio. Alternate featured alignment: first featured starts at col 1, second at col 5. Mobile: single column. Add `data-category` attribute to each card for future category-specific styling.
+Add a 1px accent-colored progress bar at the bottom edge of the navbar that grows from left to right as user scrolls (0% at top, 100% at bottom). Implement inline — don't import ScrollProgress component (it's a standalone bar, we need it embedded in nav). Also add section-aware active tracking: on long pages, detect which section is currently in view and highlight the corresponding nav link (e.g., scrolling past portfolio section highlights "Portafolio" even if on home page).
+
+**Code to Adapt:**
+Progress bar (inline GSAP in Navbar):
+```typescript
+useGSAP(() => {
+  if (!progressRef.current) return;
+  gsap.to(progressRef.current, {
+    scaleX: 1,
+    ease: "none",
+    scrollTrigger: {
+      trigger: document.documentElement,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.3,
+    },
+  });
+}, { scope: navRef });
+```
+
+Section tracking (IntersectionObserver):
+```typescript
+useEffect(() => {
+  const sections = document.querySelectorAll("[data-nav-section]");
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        setActiveSection(entry.target.getAttribute("data-nav-section") || "");
+      }
+    }
+  }, { threshold: 0.3, rootMargin: "-80px 0px 0px 0px" });
+  sections.forEach(s => observer.observe(s));
+  return () => observer.disconnect();
+}, [pathname]);
+```
+
+Note: Section tracking only works on pages that add `data-nav-section` attributes to their sections. The home page is the primary candidate. On sub-pages, pathname-based active remains.
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Featured projects visually larger (2/3 width). Standard projects 1/3 width. Grid feels asymmetric and editorial. Mobile stacks to 1-col.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Progress bar visible at nav bottom, grows with scroll. Section tracking highlights correct link on home page.
 CHUNK_5_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_6() {
   local log="$LOG_DIR/chunk-6.log"
-  echo -e "${YELLOW}▶ Chunk 6/$TOTAL_CHUNKS: Category-Specific Aspect Ratios + Color Badges${NC}"
+  echo -e "${YELLOW}▶ Chunk 6/$TOTAL_CHUNKS: Portfolio — Coordinated Stagger & ParallaxDrift${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -421,54 +544,71 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_6_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
 ## Research Findings
 
-### Per-Category Hover States
-```css
-.card[data-category="fotografia"]:hover .image { filter: grayscale(0.6) contrast(1.1); }
-.card[data-category="poster"]:hover .image { transform: scale(1.08) rotate(-1deg); }
-.card[data-category="web"]:hover .image { transform: perspective(800px) rotateY(-3deg); }
-```
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
+- ParallaxDrift: `scrub: true`, desktop-only via `gsap.matchMedia()`
 
-## Chunk 6/16: Category-Specific Aspect Ratios + Color Badges
+## Chunk 6/16: Portfolio — Coordinated Stagger & ParallaxDrift
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/portfolio/ProjectGrid.tsx` — current card markup, `.category` element
-- `components/portfolio/ProjectGrid.module.css` — current `.imageWrap`, `.category`, `.meta`
-- `data/work.ts` — project categories (branding, editorial, web, fotografia, ilustracion, poster, video)
-
-**Create:** (none)
+- `components/portfolio/ProjectGrid.tsx` — CategoryImageWrap routing, reveal components (DevelopReveal, CenterReveal, DiagonalReveal), grid layout
+- `components/portfolio/ProjectGrid.module.css` — grid layout classes, featured vs standard cards
+- `components/animations/ParallaxDrift.tsx` — props API (distance, className)
 
 **Modify:**
-- `components/portfolio/ProjectGrid.module.css` — add `[data-category]` rules for aspect ratios (photography 4:5, web 16:9, branding 1:1, editorial 3:4, poster 2:3, video 16:9). Add `.category::before` colored dot per category. Add category-specific hover states (photo→grayscale, poster→tilt, web→perspective, branding→saturate, editorial→sepia, video→brightness).
-- `components/portfolio/ProjectGrid.tsx` — ensure `data-category` is set on the card wrapper (from chunk 5)
+- `components/portfolio/ProjectGrid.tsx` — add stagger coordination: each card's ScrollTrigger delay increases by 150ms based on its visual position in the current viewport row. Wrap featured card images in ParallaxDrift (distance 20).
+- `components/portfolio/ProjectGrid.module.css` — ensure featured cards have overflow:hidden for ParallaxDrift clipping.
 
 **What to Build:**
-Each portfolio category gets its own thumbnail aspect ratio reflecting the medium (photography=portrait, web=landscape, branding=square, etc). Add colored dot before category text using `::before` pseudo-element with category-specific colors (branding=teal, foto=ochre, poster=purple, etc). Add category-specific hover states: photography goes monochrome, posters tilt, web gets 3D perspective.
+Instead of all cards triggering independently at `top 85%`, add coordinated stagger. Each reveal component (DevelopReveal, CenterReveal, DiagonalReveal, ImageReveal usage in CategoryImageWrap) receives a `staggerIndex` prop that maps to its position in the grid. Pass `delay={staggerIndex * 0.15}` to create a cascading wave effect across the grid. Wrap featured card images in `<ParallaxDrift distance={20}>` for subtle scroll-linked depth.
+
+**Code to Adapt:**
+Add staggerIndex to CategoryImageWrap:
+```tsx
+function CategoryImageWrap({ category, children, index, staggerIndex }: {
+  category: string; children: ReactNode; index: number; staggerIndex: number;
+}) {
+  const delay = staggerIndex * 0.15;
+  // Pass delay to each reveal component
+}
+```
+
+ParallaxDrift on featured:
+```tsx
+{project.featured ? (
+  <ParallaxDrift distance={20}>
+    <CategoryImageWrap ...>{imageElement}</CategoryImageWrap>
+  </ParallaxDrift>
+) : (
+  <CategoryImageWrap ...>{imageElement}</CategoryImageWrap>
+)}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Different categories show different thumbnail shapes. Category dots are colored. Hover effects vary by category.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Portfolio cards animate in with cascading delays. Featured cards have parallax drift on scroll.
 CHUNK_6_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_7() {
   local log="$LOG_DIR/chunk-7.log"
-  echo -e "${YELLOW}▶ Chunk 7/$TOTAL_CHUNKS: Per-Service Visual Themes${NC}"
+  echo -e "${YELLOW}▶ Chunk 7/$TOTAL_CHUNKS: Portfolio — Magnetic Tilt Hover${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -480,45 +620,67 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_7_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 7/16: Per-Service Visual Themes (ServiceCard Overhaul)
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- MagneticButton: `gsap.quickTo()` with `elastic.out(1, 0.4)` easing
+
+## Chunk 7/16: Portfolio — Magnetic Tilt Hover
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/services/ServiceCard.tsx` — current 3-col grid, reversed prop, ImageReveal usage
-- `components/services/ServiceCard.module.css` — grid template, imageCol, number, process pills
-- `data/services.ts` — all 7 services with slug, number, title, description, process[], image
-
-**Create:** (none)
+- `components/portfolio/ProjectGrid.tsx` — current card rendering, hover handling
+- `components/portfolio/ProjectGrid.module.css` — current hover styles (CSS-only image scale, category-specific filters)
 
 **Modify:**
-- `components/services/ServiceCard.tsx` — add `data-service={service.slug}` to card div, render different image treatments per slug (web gets browser chrome bar, video gets play overlay)
-- `components/services/ServiceCard.module.css` — add per-service rules via `[data-service]`: branding (4px left border), editorial (3:4 aspect), web (12px radius + chrome bar), fotografia (no radius, white inner outline), ilustracion (cream bg, dashed borders), poster (2:3 aspect), video (16:9 + play icon)
+- `components/portfolio/ProjectGrid.tsx` — add GSAP-driven magnetic tilt on card hover: track mouse position relative to card center, apply perspective + rotateX/rotateY transform. Reset on mouse leave.
+- `components/portfolio/ProjectGrid.module.css` — add `perspective: 800px` to card containers, `will-change: transform` on images.
 
 **What to Build:**
-Each of the 7 services gets a unique visual signature reflecting its medium. Web cards show a faux browser chrome bar above the image. Photography cards have no border-radius with a white inner-border like a photo print mat. Poster cards get 2:3 aspect ratio. Video gets 16:9 with play overlay. Each card's image treatment signals what kind of work this service produces.
+On desktop, portfolio card images respond to mouse position with a subtle 3D tilt effect. As cursor moves over a card, the image rotates slightly toward the cursor (max 4deg rotateX, 4deg rotateY). Uses `gsap.quickTo()` for smooth elastic following. On mouse leave, card smoothly returns to flat. Only applies on desktop (matchMedia 769px+). This replaces the static CSS scale hover.
+
+**Code to Adapt:**
+```typescript
+// Inside ProjectGrid card component
+const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  xTo(x * 8);   // ±4deg rotateY
+  yTo(y * -8);  // ±4deg rotateX (inverted)
+};
+
+const handleMouseLeave = () => {
+  xTo(0); yTo(0);
+};
+
+// Initialize quickTo refs
+const xTo = useRef(gsap.quickTo(el, "rotateY", { duration: 0.6, ease: "power3.out" }));
+const yTo = useRef(gsap.quickTo(el, "rotateX", { duration: 0.6, ease: "power3.out" }));
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Each service card looks visually distinct. Web has browser chrome. Photo has print mat. Poster is tall. Video is wide with play icon.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Cards tilt toward cursor on hover. Smooth return to flat on leave. Desktop only.
 CHUNK_7_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_8() {
   local log="$LOG_DIR/chunk-8.log"
-  echo -e "${YELLOW}▶ Chunk 8/$TOTAL_CHUNKS: Service Card Layout Breaking${NC}"
+  echo -e "${YELLOW}▶ Chunk 8/$TOTAL_CHUNKS: Portfolio — Cinematic Filter Transitions & Idle Float${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -530,47 +692,72 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_8_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 8/16: Service Card Layout Breaking (Varied Grid Patterns)
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
+
+## Chunk 8/16: Portfolio — Cinematic Filter Transitions & Idle Float
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/services/ServicesList.tsx` — maps services to ServiceCard with alternating reversed
-- `components/services/ServiceCard.tsx` — current grid template (80px 1fr 1fr)
-- `components/services/ServiceCard.module.css` — current responsive rules
-- `data/services.ts` — service order (7 services)
-
-**Create:** (none)
+- `components/portfolio/PortfolioClient.tsx` — current FLIP animation on filter change
+- `components/portfolio/ProjectGrid.tsx` — grid rendering
+- `components/portfolio/ProjectGrid.module.css` — card styles
 
 **Modify:**
-- `components/services/ServicesList.tsx` — pass `layout` prop to each ServiceCard based on index (0-1: "wide", 2-3: "compact", 4: "centered", 5-6: "wide")
-- `components/services/ServiceCard.tsx` — accept `layout` prop, render different grid structures per layout type
-- `components/services/ServiceCard.module.css` — add `.cardWide` (80px 3fr 2fr), `.cardCompact` (single-col vertical stack for 2-up), `.cardCentered` (max-width 700px, margin auto, vertical stack). Responsive: all collapse to single column on mobile.
+- `components/portfolio/PortfolioClient.tsx` — enhance FLIP transition: add blur(8px) on exit, blur(0) on enter, creating cinematic dissolve effect.
+- `components/portfolio/ProjectGrid.tsx` — add idle floating animation to featured card images: subtle `y` oscillation (±5px) via GSAP timeline with yoyo repeat.
+- `components/portfolio/ProjectGrid.module.css` — add will-change hints for blur/transform.
 
 **What to Build:**
-Break the alternating left-right pattern. Cards 1-2 (Branding, Editorial): full-width hero rows with wider image. Cards 3-4 (Web, Foto): side-by-side 2-up layout with vertical stacks. Card 5 (Ilustracion): centered narrow column. Cards 6-7 (Carteleria, Video): full-width rows reversed. ServicesList passes a `layout` prop based on index.
+When switching portfolio category filters, items don't just scale in/out — they blur-dissolve. Exiting items: `opacity: 0, scale: 0.95, filter: "blur(8px)"`. Entering items: start at `opacity: 0, scale: 0.95, filter: "blur(8px)"` and resolve to clear. Featured cards get a perpetual idle floating animation: gentle 5px Y oscillation on a 4-second yoyo timeline (desktop only, respects reduced motion).
+
+**Code to Adapt:**
+FLIP enhancement:
+```typescript
+onEnter: (elements) =>
+  gsap.fromTo(elements,
+    { opacity: 0, scale: 0.95, filter: "blur(8px)" },
+    { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5 }
+  ),
+onLeave: (elements) =>
+  gsap.to(elements, { opacity: 0, scale: 0.95, filter: "blur(8px)", duration: 0.35 }),
+```
+
+Idle float:
+```typescript
+gsap.to(featuredImage, {
+  y: 5,
+  duration: 4,
+  ease: "sine.inOut",
+  yoyo: true,
+  repeat: -1,
+});
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Services page shows 3 distinct layout patterns across 7 cards. No two consecutive cards look identical. Mobile collapses cleanly.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Filter transitions use blur dissolve. Featured cards float gently. Reduced motion respected.
 CHUNK_8_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_9() {
   local log="$LOG_DIR/chunk-9.log"
-  echo -e "${YELLOW}▶ Chunk 9/$TOTAL_CHUNKS: Dramatic Service Numbers${NC}"
+  echo -e "${YELLOW}▶ Chunk 9/$TOTAL_CHUNKS: Services — Card Text Animations & Parallax${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -582,44 +769,86 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_9_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 9/16: Dramatic Service Numbers (Watermark Effect)
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
+- ParallaxDrift: `scrub: true`, desktop-only via `gsap.matchMedia()`
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+
+## Chunk 9/16: Services — Card Text Animations & Parallax
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/services/ServiceCard.tsx` — current `.number` element in `.numberCol`
-- `components/services/ServiceCard.module.css` — current number styling (32-48px, ochre, opacity 0.6)
-
-**Create:** (none)
+- `components/services/ServiceCard.tsx` — card structure, number/title/description rendering
+- `components/services/ServiceCard.module.css` — watermark number (opacity 0.04, clamp 120-300px), title/description styles
+- `components/services/ServicesList.tsx` — layout orchestration, MotionSection wrapping
+- `components/animations/ParallaxDrift.tsx` — API reference
 
 **Modify:**
-- `components/services/ServiceCard.module.css` — change `.number` to absolute positioning, `font-size: clamp(120px, 20vw, 300px)`, `opacity: 0.04`, right-aligned, bleeding off card edge. Add `.card:hover .number` transition to `opacity: 0.12` and `translateX(-20px)`.
-- `components/services/ServiceCard.tsx` — ensure `.card` has `position: relative; overflow: hidden` for absolute number positioning
+- `components/services/ServiceCard.tsx` — convert to client component ("use client"). Add useGSAP: title words animate in with stagger (translateY + opacity), watermark number responds to scroll (parallax via ScrollTrigger scrub). Wrap image in ParallaxDrift.
+- `components/services/ServiceCard.module.css` — add `.animWord { opacity: 0 }` initial state. Add will-change for number parallax.
 
 **What to Build:**
-Transform service numbers from small inline elements to dramatic full-bleed watermarks. Each number (01-07) renders at massive scale (120-300px), nearly invisible (opacity 0.04), positioned absolute behind the card content. On hover, the number drifts left and becomes slightly more visible (opacity 0.12). Creates editorial poster energy.
+Service card titles get split-word animation: each word fades up individually with 80ms stagger as the card enters viewport. The giant watermark number (01-07) gets scroll-linked parallax — drifts upward slowly as user scrolls past (scrub, -20px to +20px range). Service images get ParallaxDrift wrapper (distance 15). Convert ServiceCard to client component since it now needs GSAP.
+
+**Code to Adapt:**
+Title split-word:
+```tsx
+const words = title.split(" ");
+return (
+  <h3 className={styles.title}>
+    {words.map((word, i) => (
+      <span key={i} className="animWord" style={{ display: "inline-block" }}>
+        {word}{i < words.length - 1 ? "\u00A0" : ""}
+      </span>
+    ))}
+  </h3>
+);
+```
+
+```typescript
+useGSAP(() => {
+  gsap.from(".animWord", {
+    y: 30, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.08,
+    scrollTrigger: { trigger: cardRef.current, start: "top 80%", toggleActions: "play none none none" },
+  });
+}, { scope: cardRef });
+```
+
+Number parallax:
+```typescript
+gsap.fromTo(numberEl, { y: -20 }, {
+  y: 20, ease: "none",
+  scrollTrigger: { trigger: cardRef.current, start: "top bottom", end: "bottom top", scrub: true },
+});
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Service numbers visible as large watermarks behind content. Hover reveals them slightly with drift. Numbers don't interfere with content readability.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Service titles animate word-by-word. Watermark numbers drift with scroll. Images have parallax.
 CHUNK_9_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_10() {
   local log="$LOG_DIR/chunk-10.log"
-  echo -e "${YELLOW}▶ Chunk 10/$TOTAL_CHUNKS: Editorial Rhythm — Pull Quotes + Section Numbers${NC}"
+  echo -e "${YELLOW}▶ Chunk 10/$TOTAL_CHUNKS: Services — Process Steps Sequential Reveal${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -631,49 +860,70 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_10_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 10/16: Editorial Rhythm — Pull Quotes + Section Numbers + Transitions
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+- ScrollTrigger: `{ trigger, start: "top 85%", toggleActions: "play none none none" }`
+
+## Chunk 10/16: Services — Process Steps Sequential Reveal
 
 **Read these files first** (do NOT explore beyond this list):
-- `app/(site)/page.tsx` — home page section order and composition
-- `components/home/HeroSection.module.css` — bottom edge for clip transition
-- `data/home.ts` — check for existing pull quote data structure
-
-**Create:**
-- `components/ui/PullQuote.tsx` — full-width dark strip with display-font italic quote, accent phrase
-- `components/ui/PullQuote.module.css` — width 100vw, margin-left calc(-50vw + 50%), bg-ink, padding, display font italic, accent phrase in `var(--section-accent)`
-- `components/ui/SectionNumber.tsx` — large knockout numeral (01-06) for section margins
-- `components/ui/SectionNumber.module.css` — absolute positioned, 80-180px, opacity 0.06, display font
+- `components/services/ServicesProcess.tsx` — current GSAP animation (line scaleY scrub + dot reveals with 50ms delay)
+- `components/services/ServicesProcess.module.css` — timeline line, dot, step layout styles
 
 **Modify:**
-- `app/(site)/page.tsx` — insert PullQuote between ServiceAccordion and FeaturedShowcase, add SectionNumber to each major section
-- `data/home.ts` — add `pullQuotes` array with text and accent phrase
+- `components/services/ServicesProcess.tsx` — enhance step reveal: each step's content (number, title, description) fades in + slides up sequentially AFTER its dot appears. Add connecting line segments between dots that draw themselves. Each step triggers 200ms after the previous.
+- `components/services/ServicesProcess.module.css` — add `.animStep` initial state (opacity 0, translateY 20px). Add connector line segment styles.
 
 **What to Build:**
-Three editorial devices: (1) PullQuote component — full-width dark strips between sections with display-font italic quotes, one accent phrase highlighted. (2) SectionNumber component — large knockout numerals (01, 02, 03...) at low opacity in section margins. (3) Home page composition adds a pull quote between services and portfolio showcase. Section numbers on major sections.
+Upgrade the process timeline from "dots pop in" to a full sequential reveal choreography. The vertical line still grows with scroll (scrub). But now: (1) each dot appears with `back.out(2)` bounce, (2) 150ms after dot appears, the step content (number + title + description) fades up, (3) each step triggers 200ms after the previous one fully appears. The overall effect: line draws → dot bounces in → content reveals → next dot → next content, creating a domino cascade down the timeline.
+
+**Code to Adapt:**
+Enhanced step animation:
+```typescript
+steps.forEach((step, i) => {
+  const content = step.querySelector(`.${styles.stepContent}`);
+
+  // Dot bounce
+  gsap.to(step, {
+    "--dot-opacity": 1, "--dot-scale": 1,
+    duration: 0.4, ease: "back.out(2)",
+    scrollTrigger: { trigger: step, start: "top 75%", toggleActions: "play none none none" },
+    delay: i * 0.2,
+  });
+
+  // Content reveal (tied to same trigger, extra delay)
+  gsap.from(content, {
+    y: 20, opacity: 0, duration: 0.6, ease: "power3.out",
+    scrollTrigger: { trigger: step, start: "top 75%", toggleActions: "play none none none" },
+    delay: i * 0.2 + 0.15,
+  });
+});
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Pull quote visible between services and portfolio as a dark strip. Section numbers faintly visible in margins. Editorial rhythm breaks the monotony of stacked sections.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Process timeline shows cascading reveal: line grows → dots bounce → content fades up sequentially.
 CHUNK_10_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_11() {
   local log="$LOG_DIR/chunk-11.log"
-  echo -e "${YELLOW}▶ Chunk 11/$TOTAL_CHUNKS: ServiceAccordion Choreography${NC}"
+  echo -e "${YELLOW}▶ Chunk 11/$TOTAL_CHUNKS: Blog Listing — Editorial Enhancement${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -685,44 +935,77 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_11_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 11/16: Section-Specific Motion — ServiceAccordion Choreography
+## Research Findings
+
+### MotionSection Variants
+`fade-up | slide-left | slide-right | clip-up | scale-in | blur-in`
+Uses IntersectionObserver (15% threshold), adds `is-visible` class, fires `onVisible` callback.
+
+### Blog Post Frontmatter
+`title, excerpt, category, date, isoDate, readingTime, featured, gradientFrom, gradientTo, image?`
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+
+## Chunk 11/16: Blog Listing — Editorial Enhancement
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/ServiceAccordion.tsx` — current GSAP animation (clipPath reveal, stagger 0.06)
-- `components/home/ServiceAccordion.module.css` — current `.item` clip-path initial state
-
-**Create:** (none)
+- `components/blog/PostGrid.tsx` — current grid (featured + list, MotionSection wrappers)
+- `components/blog/PostGrid.module.css` — current styles (featured split, list items)
+- `components/blog/BlogHero.tsx` — hero animation
+- `components/animations/MotionSection.tsx` — variant list (blur-in available)
+- `lib/blog.ts` — BlogPostMeta type (gradientFrom, gradientTo fields)
 
 **Modify:**
-- `components/home/ServiceAccordion.tsx` — replace uniform clipPath reveal with choreographed entrance: number fades in with scale 0.8→1, name slides in with `skewX: -3`→0, oneliner fades last. The accent slash (::before) flashes full height then settles to 0. Each row still uses clipPath but adds secondary animations for child elements.
-- `components/home/ServiceAccordion.module.css` — add `.name` transform-origin left for skew, `.oneliner` initial opacity 0
+- `components/blog/PostGrid.tsx` — change MotionSection variants: featured uses `clip-up`, list items use `blur-in` with stagger. Add gradient accent bar to each list item using post's gradientFrom color. Add creative reading time (small visual progress arc or icon).
+- `components/blog/PostGrid.module.css` — featured post image gets subtle parallax (CSS transform on hover or scroll). List items get gradient accent left-border. Reading time visualization styles.
 
 **What to Build:**
-Replace generic clipPath reveal with "being designed in real-time" choreography. When each service row enters viewport: the clip-path opens, then the name slides in with a slight skew (like type being placed on a page), the number scales in, and the oneliner fades in last. The accent slash flashes briefly. Each element has its own timing within the row's reveal.
+Transform blog listing from "safe grid" to editorial showcase. Featured post: `clip-up` reveal with 4px left border using post's `gradientFrom` color. List items: `blur-in` variant (exists but unused) with stagger mode. Each list item gets a 3px left border colored by the post's `gradientFrom`. Reading time shown as a small circular arc (SVG) instead of plain text — the arc fills proportional to reading time (e.g., 5min = 5/10 = half circle).
+
+**Code to Adapt:**
+Gradient accent border:
+```tsx
+<div className={styles.listItem} style={{ borderLeftColor: post.gradientFrom }}>
+```
+
+Reading time arc (small SVG):
+```tsx
+function ReadingArc({ minutes }: { minutes: number }) {
+  const pct = Math.min(minutes / 10, 1);
+  const r = 8; const c = 2 * Math.PI * r;
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" className={styles.readingArc}>
+      <circle cx="10" cy="10" r={r} fill="none" stroke="var(--border-light)" strokeWidth="2" />
+      <circle cx="10" cy="10" r={r} fill="none" stroke="var(--accent)" strokeWidth="2"
+        strokeDasharray={`${c * pct} ${c}`} transform="rotate(-90 10 10)" />
+    </svg>
+  );
+}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Service rows reveal with varied sub-element timing. Name has skew entrance. Number scales. Oneliner fades last. Feels like a poster being assembled.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Blog listing uses blur-in with stagger. Gradient accent borders visible. Reading time arcs render.
 CHUNK_11_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_12() {
   local log="$LOG_DIR/chunk-12.log"
-  echo -e "${YELLOW}▶ Chunk 12/$TOTAL_CHUNKS: Portfolio Category Reveals${NC}"
+  echo -e "${YELLOW}▶ Chunk 12/$TOTAL_CHUNKS: Blog MDX Components — Callout, PullQuote, Stat${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -734,45 +1017,92 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_12_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 12/16: Section-Specific Motion — Portfolio Category Reveals
+## Research Findings
+
+### MotionSection Variants
+`fade-up | slide-left | slide-right | clip-up | scale-in | blur-in`
+Uses IntersectionObserver (15% threshold), adds `is-visible` class, fires `onVisible` callback.
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+
+## Chunk 12/16: Blog MDX Components — Callout, PullQuote, Stat
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/portfolio/ProjectGrid.tsx` — current ImageReveal usage (direction "left"/"bottom" alternating)
-- `components/animations/ImageReveal.tsx` — current props (direction, delay, duration, scaleReveal)
-- `data/work.ts` — project categories
+- `mdx-components.tsx` — currently empty, need to register components
+- `components/blog/PostContent.tsx` — MDXRemote rendering
+- `components/blog/PostContent.module.css` — existing prose styles (blockquote, etc.)
+- `types/content.ts` — existing type patterns
 
-**Create:** (none)
+**Create:**
+- `components/blog/mdx/Callout.tsx` — branded aside box (accent border, icon, background tint)
+- `components/blog/mdx/Callout.module.css` — callout styles
+- `components/blog/mdx/PullQuote.tsx` — oversized quote that breaks out of content column
+- `components/blog/mdx/PullQuote.module.css` — pullquote styles (negative margins, large display font)
+- `components/blog/mdx/Stat.tsx` — big number with label (e.g., "30+" / "años de experiencia")
+- `components/blog/mdx/Stat.module.css` — stat styles (large Clash Display number, accent color)
 
 **Modify:**
-- `components/portfolio/ProjectGrid.tsx` — map ImageReveal direction based on `project.category`: branding→"left", fotografia→custom "develop" effect, web→custom "center" reveal, poster→"bottom", editorial→custom diagonal, video→"left". For categories needing custom reveals (foto develop, web center), use inline GSAP instead of ImageReveal.
-- `components/portfolio/ProjectGrid.module.css` — add `.developReveal` initial state (`filter: brightness(3) contrast(0.3) sepia(1)`) for photography cards
+- `mdx-components.tsx` — register Callout, PullQuote, Stat components
 
 **What to Build:**
-Each portfolio category gets its own reveal animation. Photography cards "develop" like film (bright/washed-out → normal over 1.2s). Web cards reveal from center outward (clipPath inset 50%→0). Posters wipe from bottom. Branding wipes from left. Editorial gets a diagonal wipe. The portfolio grid becomes a showcase of motion variety instead of uniform reveals.
+Three editorial MDX components. **Callout**: bordered aside with cream background, accent left border, optional icon (tip/warning/note types). **PullQuote**: full-bleed quote that breaks out of 680px content column with negative margins, using Clash Display italic at 28-36px, with top/bottom ochre borders. **Stat**: big number (Clash Display, 64px, accent) with small label below — for embedding impressive metrics in prose. All three are client components wrapped in MotionSection for scroll reveal.
+
+**Code to Adapt:**
+Callout:
+```tsx
+export function Callout({ type = "note", children }: { type?: "note" | "tip" | "warning"; children: ReactNode }) {
+  return (
+    <MotionSection as="div" variant="fade-up" className={styles.callout} data-type={type}>
+      <div className={styles.icon}>{icons[type]}</div>
+      <div className={styles.content}>{children}</div>
+    </MotionSection>
+  );
+}
+```
+
+PullQuote:
+```tsx
+export function PullQuote({ children, attribution }: { children: ReactNode; attribution?: string }) {
+  return (
+    <MotionSection as="div" variant="clip-up" className={styles.pullQuote}>
+      <blockquote>{children}</blockquote>
+      {attribution && <cite className={styles.attribution}>{attribution}</cite>}
+    </MotionSection>
+  );
+}
+```
+
+MDX registration:
+```tsx
+export function useMDXComponents(): MDXComponents {
+  return { Callout, PullQuote, Stat };
+}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Different categories animate differently on scroll. Photography has the "developing" film effect. Web expands from center. Variety visible when scrolling through mixed categories.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Components render when used in MDX files. Scroll reveal works.
 CHUNK_12_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_13() {
   local log="$LOG_DIR/chunk-13.log"
-  echo -e "${YELLOW}▶ Chunk 13/$TOTAL_CHUNKS: Kinetic GRAFICA — SplitText Animation${NC}"
+  echo -e "${YELLOW}▶ Chunk 13/$TOTAL_CHUNKS: Blog MDX Components — Gallery, VideoEmbed${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -784,56 +1114,81 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_13_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
 ## Research Findings
 
-### SplitText + useGSAP (already in gsap bundle)
-```tsx
-import { SplitText } from "gsap/SplitText";
-gsap.registerPlugin(SplitText);
-// Inside useGSAP:
-const split = new SplitText(ref, { type: "chars" });
-gsap.from(split.chars, { opacity: 0, y: 40, stagger: 0.05 });
-```
-Source: react-bits, Pixel-Perfect repos. Compatible with existing useGSAP scope pattern.
+### MotionSection Variants
+`fade-up | slide-left | slide-right | clip-up | scale-in | blur-in`
+Uses IntersectionObserver (15% threshold), adds `is-visible` class, fires `onVisible` callback.
 
-## Chunk 13/16: Kinetic "GRAFICA" — SplitText Per-Character Animation + Color
+## Chunk 13/16: Blog MDX Components — Gallery, VideoEmbed
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/home/HeroSection.tsx` — current hero timeline, `.grafica` element, how headline[1] renders
-- `components/home/HeroSection.module.css` — `.grafica` styles, `.animItem` initial state
+- `mdx-components.tsx` — current registrations (from chunk 12)
+- `components/blog/PostContent.module.css` — image breakout styles
 
-**Create:** (none)
+**Create:**
+- `components/blog/mdx/Gallery.tsx` — multi-image grid with lightbox overlay
+- `components/blog/mdx/Gallery.module.css` — responsive grid (2-3 columns), hover zoom, lightbox overlay
+- `components/blog/mdx/VideoEmbed.tsx` — branded YouTube/video wrapper
+- `components/blog/mdx/VideoEmbed.module.css` — 16:9 aspect ratio, play overlay, branded frame
 
 **Modify:**
-- `components/home/HeroSection.tsx` — import SplitText from gsap, register plugin. In useGSAP, create SplitText on `.grafica` element, split into chars. Replace the simple stagger with per-character animation: each char enters with `opacity: 0, y: 40, rotationX: 90`, stagger 0.05s. After entrance completes, apply chameleon colors via nth-child cycling (teal, ochre, purple). Use onComplete callback to add color classes.
-- `components/home/HeroSection.module.css` — add `.graficaChar` styles for SplitText-generated spans. Add nth-child color rules cycling through accent/ochre/purple. Remove gradient from `.grafica` (chunk 1 added it — replace with per-char colors since this is more impactful).
+- `mdx-components.tsx` — add Gallery, VideoEmbed to registrations
 
 **What to Build:**
-The word "GRÁFICA" becomes kinetic. SplitText splits it into individual characters. Each character enters with a 3D rotation (rotationX: 90→0) and vertical slide, staggered at 0.05s. After the entrance animation completes, each character gets its chameleon color via nth-child cycling (G=teal, R=ochre, Á=purple, F=teal, I=ochre, C=purple, A=teal). The hero becomes a memorable, brand-defining moment.
+**Gallery**: Accepts array of image objects `{ src, alt, caption? }`. Renders as responsive grid (2 cols on mobile, 3 on desktop) with ImageReveal on each image. Click opens a simple lightbox overlay (dark backdrop, large image, close button). Full-bleed — breaks out of 680px column. **VideoEmbed**: Accepts `url` (YouTube) and optional `caption`. Renders 16:9 container with custom play overlay (matching the video service play button style). On click, replaces overlay with actual iframe. Caption below in muted italic.
+
+**Code to Adapt:**
+Gallery grid:
+```tsx
+<MotionSection as="div" variant="fade-up" className={styles.gallery} stagger>
+  {images.map((img, i) => (
+    <button key={i} className={styles.galleryItem} onClick={() => setLightbox(i)}>
+      <ImageReveal direction={i % 2 === 0 ? "left" : "bottom"}>
+        <Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover" }} />
+      </ImageReveal>
+      {img.caption && <span className={styles.caption}>{img.caption}</span>}
+    </button>
+  ))}
+</MotionSection>
+```
+
+VideoEmbed:
+```tsx
+<div className={styles.videoWrap}>
+  {!playing ? (
+    <button onClick={() => setPlaying(true)} className={styles.playOverlay}>
+      <svg>/* play icon */</svg>
+    </button>
+  ) : (
+    <iframe src={embedUrl} allow="autoplay" ... />
+  )}
+  {caption && <p className={styles.videoCaption}>{caption}</p>}
+</div>
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. "GRÁFICA" characters enter one by one with 3D rotation. After animation, characters show cycling chameleon colors. SplitText cleans up properly.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Gallery renders responsive grid, lightbox opens on click. VideoEmbed shows play overlay, loads iframe on click.
 CHUNK_13_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_14() {
   local log="$LOG_DIR/chunk-14.log"
-  echo -e "${YELLOW}▶ Chunk 14/$TOTAL_CHUNKS: Apple-Style Text Illuminate on About Page${NC}"
+  echo -e "${YELLOW}▶ Chunk 14/$TOTAL_CHUNKS: Blog Post — Typography & Scroll Reveals${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -845,47 +1200,77 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_14_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 14/16: Apple-Style Text Illuminate on About Page
+## Research Findings
+
+### MotionSection Variants
+`fade-up | slide-left | slide-right | clip-up | scale-in | blur-in`
+
+### Blog Post Frontmatter
+`title, excerpt, category, date, isoDate, readingTime, featured, gradientFrom, gradientTo, image?`
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+
+## Chunk 14/16: Blog Post — Typography & Scroll Reveals
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/about/AboutStory.tsx` — current body text rendering, pull quote, milestones
-- `components/about/AboutStory.module.css` — `.body`, `.quote`, `.text` styles
-- `components/home/ManifestoSection.tsx` — reference for word-by-word scroll reveal pattern (segments, word spans, GSAP scrub)
-- `data/about.ts` — `story.body` string content
-
-**Create:** (none)
+- `components/blog/PostContent.tsx` — current MDXRemote rendering
+- `components/blog/PostContent.module.css` — all prose styles (242 lines: drop cap, counters, blockquotes, lists, code, images)
 
 **Modify:**
-- `data/about.ts` — convert `story.body` from plain string to segments array (like manifesto) with optional style markers for accent/ochre words
-- `components/about/AboutStory.tsx` — split body text into word spans (same pattern as ManifestoSection). Add useGSAP with ScrollTrigger scrub: words start at `color: var(--muted-light)` and illuminate to `color: var(--fg-dark)` on scroll. Words marked as accent illuminate to `var(--accent)`, ochre words to `var(--ochre)`.
-- `components/about/AboutStory.module.css` — add `.storyWord` base styles (color: muted-light, transition), `.storyWord.accent`, `.storyWord.ochre` for final colors
+- `components/blog/PostContent.tsx` — convert to client component if not already. Add MotionSection wrappers around content sections (each h2-to-h2 block). Add gradient accent from post meta as CSS variable.
+- `components/blog/PostContent.module.css` — large italic lead paragraph after each h2. Small-caps for first line of first paragraph in each section. Variable width: blockquotes and images break out wider (already partially done with -40px margins, enhance). Add hanging punctuation on blockquotes. Post gradient as subtle section divider accent.
 
 **What to Build:**
-Jesús's story text illuminates word-by-word as the user scrolls (Apple-style). Words start dim (muted-light) and transition to full color. Key phrases light up in chameleon colors: mentions of photography in ochre, design references in teal. Uses the same GSAP scrub pattern already proven in ManifestoSection. The "color flows through text" effect embodies the chameleon metaphor.
+Upgrade blog post typography from "clean but standard" to "editorial magazine." Each section (h2 + content until next h2) gets a MotionSection wrapper with `fade-up` variant for scroll reveal. First paragraph after each h2 gets slightly larger font (clamp 17-20px) and italic style as a "lead paragraph." Add `hanging-punctuation: first` on blockquotes. Section dividers (the h2 border-top) get a subtle gradient tint using the post's `gradientFrom` color. Images and blockquotes extend to `calc(100% + 120px)` with `-60px` margins for more dramatic breakout.
+
+**Code to Adapt:**
+Lead paragraph (CSS):
+```css
+.prose h2 + p {
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-style: italic;
+  color: var(--fg-dark);
+  line-height: 1.75;
+}
+```
+
+Gradient section divider:
+```css
+.prose h2 {
+  border-image: linear-gradient(to right, var(--post-gradient, var(--accent)), transparent) 1;
+  border-top-width: 2px;
+}
+```
+
+Pass gradient as CSS variable:
+```tsx
+<article className={styles.prose} style={{ "--post-gradient": meta.gradientFrom } as React.CSSProperties}>
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. About page body text starts dim and illuminates on scroll. Key phrases light up in accent colors. Scroll speed feels natural (not too fast, not too slow).
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Lead paragraphs render italic after h2. Section dividers show gradient. Content sections reveal on scroll. Images/quotes break out wider.
 CHUNK_14_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_15() {
   local log="$LOG_DIR/chunk-15.log"
-  echo -e "${YELLOW}▶ Chunk 15/$TOTAL_CHUNKS: Section-Specific Cursor Labels${NC}"
+  echo -e "${YELLOW}▶ Chunk 15/$TOTAL_CHUNKS: Blog Post — Header Upgrade & Reading Progress${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -897,50 +1282,77 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_15_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 15/16: Section-Specific Cursor Labels
+## Research Findings
+
+### GSAP Patterns (established in codebase)
+- `useGSAP(() => { ... }, { scope: ref })` for scoped animations with auto-cleanup
+
+### Blog Post Frontmatter
+`title, excerpt, category, date, isoDate, readingTime, featured, gradientFrom, gradientTo, image?`
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+
+## Chunk 15/16: Blog Post — Header Upgrade & Reading Progress
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/effects/CustomCursor.tsx` — current state machine (default/hover/project), GSAP ticker, data-cursor-project detection
-- `components/effects/CustomCursor.module.css` — `.cursor`, `.label` states
-- `components/home/ServiceAccordion.tsx` — section element structure
-- `components/portfolio/ProjectGrid.tsx` — grid wrapper structure
-- `components/contact/ContactHero.tsx` — section structure (read to confirm)
-
-**Create:** (none)
+- `components/blog/PostHeader.tsx` — current split-screen layout
+- `components/blog/PostHeader.module.css` — header styles (172 lines)
+- `components/effects/ScrollProgress.tsx` — existing implementation
+- `app/(site)/blog/[slug]/page.tsx` — page composition
 
 **Modify:**
-- `components/effects/CustomCursor.tsx` — add detection for `[data-cursor-label]` attribute on sections. When cursor enters a section with `data-cursor-label="Ver"`, show that label instead of default "Ver →". Add section detection: portfolio sections get "Ver", services get "→", contact gets "Hola".
-- `components/effects/CustomCursor.module.css` — add label variants for different text content, adjust label positioning
-- `components/home/ServiceAccordion.tsx` — add `data-cursor-label="→"` to section
-- `components/portfolio/ProjectGrid.tsx` — add `data-cursor-label="Ver"` to grid wrapper
-- `components/contact/ContactHero.tsx` — add `data-cursor-label="Hola"` to section
+- `components/blog/PostHeader.tsx` — add GSAP entrance animation (title words stagger in, metadata fades). Use post gradient colors as subtle wash on title column background.
+- `components/blog/PostHeader.module.css` — title column gets subtle gradient wash (5% opacity) from gradientFrom→transparent. Enhance breadcrumb integration.
+- `app/(site)/blog/[slug]/page.tsx` — add ScrollProgress component to blog post pages. Pass post gradient color as accent override.
 
 **What to Build:**
-Extend CustomCursor to read `data-cursor-label` attributes from sections. Each major section gets a cursor personality: portfolio shows "Ver", services shows "→", contact shows "Hola". The cursor label updates as the user scrolls between sections. Desktop only (mobile already hidden).
+Blog post header gets entrance animation: title words stagger in (similar to service card pattern — split by word, 80ms stagger, fade up). Category label and metadata fade in after title. The title column background gets a very subtle gradient wash using the post's `gradientFrom` at 5% opacity, giving each post a unique color identity. Add ScrollProgress to blog post pages — the existing component renders a progress bar at the top of the page. Modify it to accept an optional color prop for the post's gradient accent.
+
+**Code to Adapt:**
+Title word stagger (in PostHeader, convert to client component):
+```typescript
+useGSAP(() => {
+  gsap.from(".animWord", {
+    y: 40, opacity: 0, duration: 0.7, ease: "power3.out", stagger: 0.08,
+  });
+  gsap.from(metaRef.current, {
+    y: 20, opacity: 0, duration: 0.6, ease: "power3.out", delay: 0.4,
+  });
+}, { scope: headerRef });
+```
+
+Gradient wash:
+```css
+.titleCol {
+  background: linear-gradient(135deg, var(--post-gradient, transparent) 0%, transparent 60%);
+  background-blend-mode: soft-light;
+}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. Cursor label changes when hovering over different sections. Portfolio = "Ver", Services = "→", Contact = "Hola". No jank during transitions.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Title words animate in on load. Gradient wash visible on title column. ScrollProgress bar visible on blog posts.
 CHUNK_15_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
 
 run_chunk_16() {
   local log="$LOG_DIR/chunk-16.log"
-  echo -e "${YELLOW}▶ Chunk 16/$TOTAL_CHUNKS: Process Steps Timeline + Final Polish${NC}"
+  echo -e "${YELLOW}▶ Chunk 16/$TOTAL_CHUNKS: Blog Post — Related Posts & Author Presence${NC}"
 
   local context_section=""
   if [[ -n "$PREV_CONTEXT" ]]; then
     context_section="
-
 ### Previous Chunk Changes
 \`\`\`
 $PREV_CONTEXT
@@ -952,36 +1364,90 @@ Do NOT modify these files unless they are in YOUR file lists."
   claude --dangerously-skip-permissions --max-turns 50 \
     -p "$(cat <<'CHUNK_16_PROMPT'
 [Project] zona-grafica at /mnt/e/Projects/zona-grafica
-Stack: Next.js 16.1 · React 19.2 · TypeScript 5.9 · Bun · CSS Modules · GSAP 3 + ScrollTrigger + SplitText + Flip
-Check: `npx tsc --noEmit`
+Stack: Next.js 16, React 19, TypeScript 5.9, GSAP 3.14, Lenis, MDX, Biome, Bun
+Check: `npx tsc --noEmit && bun run lint`
 
-## Chunk 16/16: Process Steps Timeline + Final Polish
+## Research Findings
+
+### MotionSection Variants
+`fade-up | slide-left | slide-right | clip-up | scale-in | blur-in`
+Uses IntersectionObserver (15% threshold), adds `is-visible` class, fires `onVisible` callback.
+
+### Blog Post Frontmatter
+`title, excerpt, category, date, isoDate, readingTime, featured, gradientFrom, gradientTo, image?`
+
+### Design Tokens
+- Colors: `--accent: #2AA876`, `--ochre: #F5A623`, `--fg-dark: #1A1714`, `--muted: #7A756E`
+- Fonts: `--font-display: "Clash Display"`, `--font-sans: "Satoshi"`
+
+## Chunk 16/16: Blog Post — Related Posts & Author Presence
 
 **Read these files first** (do NOT explore beyond this list):
-- `components/services/ServicesProcess.tsx` — current step rendering (grid 2-col, numbered list)
-- `components/services/ServicesProcess.module.css` — `.step`, `.stepNumber`, `.stepTitle`, `.stepDescription`
-- `components/services/ServiceCard.tsx` — process pills (`.process`, `.step`)
-- `components/services/ServiceCard.module.css` — pill styling
+- `app/(site)/blog/[slug]/page.tsx` — current page composition (PostHeader + PostContent + BlogCTA)
+- `components/blog/BlogCTA.tsx` — existing P.D. signature section
+- `components/blog/PostGrid.tsx` — list item rendering (reuse pattern)
+- `lib/blog.ts` — getAllPosts function, post data access
 
-**Create:** (none)
+**Create:**
+- `components/blog/RelatedPosts.tsx` — "Sigue leyendo" section with 2-3 related posts
+- `components/blog/RelatedPosts.module.css` — card grid styles
+- `components/blog/mdx/AuthorAside.tsx` — inline author voice component for MDX
+- `components/blog/mdx/AuthorAside.module.css` — margin-note style (accent left border, J.H. initials)
 
 **Modify:**
-- `components/services/ServicesProcess.module.css` — redesign `.list` as vertical timeline with `::before` line connecting steps. Each `.step` gets a `::before` dot on the timeline. Line animates scaleY 0→1 on scroll.
-- `components/services/ServicesProcess.tsx` — add useGSAP for timeline line animation (scaleY) and sequential dot reveals
-- `components/services/ServiceCard.module.css` — convert `.process` pills to a compact inline timeline style (dots + small text) instead of bordered pills
-- `CLAUDE.md` — update Current Phase to reflect v2 completion
+- `app/(site)/blog/[slug]/page.tsx` — add RelatedPosts after BlogCTA. Pass current post slug and category for filtering.
+- `mdx-components.tsx` — register AuthorAside component
 
 **What to Build:**
-Two process step upgrades: (1) ServicesProcess (the "Así trabajamos" section) becomes a vertical timeline with a connecting line and dots that animate on scroll. The line draws itself (scaleY 0→1), dots appear sequentially. (2) ServiceCard process pills become a minimal inline timeline (small dots + text). Update CLAUDE.md phase status.
+**RelatedPosts**: Section showing 2-3 other posts (same category first, then recent). Rendered as horizontal cards with image thumbnail, title, and reading time. Wrapped in MotionSection with stagger. Uses `blur-in` variant. **AuthorAside**: MDX component for inline author commentary. Renders as a margin-note style aside with J.H. initials badge, accent left border, and italic text in slightly different tone. Used in MDX like `<AuthorAside>Esto es algo que aprendí después de 20 años...</AuthorAside>`. Creates author presence throughout the post, not just the P.D. at the end.
+
+**Code to Adapt:**
+RelatedPosts:
+```tsx
+export default async function RelatedPosts({ currentSlug, category }: Props) {
+  const allPosts = await getAllPosts();
+  const related = allPosts
+    .filter(p => p.meta.slug !== currentSlug)
+    .sort((a, b) => (a.meta.category === category ? -1 : 1))
+    .slice(0, 3);
+
+  return (
+    <MotionSection as="section" variant="fade-up" className={styles.section} stagger>
+      <h2 className={styles.heading}>Sigue leyendo</h2>
+      <div className={styles.grid}>
+        {related.map(post => (
+          <Link href={`/blog/${post.meta.slug}`} key={post.meta.slug} className={styles.card}>
+            {post.meta.image && <Image src={post.meta.image} ... />}
+            <h3>{post.meta.title}</h3>
+            <span>{post.meta.readingTime}</span>
+          </Link>
+        ))}
+      </div>
+    </MotionSection>
+  );
+}
+```
+
+AuthorAside:
+```tsx
+export function AuthorAside({ children }: { children: ReactNode }) {
+  return (
+    <aside className={styles.authorAside}>
+      <span className={styles.initials}>J.H.</span>
+      <div className={styles.asideContent}>{children}</div>
+    </aside>
+  );
+}
+```
 
 **Rules:**
 - Read ONLY the files listed above. Do NOT explore the codebase.
 - Implement ONLY what's described. No extras, no refactoring.
-- After implementing: `npx tsc --noEmit`
+- After implementing: `npx tsc --noEmit && bun run lint`
 - Fix ALL errors before finishing.
 - Do NOT ask questions.
 
-**Gate:** `npx tsc --noEmit` passes. ServicesProcess shows vertical timeline with animated line. ServiceCard process steps feel like a minimal timeline. CLAUDE.md updated.
+**Gate:** `npx tsc --noEmit && bun run lint` passes. Related posts appear after BlogCTA. AuthorAside renders in MDX content with margin-note styling.
 CHUNK_16_PROMPT
 )$context_section" < /dev/null 2>&1 | tee "$log"
 }
@@ -991,40 +1457,28 @@ CHUNK_16_PROMPT
 # ══════════════════════════════════════════════════════
 
 CHUNK_FUNCTIONS=(
-  run_chunk_1
-  run_chunk_2
-  run_chunk_3
-  run_chunk_4
-  run_chunk_5
-  run_chunk_6
-  run_chunk_7
-  run_chunk_8
-  run_chunk_9
-  run_chunk_10
-  run_chunk_11
-  run_chunk_12
-  run_chunk_13
-  run_chunk_14
-  run_chunk_15
-  run_chunk_16
+  run_chunk_1 run_chunk_2 run_chunk_3 run_chunk_4
+  run_chunk_5 run_chunk_6 run_chunk_7 run_chunk_8
+  run_chunk_9 run_chunk_10 run_chunk_11 run_chunk_12
+  run_chunk_13 run_chunk_14 run_chunk_15 run_chunk_16
 )
 CHUNK_NAMES=(
-  "Chameleon Gradient Typography"
-  "ServiceAccordion Dark Background + Adjusted Styles"
-  "Section-Specific Accent Colors"
-  "Purple Gets a Home"
-  "Portfolio Bento Grid Layout"
-  "Category-Specific Aspect Ratios + Color Badges"
-  "Per-Service Visual Themes"
-  "Service Card Layout Breaking"
-  "Dramatic Service Numbers"
-  "Editorial Rhythm — Pull Quotes + Section Numbers"
-  "ServiceAccordion Choreography"
-  "Portfolio Category Reveals"
-  "Kinetic GRAFICA — SplitText Animation"
-  "Apple-Style Text Illuminate on About Page"
-  "Section-Specific Cursor Labels"
-  "Process Steps Timeline + Final Polish"
+  "Google Maps Fix"
+  "Navbar — Asymmetric Layout & Structure"
+  "Navbar — Scroll Hide/Reveal"
+  "Navbar — Magnetic Links & Hover Animations"
+  "Navbar — Scroll Progress & Section Tracking"
+  "Portfolio — Coordinated Stagger & ParallaxDrift"
+  "Portfolio — Magnetic Tilt Hover"
+  "Portfolio — Cinematic Filter Transitions & Idle Float"
+  "Services — Card Text Animations & Parallax"
+  "Services — Process Steps Sequential Reveal"
+  "Blog Listing — Editorial Enhancement"
+  "Blog MDX Components — Callout, PullQuote, Stat"
+  "Blog MDX Components — Gallery, VideoEmbed"
+  "Blog Post — Typography & Scroll Reveals"
+  "Blog Post — Header Upgrade & Reading Progress"
+  "Blog Post — Related Posts & Author Presence"
 )
 
 for i in "${!CHUNK_FUNCTIONS[@]}"; do

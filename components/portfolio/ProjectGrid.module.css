@@ -36,6 +36,7 @@
   text-decoration: none;
   color: var(--fg);
   cursor: pointer;
+  will-change: transform, filter;
 }
 
 /* ─── Image Container ────────────────────────────────────── */
@@ -48,11 +49,7 @@
 
 .image {
   object-fit: cover;
-  transition: transform 0.7s var(--ease-out);
-}
-
-.card:hover .image {
-  transform: scale(1.04);
+  will-change: transform;
 }
 
 /* ─── Info — Below Image ─────────────────────────────────── */

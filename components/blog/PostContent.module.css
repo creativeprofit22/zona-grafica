@@ -23,7 +23,14 @@
   margin-bottom: var(--space-lg);
   color: var(--fg-dark);
   padding-top: var(--space-xl);
-  border-top: 1px solid var(--border-light);
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(
+      to right,
+      var(--post-gradient, var(--accent)),
+      transparent
+    )
+    1;
+  border-image-slice: 1;
   counter-increment: section;
 }
 
@@ -37,8 +44,11 @@
   letter-spacing: 0.1em;
 }
 
-.prose h2:first-child {
+/* First h2 in the prose (direct or wrapped in MotionSection) */
+.prose > h2:first-child,
+.prose > [data-animate]:first-child h2 {
   border-top: none;
+  border-image: none;
   padding-top: 0;
   margin-top: 0;
 }
@@ -70,9 +80,11 @@
   font-family: var(--font-display);
 }
 
-/* First paragraph after a heading — larger text */
-.prose h2 + p {
+/* First paragraph after a heading — lead paragraph */
+.prose h2 + p,
+.prose [data-animate] + p {
   font-size: clamp(17px, 1.8vw, 20px);
+  font-style: italic;
   line-height: 1.75;
   color: var(--fg-dark);
 }
@@ -139,7 +151,8 @@
 /* ─── Blockquotes — pull quote style ─────────────────────── */
 .prose blockquote {
   border-left: none;
-  margin: var(--space-2xl) -40px;
+  margin: var(--space-2xl) -60px;
+  hanging-punctuation: first;
   padding: var(--space-xl) 0;
   border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
@@ -209,8 +222,8 @@
 
 /* ─── Images — breakout width ────────────────────────────── */
 .prose img {
-  max-width: calc(100% + 80px);
-  margin-left: -40px;
+  max-width: calc(100% + 120px);
+  margin-left: -60px;
   height: auto;
   border-radius: 4px;
   margin-top: var(--space-xl);

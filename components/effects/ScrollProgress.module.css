@@ -6,8 +6,8 @@
   height: 4px;
   background: repeating-linear-gradient(
     to right,
-    var(--accent) 0px,
-    var(--accent) 7px,
+    var(--progress-color, var(--accent)) 0px,
+    var(--progress-color, var(--accent)) 7px,
     transparent 7px,
     transparent 8px
   );

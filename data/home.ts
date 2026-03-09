@@ -55,10 +55,6 @@ export const stats: Stat[] = [
   { value: "∞", label: "cafés en el estudio" },
 ];
 
-/* Testimonials removed — better to have zero than fake ones.
-   Will add real testimonials when available from clients. */
-export const testimonials: never[] = [];
-
 export const pullQuotes: PullQuoteData[] = [
   {
     text: "No hacemos diseño bonito. Hacemos diseño que mueve, que comunica, que conecta, que deja marca.",

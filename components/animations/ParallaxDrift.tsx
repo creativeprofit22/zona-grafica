@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type ReactNode, useRef } from "react";
-import styles from "./ImageReveal.module.css";
+import styles from "./ParallaxDrift.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 

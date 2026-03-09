@@ -23,8 +23,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
-    const body = await request.json();
-    const { path, referrer, utmSource, utmMedium, utmCampaign } = body;
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid request body" },
+        { status: 400 },
+      );
+    }
+    const { path, referrer, utmSource, utmMedium, utmCampaign } =
+      body as Record<string, unknown>;
 
     if (!path || typeof path !== "string" || path.length > 2048) {
       return NextResponse.json({ error: "path required" }, { status: 400 });
@@ -43,10 +52,11 @@ export async function POST(request: NextRequest) {
 
     await db.insert(pageViews).values({
       path: path.slice(0, 2048),
-      referrer: referrer?.slice(0, 2048) || null,
-      utmSource: utmSource?.slice(0, 256) || null,
-      utmMedium: utmMedium?.slice(0, 256) || null,
-      utmCampaign: utmCampaign?.slice(0, 256) || null,
+      referrer: typeof referrer === "string" ? referrer.slice(0, 2048) : null,
+      utmSource: typeof utmSource === "string" ? utmSource.slice(0, 256) : null,
+      utmMedium: typeof utmMedium === "string" ? utmMedium.slice(0, 256) : null,
+      utmCampaign:
+        typeof utmCampaign === "string" ? utmCampaign.slice(0, 256) : null,
       country,
       device,
       browser,

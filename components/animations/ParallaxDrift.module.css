@@ -1,0 +1,13 @@
+/* ─── Parallax drift ─────────────────────────────────────── */
+.parallaxWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallaxInner {
+  width: 100%;
+  height: 110%;
+  position: relative;
+  top: -5%;
+  will-change: transform;
+}

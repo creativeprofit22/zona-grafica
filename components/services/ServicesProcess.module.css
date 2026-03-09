@@ -57,10 +57,6 @@
 /* ─── Step ───────────────────────────────────────────────── */
 .step {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
-  align-items: baseline;
   padding: var(--space-lg) 0;
   border: none;
 }
@@ -83,6 +79,21 @@
   z-index: 1;
   opacity: var(--dot-opacity, 0);
   transform: scale(var(--dot-scale, 0));
+}
+
+/* ─── Step Content Wrapper (animated) ────────────────────── */
+.stepContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: baseline;
+  grid-column: 1 / -1;
+}
+
+/* Initial state for GSAP animation */
+.animStep {
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 /* ─── Step Header (Number + Title) ───────────────────────── */
@@ -136,9 +147,12 @@
   }
 
   .step {
+    padding: var(--space-md) 0;
+  }
+
+  .stepContent {
     grid-template-columns: 1fr;
     gap: var(--space-sm);
-    padding: var(--space-md) 0;
   }
 
   .step::before {

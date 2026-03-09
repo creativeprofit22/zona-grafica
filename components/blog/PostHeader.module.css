@@ -45,6 +45,17 @@
   justify-content: flex-end;
   padding: 140px 48px var(--space-3xl) 80px;
   position: relative;
+  background: linear-gradient(
+    135deg,
+    var(--post-gradient, transparent) 0%,
+    transparent 60%
+  );
+}
+
+/* ─── Word stagger animation ─────────────────────────────── */
+.word {
+  display: inline-block;
+  opacity: 0;
 }
 
 .categoryVertical {

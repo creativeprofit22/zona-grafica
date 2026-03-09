@@ -6,11 +6,10 @@ import HeroSection from "@/components/home/HeroSection";
 import ManifestoSection from "@/components/home/ManifestoSection";
 import ServiceAccordion from "@/components/home/ServiceAccordion";
 import StatsStrip from "@/components/home/StatsStrip";
-import TestimonialCarousel from "@/components/home/TestimonialCarousel";
 import PullQuote from "@/components/ui/PullQuote";
 import SectionNumber from "@/components/ui/SectionNumber";
 import { homeFAQ } from "@/data/faq";
-import { homeData, pullQuotes, stats, testimonials } from "@/data/home";
+import { homeData, pullQuotes, stats } from "@/data/home";
 import { services } from "@/data/services";
 import { siteConfig } from "@/data/site";
 import { projects } from "@/data/work";
@@ -81,8 +80,6 @@ export default function Home() {
           <SectionNumber n={4} />
           <StatsStrip stats={stats} />
         </div>
-
-        <TestimonialCarousel testimonials={testimonials} />
 
         <CTASection
           headline={cta.headline}

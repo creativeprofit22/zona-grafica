@@ -44,6 +44,8 @@
   align-items: center;
   padding-bottom: var(--space-2xl);
   border-bottom: 1px solid var(--border-light);
+  border-left: 4px solid var(--accent);
+  padding-left: var(--space-lg);
   margin-bottom: var(--space-xl);
   text-decoration: none;
   color: var(--fg-dark);
@@ -119,6 +121,17 @@
   border-radius: 4px;
 }
 
+/* ─── Reading Time Arc ──────────────────────────────────── */
+.readingTimeWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.readingArc {
+  flex-shrink: 0;
+}
+
 /* ─── List Posts (remaining) ─────────────────────────────── */
 .list {
   display: flex;
@@ -130,8 +143,9 @@
   grid-template-columns: 40px 1fr auto;
   gap: var(--space-md);
   align-items: start;
-  padding: var(--space-lg) 0;
+  padding: var(--space-lg) 0 var(--space-lg) var(--space-md);
   border-bottom: 1px solid var(--border-light);
+  border-left: 3px solid var(--accent);
   text-decoration: none;
   color: var(--fg-dark);
   transition: transform 0.3s ease;
@@ -199,6 +213,9 @@
   font-size: 11px;
   color: var(--muted-light);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* ─── Colophon ──────────────────────────────────────────── */

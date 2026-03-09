@@ -1,5 +1,10 @@
+"use client";
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 import type { BlogPostMeta } from "@/lib/blog";
 import styles from "./PostHeader.module.css";
 
@@ -8,10 +13,42 @@ interface Props {
 }
 
 export default function PostHeader({ meta }: Props) {
+  const headerRef = useRef<HTMLElement>(null);
+  const metaRef = useRef<HTMLDivElement>(null);
   const gradient = `linear-gradient(135deg, ${meta.gradientFrom}, ${meta.gradientTo})`;
 
+  useGSAP(
+    () => {
+      gsap.from(".animWord", {
+        y: 40,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: 0.08,
+      });
+      gsap.from(metaRef.current, {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        delay: 0.4,
+      });
+    },
+    { scope: headerRef },
+  );
+
+  const titleWords = meta.title.split(" ").map((word, i) => (
+    // biome-ignore lint/suspicious/noArrayIndexKey: stable word order from title string
+    <span key={`${word}-${i}`} className={`animWord ${styles.word}`}>
+      {word}{" "}
+    </span>
+  ));
+
   return (
-    <header className={meta.image ? styles.headerSplit : styles.header}>
+    <header
+      ref={headerRef}
+      className={meta.image ? styles.headerSplit : styles.header}
+    >
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
         <Link href="/blog" className={styles.breadcrumbLink}>
           ← Blog
@@ -20,10 +57,17 @@ export default function PostHeader({ meta }: Props) {
 
       {meta.image ? (
         <>
-          <div className={styles.titleCol}>
+          <div
+            className={styles.titleCol}
+            style={
+              {
+                "--post-gradient": `${meta.gradientFrom}0D`,
+              } as React.CSSProperties
+            }
+          >
             <span className={styles.categoryVertical}>{meta.category}</span>
-            <h1 className={styles.title}>{meta.title}</h1>
-            <div className={styles.meta}>
+            <h1 className={styles.title}>{titleWords}</h1>
+            <div ref={metaRef} className={styles.meta}>
               <time dateTime={meta.isoDate}>{meta.date}</time>
               <span className={styles.separator}>/</span>
               <span>{meta.readingTime}</span>
@@ -41,10 +85,17 @@ export default function PostHeader({ meta }: Props) {
           </div>
         </>
       ) : (
-        <div className={styles.titleOnly}>
+        <div
+          className={styles.titleOnly}
+          style={
+            {
+              "--post-gradient": `${meta.gradientFrom}0D`,
+            } as React.CSSProperties
+          }
+        >
           <span className={styles.category}>{meta.category}</span>
-          <h1 className={styles.titleLarge}>{meta.title}</h1>
-          <div className={styles.meta}>
+          <h1 className={styles.titleLarge}>{titleWords}</h1>
+          <div ref={metaRef} className={styles.meta}>
             <time dateTime={meta.isoDate}>{meta.date}</time>
             <span className={styles.separator}>/</span>
             <span>{meta.readingTime}</span>

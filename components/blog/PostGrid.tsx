@@ -4,6 +4,45 @@ import MotionSection from "@/components/animations/MotionSection";
 import type { BlogPostMeta } from "@/lib/blog";
 import styles from "./PostGrid.module.css";
 
+function ReadingArc({ minutes }: { minutes: number }) {
+  const pct = Math.min(minutes / 10, 1);
+  const r = 8;
+  const c = 2 * Math.PI * r;
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      className={styles.readingArc}
+      aria-hidden="true"
+    >
+      <circle
+        cx="10"
+        cy="10"
+        r={r}
+        fill="none"
+        stroke="var(--border-light)"
+        strokeWidth="2"
+      />
+      <circle
+        cx="10"
+        cy="10"
+        r={r}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="2"
+        strokeDasharray={`${c * pct} ${c}`}
+        transform="rotate(-90 10 10)"
+      />
+    </svg>
+  );
+}
+
+function parseMinutes(readingTime: string): number {
+  const match = readingTime.match(/(\d+)/);
+  return match ? Number.parseInt(match[1], 10) : 3;
+}
+
 interface Props {
   posts: BlogPostMeta[];
 }
@@ -31,8 +70,12 @@ export default function PostGrid({ posts }: Props) {
       </MotionSection>
 
       {/* Featured post */}
-      <MotionSection as="div" variant="fade-up">
-        <Link href={`/blog/${featured.slug}`} className={styles.featured}>
+      <MotionSection as="div" variant="clip-up">
+        <Link
+          href={`/blog/${featured.slug}`}
+          className={styles.featured}
+          style={{ borderLeftColor: featured.gradientFrom }}
+        >
           <div className={styles.featuredContent}>
             <span className={styles.featuredCategory}>{featured.category}</span>
             <h2 className={styles.featuredTitle}>{featured.title}</h2>
@@ -40,7 +83,10 @@ export default function PostGrid({ posts }: Props) {
             <div className={styles.featuredMeta}>
               <time dateTime={featured.isoDate}>{featured.date}</time>
               <span className={styles.metaDot}>·</span>
-              <span>{featured.readingTime}</span>
+              <span className={styles.readingTimeWrap}>
+                <ReadingArc minutes={parseMinutes(featured.readingTime)} />
+                {featured.readingTime}
+              </span>
             </div>
           </div>
           <div className={styles.featuredImage}>
@@ -65,13 +111,14 @@ export default function PostGrid({ posts }: Props) {
 
       {/* Remaining posts */}
       {rest.length > 0 && (
-        <MotionSection as="div" variant="fade-up">
+        <MotionSection as="div" variant="blur-in" stagger>
           <div className={styles.list}>
             {rest.map((post, i) => (
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
                 className={styles.listItem}
+                style={{ borderLeftColor: post.gradientFrom }}
               >
                 <span className={styles.listIndex}>
                   {String(i + 1).padStart(2, "0")}
@@ -82,7 +129,10 @@ export default function PostGrid({ posts }: Props) {
                 </div>
                 <div className={styles.listRight}>
                   <span className={styles.listCategory}>{post.category}</span>
-                  <span className={styles.listTime}>{post.readingTime}</span>
+                  <span className={styles.listTime}>
+                    <ReadingArc minutes={parseMinutes(post.readingTime)} />
+                    {post.readingTime}
+                  </span>
                 </div>
               </Link>
             ))}

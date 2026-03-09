@@ -1,0 +1,112 @@
+/* ─── Gallery — responsive grid with lightbox ─────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: var(--space-xl) -40px;
+}
+
+@media (min-width: 769px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+.galleryItem {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: zoom-in;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.galleryItem img {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.galleryItem:hover img {
+  transform: scale(1.05);
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--fg-light);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  text-align: left;
+  pointer-events: none;
+}
+
+/* ─── Lightbox overlay ────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  cursor: zoom-out;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--fg-light);
+  font-size: 24px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}
+
+.lightboxInner {
+  max-width: 1200px;
+  max-height: 90vh;
+  cursor: default;
+}
+
+.lightboxInner img {
+  max-height: 85vh;
+  border-radius: 4px;
+}
+
+.lightboxCaption {
+  text-align: center;
+  color: var(--muted-light);
+  font-size: 14px;
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gallery {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .lightbox {
+    padding: 20px;
+  }
+}

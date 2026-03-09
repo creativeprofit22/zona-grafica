@@ -13,19 +13,105 @@ import {
   useState,
 } from "react";
 import ImageReveal from "@/components/animations/ImageReveal";
+import ParallaxDrift from "@/components/animations/ParallaxDrift";
 import type { Project } from "@/types/content";
 import styles from "./ProjectGrid.module.css";
 import VideoEmbed, { PlayOverlay } from "./VideoEmbed";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ─── Idle Float for Featured Images (desktop only) ────── */
+function useIdleFloat(ref: RefObject<HTMLElement | null>) {
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+
+      const mm = gsap.matchMedia();
+      mm.add(
+        {
+          desktop: "(min-width: 769px)",
+          reducedMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          const { reducedMotion } = context.conditions as {
+            desktop: boolean;
+            reducedMotion: boolean;
+          };
+          if (reducedMotion) return;
+
+          gsap.to(el, {
+            y: 5,
+            duration: 4,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1,
+          });
+        },
+      );
+    },
+    { scope: ref },
+  );
+}
+
+/* ─── Magnetic Tilt Hover (desktop only) ───────────────── */
+function useTiltEffect(cardRef: RefObject<HTMLElement | null>) {
+  const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
+  const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
+
+  useGSAP(
+    () => {
+      const el = cardRef.current;
+      if (!el) return;
+
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 769px)", () => {
+        gsap.set(el, { transformPerspective: 800 });
+        xTo.current = gsap.quickTo(el, "rotateY", {
+          duration: 0.6,
+          ease: "power3.out",
+        });
+        yTo.current = gsap.quickTo(el, "rotateX", {
+          duration: 0.6,
+          ease: "power3.out",
+        });
+
+        return () => {
+          gsap.set(el, { clearProps: "transform" });
+          xTo.current = null;
+          yTo.current = null;
+        };
+      });
+    },
+    { scope: cardRef },
+  );
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!xTo.current || !yTo.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    xTo.current(x * 8);
+    yTo.current(y * -8);
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    xTo.current?.(0);
+    yTo.current?.(0);
+  }, []);
+
+  return { onMouseMove, onMouseLeave };
+}
+
 /* ─── Custom Reveal: Photography "film develop" effect ──── */
 function DevelopReveal({
   children,
   className,
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -41,6 +127,7 @@ function DevelopReveal({
           filter: "brightness(1) contrast(1) sepia(0)",
           opacity: 1,
           duration: 1.2,
+          delay,
           ease: "power2.out",
           scrollTrigger: {
             trigger: el,
@@ -64,9 +151,11 @@ function DevelopReveal({
 function CenterReveal({
   children,
   className,
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -81,6 +170,7 @@ function CenterReveal({
         {
           clipPath: "inset(0% 0% 0% 0%)",
           duration: 1,
+          delay,
           ease: "power3.inOut",
           scrollTrigger: {
             trigger: el,
@@ -104,9 +194,11 @@ function CenterReveal({
 function DiagonalReveal({
   children,
   className,
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -121,6 +213,7 @@ function DiagonalReveal({
         {
           clipPath: "polygon(0 0, 120% 0, 100% 100%, -20% 100%)",
           duration: 1.2,
+          delay,
           ease: "power3.inOut",
           scrollTrigger: {
             trigger: el,
@@ -140,40 +233,63 @@ function DiagonalReveal({
   );
 }
 
+/* ─── Idle Float Wrapper for Featured Cards ────────────── */
+function IdleFloat({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useIdleFloat(ref);
+  return <div ref={ref}>{children}</div>;
+}
+
 /* ─── Category → Reveal wrapper ─────────────────────────── */
 function CategoryImageWrap({
   category,
   children,
   className,
   index,
+  staggerIndex = 0,
 }: {
   category: string;
   children: ReactNode;
   className?: string;
   index: number;
+  staggerIndex?: number;
 }) {
+  const delay = staggerIndex * 0.15;
+
   switch (category) {
     case "fotografia":
-      return <DevelopReveal className={className}>{children}</DevelopReveal>;
+      return (
+        <DevelopReveal className={className} delay={delay}>
+          {children}
+        </DevelopReveal>
+      );
     case "web":
-      return <CenterReveal className={className}>{children}</CenterReveal>;
+      return (
+        <CenterReveal className={className} delay={delay}>
+          {children}
+        </CenterReveal>
+      );
     case "editorial":
-      return <DiagonalReveal className={className}>{children}</DiagonalReveal>;
+      return (
+        <DiagonalReveal className={className} delay={delay}>
+          {children}
+        </DiagonalReveal>
+      );
     case "branding":
       return (
-        <ImageReveal direction="left" className={className}>
+        <ImageReveal direction="left" delay={delay} className={className}>
           {children}
         </ImageReveal>
       );
     case "poster":
       return (
-        <ImageReveal direction="bottom" className={className}>
+        <ImageReveal direction="bottom" delay={delay} className={className}>
           {children}
         </ImageReveal>
       );
     case "video":
       return (
-        <ImageReveal direction="left" delay={0.1} className={className}>
+        <ImageReveal direction="left" delay={delay + 0.1} className={className}>
           {children}
         </ImageReveal>
       );
@@ -181,7 +297,7 @@ function CategoryImageWrap({
       return (
         <ImageReveal
           direction={index % 2 === 0 ? "left" : "bottom"}
-          delay={index % 2 === 0 ? 0 : 0.1}
+          delay={delay + (index % 2 === 0 ? 0 : 0.1)}
           className={className}
         >
           {children}
@@ -195,8 +311,18 @@ interface Props {
   gridRef?: RefObject<HTMLDivElement | null>;
 }
 
-function VideoCard({ project, index }: { project: Project; index: number }) {
+function VideoCard({
+  project,
+  index,
+  staggerIndex,
+}: {
+  project: Project;
+  index: number;
+  staggerIndex: number;
+}) {
   const [playing, setPlaying] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { onMouseMove, onMouseLeave } = useTiltEffect(cardRef);
 
   const handlePlay = useCallback(() => {
     setPlaying(true);
@@ -225,30 +351,53 @@ function VideoCard({ project, index }: { project: Project; index: number }) {
   }
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: decorative tilt effect
     <div
+      ref={cardRef}
       className={cardClass}
       data-flip-id={project.id}
       data-category={project.category}
       data-cursor-project
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
     >
-      <CategoryImageWrap
-        category={project.category}
-        index={index}
-        className={styles.imageWrap}
-      >
-        <Image
-          src={project.thumbnail}
-          alt={project.title}
-          fill
-          sizes={
-            project.featured
-              ? "(max-width: 768px) 100vw, 66vw"
-              : "(max-width: 768px) 100vw, 33vw"
-          }
-          className={styles.image}
-        />
-        <PlayOverlay onClick={handlePlay} />
-      </CategoryImageWrap>
+      {project.featured ? (
+        <IdleFloat>
+          <ParallaxDrift distance={20}>
+            <CategoryImageWrap
+              category={project.category}
+              index={index}
+              staggerIndex={staggerIndex}
+              className={styles.imageWrap}
+            >
+              <Image
+                src={project.thumbnail}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                className={styles.image}
+              />
+              <PlayOverlay onClick={handlePlay} />
+            </CategoryImageWrap>
+          </ParallaxDrift>
+        </IdleFloat>
+      ) : (
+        <CategoryImageWrap
+          category={project.category}
+          index={index}
+          staggerIndex={staggerIndex}
+          className={styles.imageWrap}
+        >
+          <Image
+            src={project.thumbnail}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className={styles.image}
+          />
+          <PlayOverlay onClick={handlePlay} />
+        </CategoryImageWrap>
+      )}
 
       <div className={styles.info}>
         <h3 className={styles.title}>{project.title}</h3>
@@ -262,6 +411,90 @@ function VideoCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
+function ProjectCard({
+  project,
+  index,
+  staggerIndex,
+}: {
+  project: Project;
+  index: number;
+  staggerIndex: number;
+}) {
+  const cardRef = useRef<HTMLAnchorElement>(null);
+  const { onMouseMove, onMouseLeave } = useTiltEffect(cardRef);
+
+  return (
+    <Link
+      ref={cardRef}
+      href={`/portafolio/${project.slug}`}
+      className={`${styles.card} ${project.featured ? styles.cardFeatured : styles.cardStandard}`}
+      data-flip-id={project.id}
+      data-category={project.category}
+      data-cursor-project
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
+      {project.featured ? (
+        <IdleFloat>
+          <ParallaxDrift distance={20}>
+            <CategoryImageWrap
+              category={project.category}
+              index={index}
+              staggerIndex={staggerIndex}
+              className={styles.imageWrap}
+            >
+              <Image
+                src={project.thumbnail}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                className={styles.image}
+              />
+            </CategoryImageWrap>
+          </ParallaxDrift>
+        </IdleFloat>
+      ) : (
+        <CategoryImageWrap
+          category={project.category}
+          index={index}
+          staggerIndex={staggerIndex}
+          className={styles.imageWrap}
+        >
+          <Image
+            src={project.thumbnail}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className={styles.image}
+          />
+        </CategoryImageWrap>
+      )}
+
+      <div className={styles.info}>
+        <h3 className={styles.title}>{project.title}</h3>
+        <div className={styles.meta}>
+          <span className={styles.category}>{project.category}</span>
+          <span className={styles.separator}>·</span>
+          <span className={styles.year}>{project.year}</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+/** Compute stagger index based on grid position (column within row) */
+function getStaggerIndex(index: number, projects: Project[]): number {
+  let col = 0;
+  for (let i = 0; i < index; i++) {
+    col += projects[i].featured ? 8 : 4;
+    if (col >= 12) col = col % 12;
+  }
+  // Map column position to stagger slot (0-2)
+  if (col === 0) return 0;
+  if (col <= 4) return 1;
+  return 2;
+}
+
 export default function ProjectGrid({ projects, gridRef }: Props) {
   if (projects.length === 0) {
     return (
@@ -273,47 +506,25 @@ export default function ProjectGrid({ projects, gridRef }: Props) {
 
   return (
     <div className={styles.grid} ref={gridRef} data-cursor-label="Ver">
-      {projects.map((project, i) =>
-        project.videoUrl ? (
-          <VideoCard key={project.id} project={project} index={i} />
-        ) : (
-          <Link
-            key={project.id}
-            href={`/portafolio/${project.slug}`}
-            className={`${styles.card} ${project.featured ? styles.cardFeatured : styles.cardStandard}`}
-            data-flip-id={project.id}
-            data-category={project.category}
-            data-cursor-project
-          >
-            <CategoryImageWrap
-              category={project.category}
-              index={i}
-              className={styles.imageWrap}
-            >
-              <Image
-                src={project.thumbnail}
-                alt={project.title}
-                fill
-                sizes={
-                  project.featured
-                    ? "(max-width: 768px) 100vw, 66vw"
-                    : "(max-width: 768px) 100vw, 33vw"
-                }
-                className={styles.image}
-              />
-            </CategoryImageWrap>
+      {projects.map((project, i) => {
+        const stagger = getStaggerIndex(i, projects);
 
-            <div className={styles.info}>
-              <h3 className={styles.title}>{project.title}</h3>
-              <div className={styles.meta}>
-                <span className={styles.category}>{project.category}</span>
-                <span className={styles.separator}>·</span>
-                <span className={styles.year}>{project.year}</span>
-              </div>
-            </div>
-          </Link>
-        ),
-      )}
+        return project.videoUrl ? (
+          <VideoCard
+            key={project.id}
+            project={project}
+            index={i}
+            staggerIndex={stagger}
+          />
+        ) : (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={i}
+            staggerIndex={stagger}
+          />
+        );
+      })}
     </div>
   );
 }

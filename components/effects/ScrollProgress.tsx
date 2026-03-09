@@ -7,7 +7,11 @@ import styles from "./ScrollProgress.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ScrollProgress() {
+interface Props {
+  color?: string;
+}
+
+export default function ScrollProgress({ color }: Props) {
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,5 +32,16 @@ export default function ScrollProgress() {
     };
   }, []);
 
-  return <div ref={barRef} className={styles.bar} aria-hidden="true" />;
+  return (
+    <div
+      ref={barRef}
+      className={styles.bar}
+      style={
+        color
+          ? ({ "--progress-color": color } as React.CSSProperties)
+          : undefined
+      }
+      aria-hidden="true"
+    />
+  );
 }

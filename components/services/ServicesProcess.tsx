@@ -62,8 +62,11 @@ export default function ServicesProcess() {
         },
       );
 
-      // Sequential dot reveals
+      // Sequential dot reveals + content cascade
       dots.forEach((dot, i) => {
+        const content = dot.querySelector(`.${styles.stepContent}`);
+
+        // Dot bounce
         gsap.to(dot, {
           "--dot-opacity": 1,
           "--dot-scale": 1,
@@ -74,8 +77,24 @@ export default function ServicesProcess() {
             start: "top 75%",
             toggleActions: "play none none none",
           },
-          delay: i * 0.05,
+          delay: i * 0.2,
         });
+
+        // Content reveal (tied to same trigger, extra delay)
+        if (content) {
+          gsap.from(content, {
+            y: 20,
+            opacity: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: dot,
+              start: "top 75%",
+              toggleActions: "play none none none",
+            },
+            delay: i * 0.2 + 0.15,
+          });
+        }
       });
     },
     { scope: sectionRef },
@@ -92,11 +111,13 @@ export default function ServicesProcess() {
         <ol className={styles.list}>
           {steps.map((step) => (
             <li key={step.number} className={styles.step}>
-              <div className={styles.stepHeader}>
-                <span className={styles.stepNumber}>{step.number}</span>
-                <h3 className={styles.stepTitle}>{step.title}</h3>
+              <div className={styles.stepContent}>
+                <div className={styles.stepHeader}>
+                  <span className={styles.stepNumber}>{step.number}</span>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                </div>
+                <p className={styles.stepDescription}>{step.description}</p>
               </div>
-              <p className={styles.stepDescription}>{step.description}</p>
             </li>
           ))}
         </ol>

@@ -17,7 +17,27 @@
     background var(--duration-normal) var(--ease-out),
     backdrop-filter var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out),
-    color var(--duration-normal) var(--ease-out);
+    color var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+/* ─── Progress Bar ───────────────────────────────────── */
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* Hidden state — slides up when scrolling down */
+.nav.hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
 }
 
 /* Scrolled state — always paper bg with dark text */
@@ -31,7 +51,7 @@
 .inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 32px;
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
@@ -61,14 +81,24 @@
   font-weight: 500;
   letter-spacing: 0;
   color: var(--muted);
-  transition: color var(--duration-normal) var(--ease-out);
+  overflow: hidden;
+  transition:
+    color var(--duration-normal) var(--ease-out),
+    opacity 0.3s var(--ease-out),
+    max-width 0.3s var(--ease-out);
+  max-width: 120px;
+  opacity: 1;
 }
 
-/* ─── Desktop Links — editorial treatment ────────────── */
+/* ─── Desktop Links ──────────────────────────────────── */
 .desktopLinks {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+}
+
+.navLinkWrap {
+  display: inline-flex;
 }
 
 .navLink {
@@ -76,20 +106,34 @@
   font-weight: 500;
   color: var(--muted);
   letter-spacing: 0.02em;
-  transition:
-    color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-out);
   display: flex;
   align-items: baseline;
   gap: 5px;
-  padding: 6px 14px;
-  border-radius: 100px;
+  padding: 6px 10px;
   position: relative;
+}
+
+/* Underline wipe from left */
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: var(--fg-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
 }
 
 .navLink:hover {
   color: var(--fg-dark);
-  background: rgba(26, 23, 20, 0.04);
 }
 
 .navLink.active {
@@ -98,14 +142,7 @@
 }
 
 .navLink.active::after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 14px;
-  right: 14px;
-  height: 1.5px;
-  background: var(--accent);
-  border-radius: 1px;
+  transform: scaleX(1);
 }
 
 .navNumber {
@@ -113,7 +150,15 @@
   color: var(--ochre);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  transition: color var(--duration-normal) var(--ease-out);
+  display: inline-block;
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+
+.navLink:hover .navNumber {
+  transform: scale(1.4);
+  color: var(--accent);
 }
 
 /* ─── Right Side ─────────────────────────────────────── */
@@ -121,6 +166,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  margin-left: auto;
 }
 
 /* CTA — editorial bracket marks */
@@ -245,9 +291,12 @@
   color: rgba(250, 249, 246, 0.55);
 }
 
+.nav.inverted .navLink::after {
+  background: var(--fg-light);
+}
+
 .nav.inverted .navLink:hover {
   color: var(--fg-light);
-  background: rgba(250, 249, 246, 0.08);
 }
 
 .nav.inverted .navLink.active {
@@ -281,7 +330,8 @@
 }
 
 .nav.scrolled .logoFull {
-  color: var(--muted);
+  opacity: 0;
+  max-width: 0;
 }
 
 .nav.scrolled .navLink {
@@ -290,7 +340,6 @@
 
 .nav.scrolled .navLink:hover {
   color: var(--fg-dark);
-  background: rgba(26, 23, 20, 0.04);
 }
 
 .nav.scrolled .navLink.active {

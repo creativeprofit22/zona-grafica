@@ -71,11 +71,16 @@ export default function PortfolioClient({ projects, categories }: Props) {
         onEnter: (elements) =>
           gsap.fromTo(
             elements,
-            { opacity: 0, scale: 0.9 },
-            { opacity: 1, scale: 1, duration: 0.4 },
+            { opacity: 0, scale: 0.95, filter: "blur(8px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5 },
           ),
         onLeave: (elements) =>
-          gsap.to(elements, { opacity: 0, scale: 0.9, duration: 0.3 }),
+          gsap.to(elements, {
+            opacity: 0,
+            scale: 0.95,
+            filter: "blur(8px)",
+            duration: 0.35,
+          }),
         onComplete: () => ScrollTrigger.refresh(),
       });
 

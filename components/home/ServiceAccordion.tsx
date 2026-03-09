@@ -145,6 +145,7 @@ export default function ServiceAccordion({ services }: Props) {
   const activeImage = services.find((s) => s.id === hoveredId)?.image;
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: decorative mouse tracking for cursor effect
     <section
       ref={sectionRef}
       className={styles.section}

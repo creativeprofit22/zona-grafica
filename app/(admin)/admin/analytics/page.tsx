@@ -83,7 +83,7 @@ export default async function AnalyticsPage() {
       .limit(15),
   ]);
 
-  const [todayResult] = todayResults;
+  const todayResult = todayResults[0] ?? { count: 0 };
   const total30d = dailyViews.reduce((sum, d) => sum + d.views, 0);
   const avgDaily = dailyViews.length > 0 ? Math.round(total30d / 30) : 0;
   const peakDay = dailyViews.reduce(

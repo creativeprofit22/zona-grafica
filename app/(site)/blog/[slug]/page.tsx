@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import BlogCTA from "@/components/blog/BlogCTA";
 import PostContent from "@/components/blog/PostContent";
 import PostHeader from "@/components/blog/PostHeader";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import ScrollProgress from "@/components/effects/ScrollProgress";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
@@ -62,9 +64,11 @@ export default async function BlogPostPage({ params }: Props) {
         }}
       />
 
+      <ScrollProgress color={post.meta.gradientFrom} />
       <PostHeader meta={post.meta} />
       <PostContent source={post.content} />
       <BlogCTA />
+      <RelatedPosts currentSlug={slug} category={post.meta.category} />
     </main>
   );
 }

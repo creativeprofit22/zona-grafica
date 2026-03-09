@@ -78,6 +78,7 @@
 }
 
 .inputError {
+  /* biome-ignore lint/complexity/noImportantStyles: must override input border states */
   border-bottom-color: var(--accent) !important;
 }
 

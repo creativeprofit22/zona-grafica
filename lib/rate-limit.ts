@@ -21,13 +21,14 @@ export function getClientIp(request: NextRequest): string {
   return request.headers.get("x-real-ip") ?? "unknown";
 }
 
+const MAX_KEYS = 10_000; // cap to prevent unbounded growth
 const rateLimit = new Map<string, { windowMs: number; timestamps: number[] }>();
 let lastCleanup = Date.now();
 const CLEANUP_INTERVAL = 60_000; // prune stale keys every 60s
 
-function cleanup() {
+function cleanup(force = false) {
   const now = Date.now();
-  if (now - lastCleanup < CLEANUP_INTERVAL) return;
+  if (!force && now - lastCleanup < CLEANUP_INTERVAL) return;
   lastCleanup = now;
   for (const [key, entry] of rateLimit) {
     const valid = entry.timestamps.filter((t) => now - t < entry.windowMs);
@@ -45,6 +46,8 @@ export function checkRateLimit(
   windowMs: number,
 ): boolean {
   cleanup();
+  // Force cleanup if map exceeds cap
+  if (rateLimit.size >= MAX_KEYS) cleanup(true);
   const now = Date.now();
   const entry = rateLimit.get(key);
   const timestamps = entry?.timestamps ?? [];

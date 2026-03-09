@@ -88,12 +88,14 @@ export default function HeroSection() {
         }
 
         // Continuous slow color shift — chameleon effect
+        let colorInterval: ReturnType<typeof setInterval>;
         tl.call(() => {
           let offset = 0;
-          setInterval(() => {
+          colorInterval = setInterval(() => {
             offset++;
-            for (let i = 0; i < split!.chars.length; i++) {
-              gsap.to(split!.chars[i], {
+            if (!split) return;
+            for (let i = 0; i < split.chars.length; i++) {
+              gsap.to(split.chars[i], {
                 color: colors[(i + offset) % colors.length],
                 duration: 1.2,
                 ease: "power1.inOut",
@@ -101,6 +103,11 @@ export default function HeroSection() {
             }
           }, 4000);
         });
+
+        // Cleanup interval on revert
+        return () => {
+          clearInterval(colorInterval);
+        };
       }
 
       // Footnotes fade in together

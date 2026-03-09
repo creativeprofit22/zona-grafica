@@ -16,8 +16,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
-    const { name, projectType, contact, message } = body;
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Solicitud inválida." },
+        { status: 400 },
+      );
+    }
+    const { name, projectType, contact, message } = body as Record<
+      string,
+      unknown
+    >;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json(
