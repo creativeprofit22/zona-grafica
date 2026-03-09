@@ -142,7 +142,7 @@ export default function Navbar() {
               width={153}
               height={40}
               className={styles.logoImage}
-              priority
+              preload
             />
             <span className={styles.logoFull}>Zona Gráfica</span>
           </Link>

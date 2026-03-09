@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Analytics from "@/components/Analytics";
 import { siteConfig } from "@/data/site";
 import { organizationSchema, webSiteSchema } from "@/lib/jsonld";
@@ -23,19 +24,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
+
   return (
     <html lang="es" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning nonce={nonce}>
         <a className="skip-to-content" href="#main-content">
           Ir al contenido
         </a>
         <script
           type="application/ld+json"
+          nonce={nonce}
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema()).replace(
@@ -46,6 +50,7 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
+          nonce={nonce}
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(webSiteSchema()).replace(/</g, "\\u003c"),

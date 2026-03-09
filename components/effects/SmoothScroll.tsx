@@ -24,6 +24,7 @@ export default function SmoothScroll({
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
+      autoRaf: false,
     });
     lenisRef.current = lenis;
 
