@@ -2,16 +2,17 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Image from "next/image";
 import { useRef } from "react";
 import { clients } from "@/data/clients";
 import styles from "./ClientMarquee.module.css";
 
-/* Two rows of client names scrolling in opposite directions */
-const ROW_1 = clients.slice(0, 7).map((c) => c.name);
-const ROW_2 = clients.slice(7).map((c) => c.name);
+/* Two rows scrolling in opposite directions */
+const ROW_1 = clients.slice(0, 7);
+const ROW_2 = clients.slice(7);
 
 /* Triple the items for seamless loop (original + 2 clones) */
-function tripled(arr: string[]) {
+function tripled<T>(arr: T[]): T[] {
   return [...arr, ...arr, ...arr];
 }
 
@@ -20,7 +21,7 @@ function MarqueeRow({
   reverse,
   rowRef,
 }: {
-  items: string[];
+  items: typeof clients;
   reverse?: boolean;
   rowRef: React.RefObject<HTMLDivElement | null>;
 }) {
@@ -32,11 +33,17 @@ function MarqueeRow({
         className={`${styles.slide} ${reverse ? styles.slideReverse : ""}`}
         aria-hidden="true"
       >
-        {tripleItems.map((name, i) => (
+        {tripleItems.map((client, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: tripled array needs index for unique keys
-          <span key={`${name}-${i}`} className={styles.item}>
-            <span className={styles.dot} aria-hidden="true" />
-            <span className={styles.name}>{name}</span>
+          <span key={`${client.name}-${i}`} className={styles.item}>
+            <Image
+              src={client.logo}
+              alt={client.name}
+              width={160}
+              height={80}
+              className={styles.logo}
+              unoptimized={client.logo.endsWith(".svg")}
+            />
           </span>
         ))}
       </div>
