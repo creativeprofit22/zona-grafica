@@ -29,6 +29,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Reading x-nonce header is required — Next.js uses the await headers() call
+  // to discover the nonce and apply it to its own bootstrap <script> tags.
+  // Without this, CSP blocks all client-side JavaScript.
   const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
@@ -39,7 +42,6 @@ export default async function RootLayout({
         </a>
         <script
           type="application/ld+json"
-          nonce={nonce}
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema()).replace(
@@ -50,7 +52,6 @@ export default async function RootLayout({
         />
         <script
           type="application/ld+json"
-          nonce={nonce}
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(webSiteSchema()).replace(/</g, "\\u003c"),

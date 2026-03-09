@@ -66,7 +66,10 @@ export default async function BlogPostPage({ params }: Props) {
 
       <ScrollProgress color={post.meta.gradientFrom} />
       <PostHeader meta={post.meta} />
-      <PostContent source={post.content} />
+      <PostContent
+        source={post.content}
+        gradientFrom={post.meta.gradientFrom}
+      />
       <BlogCTA />
       <RelatedPosts currentSlug={slug} category={post.meta.category} />
     </main>

@@ -2,6 +2,12 @@ import type { MDXComponents } from "mdx/types";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import MotionSection from "@/components/animations/MotionSection";
+import { AuthorAside } from "@/components/blog/mdx/AuthorAside";
+import { Callout } from "@/components/blog/mdx/Callout";
+import { Gallery } from "@/components/blog/mdx/Gallery";
+import { PullQuote } from "@/components/blog/mdx/PullQuote";
+import { Stat } from "@/components/blog/mdx/Stat";
+import { VideoEmbed } from "@/components/blog/mdx/VideoEmbed";
 import styles from "./PostContent.module.css";
 
 interface Props {
@@ -15,6 +21,12 @@ const mdxComponents: MDXComponents = {
       <h2 {...props} />
     </MotionSection>
   ),
+  AuthorAside,
+  Callout,
+  Gallery,
+  PullQuote,
+  Stat,
+  VideoEmbed,
 };
 
 export default function PostContent({ source, gradientFrom }: Props) {

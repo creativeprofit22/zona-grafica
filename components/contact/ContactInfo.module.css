@@ -123,13 +123,21 @@
   height: 320px;
   overflow: hidden;
   border-radius: 2px;
-  /* Match site's paper/cream palette */
-  filter: grayscale(0.85) sepia(0.25) contrast(0.95) brightness(1.05);
-  transition: filter 0.6s ease;
 }
 
-.mapFrame:hover {
-  filter: grayscale(0.3) sepia(0.1) contrast(1) brightness(1);
+/* Filter overlay avoids stacking-context issues with iframes */
+.mapFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(242, 237, 231, 0.35);
+  mix-blend-mode: color;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.mapFrame:hover::after {
+  opacity: 0.15;
 }
 
 .mapFrame iframe {

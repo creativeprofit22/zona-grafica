@@ -114,13 +114,6 @@ export interface FAQItem {
   answer: string;
 }
 
-export interface BlogCategory {
-  slug: string;
-  label: string;
-  description: string;
-  color: string;
-}
-
 export interface ValueItem {
   title: string;
   description: string;

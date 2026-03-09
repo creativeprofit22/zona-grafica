@@ -66,6 +66,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     const cause = (err as { cause?: { code?: string } })?.cause;
     if (cause?.code === "ECONNREFUSED" || cause?.code === "ENOTFOUND") {
+      console.warn("Tracking DB unavailable:", cause.code);
       return NextResponse.json({ ok: true, skipped: true });
     }
     console.error("Tracking error:", err);

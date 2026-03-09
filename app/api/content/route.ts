@@ -6,6 +6,11 @@ import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 export const dynamic = "force-dynamic";
 
 export async function PUT(request: NextRequest) {
+  const authenticated = await verifySession();
+  if (!authenticated) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const ip = getClientIp(request);
 
   if (!checkRateLimit(`content:${ip}`, 20, 60_000)) {
@@ -13,11 +18,6 @@ export async function PUT(request: NextRequest) {
       { error: "Too many requests. Please try again later." },
       { status: 429 },
     );
-  }
-
-  const authenticated = await verifySession();
-  if (!authenticated) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   let body: unknown;
