@@ -203,6 +203,16 @@
   opacity: 0;
 }
 
+/* ─── Center Expand Reveal (web) ────────────────────────── */
+.centerReveal {
+  clip-path: inset(50% 50% 50% 50%);
+}
+
+/* ─── Diagonal Wipe Reveal (editorial) ──────────────────── */
+.diagonalReveal {
+  clip-path: polygon(0 0, 0 0, -20% 100%, -20% 100%);
+}
+
 /* ─── Empty State ────────────────────────────────────────── */
 .empty {
   grid-column: 1 / -1;

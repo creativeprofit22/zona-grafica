@@ -9,11 +9,12 @@ import type { Project } from "@/types/content";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const FlipPlugin: typeof Flip = require("gsap/Flip").default;
 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCallback, useMemo, useRef, useState } from "react";
 import ProjectFilter from "./ProjectFilter";
 import ProjectGrid from "./ProjectGrid";
 
-gsap.registerPlugin(FlipPlugin);
+gsap.registerPlugin(FlipPlugin, ScrollTrigger);
 
 interface Category {
   slug: string;
@@ -75,6 +76,7 @@ export default function PortfolioClient({ projects, categories }: Props) {
           ),
         onLeave: (elements) =>
           gsap.to(elements, { opacity: 0, scale: 0.9, duration: 0.3 }),
+        onComplete: () => ScrollTrigger.refresh(),
       });
 
       flipStateRef.current = null;

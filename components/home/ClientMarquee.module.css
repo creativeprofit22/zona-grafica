@@ -1,132 +1,107 @@
-/* ─── Client Strip — Inline Editorial ───────────────────── */
+/* ─── Client Marquee — Infinite Dual-Row Scroll ──────── */
 .wrapper {
-  padding: clamp(2rem, 4vw, 3.5rem) 0;
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
   border-top: 1px solid var(--stone);
   border-bottom: 1px solid var(--stone);
   background: var(--bg-paper);
   overflow: hidden;
 }
 
-.inner {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 4vw, 3rem);
-  text-align: center;
-}
-
-/* ─── Tagline above ─────────────────────────────────────── */
+/* ─── Tagline ──────────────────────────────────────────── */
 .tagline {
   font-family: var(--font-display);
-  font-size: clamp(0.75rem, 1.2vw, 0.875rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  margin: 0 0 1.25rem;
-  opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
+  text-align: center;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.visible .tagline {
-  opacity: 1;
-  transform: translateY(0);
+/* ─── Marquee container ────────────────────────────────── */
+.marquee {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
-/* ─── Sentence ──────────────────────────────────────────── */
-.sentence {
-  font-family: var(--font-display);
-  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-  line-height: 1.8;
-  color: var(--fg-dark);
-  margin: 0;
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.7s ease 0.15s,
-    transform 0.7s ease 0.15s;
+/* ─── Track — clips overflow, holds the sliding row ───── */
+.track {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
 }
 
-.visible .sentence {
-  opacity: 1;
-  transform: translateY(0);
+/* ─── Slide — the moving strip ─────────────────────────── */
+.slide {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  width: max-content;
+  will-change: transform;
 }
 
-.prefix,
-.suffix {
-  color: var(--muted);
-  font-weight: 400;
-}
-
-.separator {
-  color: var(--muted);
-  font-weight: 400;
-}
-
-/* ─── Client name with parentheses ──────────────────────── */
-.client {
-  display: inline;
+/* ─── Individual client item ──────────────────────────── */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   white-space: nowrap;
-  position: relative;
-  cursor: default;
+  flex-shrink: 0;
 }
 
-.paren {
-  color: var(--stone);
-  font-weight: 300;
-  transition: color 0.3s ease;
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: 0.6;
 }
 
 .name {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 500;
   color: var(--fg-dark);
-  position: relative;
+  letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
 
-.name::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 1.5px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ─── Hover states ──────────────────────────────────────── */
-.client:hover .name {
+.item:hover .name {
   color: var(--accent);
 }
 
-.client:hover .paren {
-  color: var(--accent);
+.item:hover .dot {
+  opacity: 1;
 }
 
-.client:hover .name::after {
-  transform: scaleX(1);
-}
-
-/* ─── Responsive ────────────────────────────────────────── */
+/* ─── Responsive ──────────────────────────────────────── */
 @media (max-width: 640px) {
-  .sentence {
-    line-height: 2;
+  .name {
+    font-size: 0.95rem;
+  }
+
+  .slide {
+    gap: 1.25rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tagline,
-  .sentence {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .name::after {
-    transition: none;
+  .slide {
+    animation-play-state: paused;
   }
 }

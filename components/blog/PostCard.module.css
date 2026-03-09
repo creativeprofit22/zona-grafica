@@ -17,16 +17,32 @@
   transform: translateX(4px);
 }
 
-/* ─── Gradient Accent ────────────────────────────────────── */
-.gradient {
+/* ─── Visual — image or gradient ─────────────────────────── */
+.visual {
+  position: relative;
   width: 100%;
   height: 200px;
   border-radius: 6px;
+  overflow: hidden;
+}
+
+.gradient {
+  width: 100%;
+  height: 100%;
   transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out);
 }
 
 .card:hover .gradient {
   opacity: 0.85;
+}
+
+.card:hover .image {
+  transform: scale(1.04);
 }
 
 /* ─── Content ────────────────────────────────────────────── */
@@ -111,7 +127,7 @@
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .gradient {
+  .visual {
     height: 160px;
   }
 

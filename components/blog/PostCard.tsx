@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { BlogPostMeta } from "@/lib/blog";
 import styles from "./PostCard.module.css";
@@ -9,12 +10,24 @@ interface Props {
 export default function PostCard({ post }: Props) {
   return (
     <Link href={`/blog/${post.slug}`} className={styles.card}>
-      <div
-        className={styles.gradient}
-        style={{
-          background: `linear-gradient(135deg, ${post.gradientFrom}, ${post.gradientTo})`,
-        }}
-      />
+      <div className={styles.visual}>
+        {post.image ? (
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className={styles.image}
+          />
+        ) : (
+          <div
+            className={styles.gradient}
+            style={{
+              background: `linear-gradient(135deg, ${post.gradientFrom}, ${post.gradientTo})`,
+            }}
+          />
+        )}
+      </div>
 
       <div className={styles.content}>
         <div className={styles.top}>

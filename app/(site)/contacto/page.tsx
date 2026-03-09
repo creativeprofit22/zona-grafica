@@ -20,7 +20,7 @@ export default function ContactoPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: "Contacto — Zona Gráfica",
+              name: "Contacto · Zona Gráfica",
               description: "Escríbenos para cotizar tu proyecto de diseño.",
               url: "/contacto",
             }),

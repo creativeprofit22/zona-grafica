@@ -1,57 +1,92 @@
-.cursor {
+/* ─── Chameleon Eye Cursor ──────────────────────────── */
+
+/* ─── Eye — almond / vesica piscis shape ───────────── */
+.eye {
   position: fixed;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 24px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--fg-light);
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  mix-blend-mode: difference;
+  will-change: transform;
+  overflow: hidden;
+  transition:
+    width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    background 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    border-radius 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.25s ease;
+}
+
+.eye.visible {
+  opacity: 1;
+}
+
+/* ─── Pupil — dark circle inside eye ───────────────── */
+.pupil {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--fg-dark);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  transition:
+    width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.3s ease;
+}
+
+/* ─── Orbit ring — elastic-follow circle ───────────── */
+.orbit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--fg-light);
+  background: transparent;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
   opacity: 0;
   mix-blend-mode: difference;
-  will-change: transform, width, height, opacity;
+  will-change: transform, width, height;
   transition:
-    width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-    height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-    background 0.3s ease,
-    mix-blend-mode 0.3s ease;
+    width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.3s ease,
+    border-width 0.3s ease,
+    opacity 0.3s ease;
 }
 
-.cursor.visible {
-  opacity: 1;
+.orbit.visible {
+  opacity: 0.6;
 }
 
-.cursor.hover {
-  width: 40px;
-  height: 40px;
-  background: var(--fg-light);
-  mix-blend-mode: difference;
-}
-
-.cursor.project {
-  width: 80px;
-  height: 80px;
-  background: var(--accent);
-  mix-blend-mode: normal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* ─── Label — text overlay for project/section ─────── */
 .label {
   position: fixed;
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 10000;
+  z-index: 10001;
   transform: translate(-50%, -50%);
   opacity: 0;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-light);
   white-space: nowrap;
   will-change: transform, opacity;
@@ -62,17 +97,89 @@
   opacity: 1;
 }
 
-.cursor.section {
-  width: 60px;
-  height: 60px;
+/* ─── Hover state — blink + enlarge ────────────────── */
+.eye.eyeHover {
+  height: 14px;
+}
+
+.eye.eyeHover .pupil {
+  width: 8px;
+  height: 8px;
+}
+
+.orbit.orbitHover {
+  width: 48px;
+  height: 48px;
+  opacity: 0.8;
+}
+
+/* ─── Project state — wide open, accent fill ─────────*/
+.eye.eyeProject {
+  width: 80px;
+  height: 48px;
   background: var(--accent);
   mix-blend-mode: normal;
 }
 
-/* Hide on touch / small screens */
+.eye.eyeProject .pupil {
+  opacity: 0;
+}
+
+.orbit.visible.orbitProject {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* ─── Section state — medium, accent fill ──────────── */
+.eye.eyeSection {
+  width: 60px;
+  height: 36px;
+  background: var(--accent);
+  mix-blend-mode: normal;
+}
+
+.eye.eyeSection .pupil {
+  opacity: 0;
+}
+
+/* ─── Logo state — circle matching logo size ────────── */
+.eye.eyeLogo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fg-light);
+  mix-blend-mode: difference;
+}
+
+.eye.eyeLogo .pupil {
+  opacity: 0;
+}
+
+.orbit.orbitLogo {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+/* ─── Form state — just the dot ────────────────────── */
+.eye.eyeForm {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.eye.eyeForm .pupil {
+  opacity: 0;
+}
+
+/* ─── Hide on touch / small screens ────────────────── */
 @media (hover: none), (max-width: 768px) {
-  .cursor,
+  .eye,
+  .orbit,
   .label {
-    display: none !important;
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
   }
 }

@@ -17,11 +17,11 @@ import { projects } from "@/data/work";
 import { faqSchema, webPageSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — Estudio Creativo en ${siteConfig.location.city}`,
+  title: `${siteConfig.name} ·Estudio Creativo en ${siteConfig.location.city}`,
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    title: `${siteConfig.name} ·${siteConfig.tagline}`,
     description: siteConfig.description,
     type: "website",
     url: "/",
@@ -40,7 +40,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: `${siteConfig.name} — ${siteConfig.tagline}`,
+              name: `${siteConfig.name} ·${siteConfig.tagline}`,
               description: siteConfig.description,
               url: "/",
             }),

@@ -1,0 +1,59 @@
+/* ─── Blog CTA — "P.D." Conversational Aside ────────────── */
+.coda {
+  padding: var(--space-2xl) 48px var(--space-3xl);
+  background: var(--bg-paper);
+}
+
+.inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border-light);
+}
+
+.pd {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.02em;
+}
+
+.message {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.6;
+  color: var(--fg-dark);
+  margin: 0 0 var(--space-lg);
+}
+
+.link,
+.serviceLink {
+  color: var(--fg-dark);
+  text-decoration: none;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 1px;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.serviceLink:hover {
+  color: var(--accent);
+}
+
+.sig {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .coda {
+    padding: var(--space-xl) 20px var(--space-2xl);
+  }
+}

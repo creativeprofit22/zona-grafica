@@ -85,7 +85,23 @@ CSS convention: `.animItem { opacity: 0; }` as initial state, GSAP sets final va
 
 ## Current Phase
 
-v2 visual upgrade complete — all 16 chunks implemented. Editorial typography, GSAP animations, vertical timelines, portfolio grid with Flip transitions, and per-service visual themes are all in place.
+v3 polish pass in progress. v2 visual upgrade was complete (16 chunks). Now refining UX, animations, and moving away from templateized patterns.
+
+## Tooling — MANDATORY
+
+**Motif** (`/mnt/e/Projects/motif`) — Design system audit/critique tool. MUST be used before design work. Fix any errors in motif first, then run `motif analyze`, `motif audit`, `motif critique` on this project. The analyzer package had a missing module (`packages/analyzer/src/classification/index.js`) — fix that first.
+
+## Last Session (2026-03-08)
+
+Session 1 of v3 polish. Implemented: cursor ring+dot, hero caret+color wave, client marquee rewrite, blog CTA+images, MotionSection variants, contact map embed, video service image. Build green. User reviewed and found multiple issues — full context in memory file `v3-polish-context.md`.
+
+## Next Steps
+
+1. **FIX MOTIF FIRST** — Fix missing module `packages/analyzer/src/classification/index.js` in `/mnt/e/Projects/motif`, then run analyze/audit/critique on this project. All design decisions must be informed by Motif output.
+2. **Bugs**: Google Maps blank in contact, portfolio animations didn't deploy (ProjectGrid uses CategoryImageWrap not MotionSection), contact form select text color mismatch, footer seal overlaps newsletter, about stats may show zeros
+3. **Cursor**: Too transparent, needs MORE creative design (agency-worthy, unique) while keeping mix-blend-mode:difference for chameleon logo tracing. Don't break UX.
+4. **Design upgrades**: Sticky header nav+button look generic on desktop, all buttons look templateized/cheap, blog post template headline+body lacks creativity, footer seal design is poor
+5. Read `~/.claude/projects/-mnt-e-Projects-zona-grafica/memory/v3-polish-context.md` for FULL detailed context on every issue
 
 ## Code Quality — Zero Tolerance
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import BlogCTA from "@/components/blog/BlogCTA";
 import PostContent from "@/components/blog/PostContent";
 import PostHeader from "@/components/blog/PostHeader";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
@@ -63,6 +64,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       <PostHeader meta={post.meta} />
       <PostContent source={post.content} />
+      <BlogCTA />
     </main>
   );
 }

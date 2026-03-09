@@ -52,13 +52,15 @@ export default function HeroSection() {
         stagger: 0.15,
       });
 
-      // GRÁFICA chars enter with 3D rotation
+      // GRÁFICA chars enter with 3D rotation + color wave
       if (split) {
         const colors = [
           "var(--accent)",
           "var(--ochre)",
           "var(--purple, #8B5CF6)",
         ];
+
+        // Entrance animation
         tl.to(
           split.chars,
           {
@@ -68,15 +70,37 @@ export default function HeroSection() {
             duration: 0.8,
             ease: "power3.out",
             stagger: 0.05,
-            onComplete: () => {
-              for (let i = 0; i < split!.chars.length; i++) {
-                (split!.chars[i] as HTMLElement).style.color =
-                  colors[i % colors.length];
-              }
-            },
           },
           "-=0.6",
         );
+
+        // Staggered color wave — each letter gets its color one by one
+        for (let i = 0; i < split.chars.length; i++) {
+          tl.to(
+            split.chars[i],
+            {
+              color: colors[i % colors.length],
+              duration: 0.4,
+              ease: "power2.out",
+            },
+            `-=${i === 0 ? 0 : 0.3}`,
+          );
+        }
+
+        // Continuous slow color shift — chameleon effect
+        tl.call(() => {
+          let offset = 0;
+          setInterval(() => {
+            offset++;
+            for (let i = 0; i < split!.chars.length; i++) {
+              gsap.to(split!.chars[i], {
+                color: colors[(i + offset) % colors.length],
+                duration: 1.2,
+                ease: "power1.inOut",
+              });
+            }
+          }, 4000);
+        });
       }
 
       // Footnotes fade in together
@@ -150,10 +174,11 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Line 5: "habla →" — with arrow, offset */}
+        {/* Line 5: "habla" — with blinking caret (design that speaks) */}
         <div className={`${styles.line} ${styles.lineHabla}`}>
           <span className={`${styles.habla} ${styles.animItem}`}>
-            {hero.headline[3]} <span className={styles.arrow}>→</span>
+            {hero.headline[3]}
+            <span className={styles.caret} aria-hidden="true" />
           </span>
         </div>
       </div>

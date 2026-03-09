@@ -3,11 +3,11 @@ import type { ManifestoSegment, TeamMember, ValueItem } from "@/types/content";
 export const story = {
   headline: "30 años haciendo diseño desde San Miguel de Allende",
   intro:
-    "Fundé Zona Gráfica en 1993 porque creo que el buen diseño no es un lujo — es la forma más honesta de comunicar. Desde entonces, este estudio ha sido mi manera de contar historias visuales para la cultura, el turismo, la educación y la iniciativa privada de Guanajuato y más allá.",
+    "Fundé Zona Gráfica en 1993 porque creo que el buen diseño no es un lujo, es la forma más honesta de comunicar. Desde entonces, este estudio ha sido mi manera de contar historias visuales para la cultura, el turismo, la educación y la iniciativa privada de Guanajuato y más allá.",
   bodySegments: [
     { text: "Durante 22 años hemos diseñado la imagen del" },
     {
-      text: "GIFF — el Guanajuato International Film Festival —",
+      text: "GIFF, el Guanajuato International Film Festival,",
       style: "accent" as const,
     },
     { text: "donde he tenido el privilegio de" },
@@ -42,7 +42,7 @@ export const values: ValueItem[] = [
   {
     title: "Diseño con raíz",
     description:
-      "Cada proyecto está enraizado en su contexto — la historia, el lugar, la gente. No aplicamos fórmulas: escuchamos, investigamos y diseñamos desde lo auténtico.",
+      "Cada proyecto está enraizado en su contexto: la historia, el lugar, la gente. No aplicamos fórmulas. Escuchamos, investigamos y diseñamos desde lo auténtico.",
   },
   {
     title: "Obsesión por el detalle",

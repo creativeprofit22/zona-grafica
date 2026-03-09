@@ -12,7 +12,7 @@ import { aboutPageSchema, faqSchema } from "@/lib/jsonld";
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "Conoce a Zona Gráfica — estudio creativo fundado por Jesús Herrera en San Miguel de Allende, Guanajuato.",
+    "Conoce a Zona Gráfica ·estudio creativo fundado por Jesús Herrera en San Miguel de Allende, Guanajuato.",
   alternates: { canonical: "/nosotros" },
 };
 
@@ -25,7 +25,7 @@ export default function NosotrosPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             aboutPageSchema({
-              name: "Nosotros — Zona Gráfica",
+              name: "Nosotros ·Zona Gráfica",
               description: story.intro,
             }),
           ).replace(/</g, "\\u003c"),

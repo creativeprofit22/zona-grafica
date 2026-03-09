@@ -103,6 +103,41 @@
   color: var(--accent);
 }
 
+/* ─── Styled Map ─────────────────────────────────────────── */
+.mapWrap {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--stone);
+}
+
+.mapLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.mapFrame {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 2px;
+  /* Match site's paper/cream palette */
+  filter: grayscale(0.85) sepia(0.25) contrast(0.95) brightness(1.05);
+  transition: filter 0.6s ease;
+}
+
+.mapFrame:hover {
+  filter: grayscale(0.3) sepia(0.1) contrast(1) brightness(1);
+}
+
+.mapFrame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* ─── Closing ────────────────────────────────────────────── */
 .closing {
   margin-top: var(--space-2xl);

@@ -72,7 +72,7 @@ export default function AboutStory({ segments }: Props) {
     { scope: textRef, dependencies: [isMounted] },
   );
 
-  // Milestone counter animation
+  // Milestone counter animation — ScrollTrigger fires when milestones enter viewport
   useGSAP(
     () => {
       const container = milestonesRef.current;
@@ -83,7 +83,10 @@ export default function AboutStory({ segments }: Props) {
       );
 
       values.forEach((el, i) => {
-        const target = Number.parseInt(el.textContent || "0", 10);
+        const target = Number.parseInt(
+          el.getAttribute("data-target") || "0",
+          10,
+        );
         const obj = { val: 0 };
 
         gsap.to(obj, {
@@ -92,13 +95,13 @@ export default function AboutStory({ segments }: Props) {
           ease: "power2.out",
           delay: i * 0.1,
           snap: { val: 1 },
+          onUpdate() {
+            el.textContent = String(Math.round(obj.val));
+          },
           scrollTrigger: {
             trigger: container,
             start: "top 80%",
             toggleActions: "play none none none",
-          },
-          onUpdate() {
-            el.textContent = String(Math.round(obj.val));
           },
         });
       });
@@ -118,7 +121,11 @@ export default function AboutStory({ segments }: Props) {
     ));
 
   return (
-    <MotionSection className={styles.section} data-theme="cream">
+    <MotionSection
+      className={styles.section}
+      data-theme="cream"
+      variant="fade-up"
+    >
       <div className={styles.inner} ref={sectionRef}>
         <div className={styles.labelRow}>
           <span className={styles.number}>(01)</span>
@@ -129,7 +136,7 @@ export default function AboutStory({ segments }: Props) {
           <div className={styles.pullQuote}>
             <span className={styles.quoteMarks}>"</span>
             <blockquote className={styles.quote}>
-              El buen diseño no es un lujo — es la forma más honesta de
+              El buen diseño no es un lujo, es la forma más honesta de
               comunicar.
             </blockquote>
           </div>
@@ -148,7 +155,9 @@ export default function AboutStory({ segments }: Props) {
 
         <div ref={milestonesRef} className={styles.milestones}>
           <div className={styles.milestone}>
-            <span className={styles.milestoneValue}>22</span>
+            <span className={styles.milestoneValue} data-target="22">
+              22
+            </span>
             <span className={styles.milestoneLabel}>
               años diseñando
               <br />
@@ -156,21 +165,27 @@ export default function AboutStory({ segments }: Props) {
             </span>
           </div>
           <div className={styles.milestone}>
-            <span className={styles.milestoneValue}>33</span>
+            <span className={styles.milestoneValue} data-target="33">
+              33
+            </span>
             <span className={styles.milestoneLabel}>
               edición del Cervantino
-              <br />— nuestro cartel
+              <br />· nuestro cartel
             </span>
           </div>
           <div className={styles.milestone}>
-            <span className={styles.milestoneValue}>475</span>
+            <span className={styles.milestoneValue} data-target="475">
+              475
+            </span>
             <span className={styles.milestoneLabel}>
               aniversario de SMA
-              <br />— libro conmemorativo
+              <br />· libro conmemorativo
             </span>
           </div>
           <div className={styles.milestone}>
-            <span className={styles.milestoneValue}>5</span>
+            <span className={styles.milestoneValue} data-target="5">
+              5
+            </span>
             <span className={styles.milestoneLabel}>
               libros de arte
               <br />

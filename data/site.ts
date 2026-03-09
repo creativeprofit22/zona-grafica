@@ -2,7 +2,7 @@ import type { NavLink, SiteConfig } from "@/types/content";
 
 export const siteConfig: SiteConfig = {
   name: "Zona Gráfica",
-  tagline: "Diseño con raíz — desde San Miguel de Allende, desde 1993",
+  tagline: "Diseño con raíz · San Miguel de Allende, desde 1993",
   description:
     "Despacho de diseño con más de 30 años creando identidades, carteles, libros y marcas desde San Miguel de Allende. Branding, editorial, web, fotografía, ilustración y cartelería para cultura, turismo y empresa.",
   url: "https://zonagrafica.com.mx",

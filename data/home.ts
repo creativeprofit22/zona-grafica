@@ -13,7 +13,7 @@ export const homeData: HomeData = {
       { text: "Fundé Zona Gráfica" },
       { text: "porque creo que", style: "italic" },
       { text: "el diseño no es decoración", style: "bold-accent" },
-      { text: "— es" },
+      { text: "es" },
       { text: "comunicación.", style: "bold" },
       { text: "Llevamos más de" },
       { text: "30 años", style: "ochre" },
@@ -31,7 +31,7 @@ export const homeData: HomeData = {
       { text: "No seguimos tendencias." },
       { text: "Hacemos diseño con raíz.", style: "bold-accent" },
     ],
-    attribution: "— Jesús Herrera, fundador",
+    attribution: "Jesús Herrera, fundador",
   },
   cta: {
     headline: "¿Tienes una idea? Platiquemos.",
@@ -61,7 +61,7 @@ export const testimonials: never[] = [];
 
 export const pullQuotes: PullQuoteData[] = [
   {
-    text: "No hacemos diseño bonito. Hacemos diseño que mueve — que comunica, que conecta, que deja marca.",
+    text: "No hacemos diseño bonito. Hacemos diseño que mueve, que comunica, que conecta, que deja marca.",
     accentPhrase: "diseño que mueve",
   },
 ];

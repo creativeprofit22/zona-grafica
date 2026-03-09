@@ -236,52 +236,26 @@
   color: var(--ochre);
 }
 
-/* ─── Postmark Stamp ─────────────────────────────────────── */
+/* ─── Postal Cancellation Mark (Matasellos) ─────────────── */
 .stamp {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%) rotate(-12deg);
-  pointer-events: none;
-  opacity: 0.12;
+  width: 130px;
+  color: rgba(245, 166, 35, 0.25);
+  transform: rotate(-12deg);
+  transition:
+    color 0.4s ease,
+    transform 0.4s ease;
+  flex-shrink: 0;
 }
 
-.stampInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  border: 2px solid var(--fg-light);
-  border-radius: 50%;
-  width: 140px;
-  height: 140px;
-  justify-content: center;
-  padding: 12px;
+.stamp:hover {
+  color: rgba(245, 166, 35, 0.45);
+  transform: rotate(-8deg);
 }
 
-.stampText {
-  font-size: 10px;
-  color: var(--fg-light);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 500;
-}
-
-.stampCity {
-  font-size: 9px;
-  color: var(--fg-light);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.stampYear {
-  font-size: 10px;
-  color: var(--fg-light);
-  letter-spacing: 0.15em;
-  font-weight: 500;
+.stampSvg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ─── Bottom Bar ─────────────────────────────────────────── */
@@ -319,18 +293,12 @@
   }
 
   .stamp {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: rotate(-12deg);
-    opacity: 0.1;
-    justify-self: center;
-    margin-top: var(--space-sm);
+    display: none;
   }
 
   .bottom {
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     text-align: center;
   }
 }

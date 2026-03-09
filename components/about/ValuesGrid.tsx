@@ -8,7 +8,7 @@ interface Props {
 
 export default function ValuesGrid({ values }: Props) {
   return (
-    <MotionSection className={styles.section} stagger>
+    <MotionSection className={styles.section} stagger variant="slide-left">
       <div className={styles.inner}>
         <div className={styles.labelRow}>
           <span className={styles.number}>(02)</span>

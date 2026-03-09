@@ -14,7 +14,7 @@ export const homeFAQ: FAQItem[] = [
   {
     question: "¿Trabajan con clientes fuera de San Miguel de Allende?",
     answer:
-      "Por supuesto. Trabajamos con clientes en toda la república y también internacionales. La comunicación fluye igual de bien en remoto — lo importante es entender tu visión.",
+      "Por supuesto. Trabajamos con clientes en toda la república y también internacionales. La comunicación fluye igual de bien en remoto; lo importante es entender tu visión.",
   },
   {
     question: "¿Qué incluye un proyecto de diseño web?",
@@ -32,7 +32,7 @@ export const aboutFAQ: FAQItem[] = [
   {
     question: "¿Cómo es el proceso de trabajo?",
     answer:
-      "Empezamos con una conversación para entender tu proyecto. Luego investigamos, conceptualizamos, diseñamos y refinamos. Tú estás involucrado en cada etapa — nada se hace a ciegas.",
+      "Empezamos con una conversación para entender tu proyecto. Luego investigamos, conceptualizamos, diseñamos y refinamos. Tú estás involucrado en cada etapa, nada se hace a ciegas.",
   },
   {
     question: "¿Qué necesito para empezar un proyecto?",

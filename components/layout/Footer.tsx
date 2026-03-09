@@ -106,15 +106,6 @@ export default function Footer() {
           </p>
           <NewsletterForm />
         </div>
-
-        {/* ── Postmark Stamp ── */}
-        <div className={styles.stamp}>
-          <div className={styles.stampInner}>
-            <span className={styles.stampText}>Hecho en</span>
-            <span className={styles.stampCity}>San Miguel de Allende</span>
-            <span className={styles.stampYear}>· 1993 ·</span>
-          </div>
-        </div>
       </div>
 
       {/* ── Bottom bar ── */}
@@ -125,6 +116,121 @@ export default function Footer() {
         <p className={styles.craft}>
           Hecho en San Miguel de Allende, GTO · Desde 1993
         </p>
+
+        {/* ── Postal Cancellation Mark (Matasellos) ── */}
+        <div className={styles.stamp} aria-hidden="true">
+          <svg
+            viewBox="0 0 180 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.stampSvg}
+            role="img"
+          >
+            <title>Zona Grafica · S.M.A. 1993</title>
+            {/* Cancellation lines */}
+            <line
+              x1="0"
+              y1="38"
+              x2="180"
+              y2="38"
+              stroke="currentColor"
+              strokeWidth="0.75"
+            />
+            <line
+              x1="0"
+              y1="50"
+              x2="180"
+              y2="50"
+              stroke="currentColor"
+              strokeWidth="0.75"
+            />
+            <line
+              x1="0"
+              y1="62"
+              x2="180"
+              y2="62"
+              stroke="currentColor"
+              strokeWidth="0.75"
+            />
+
+            {/* Elliptical outline */}
+            <ellipse
+              cx="90"
+              cy="50"
+              rx="65"
+              ry="40"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              fill="var(--bg-ink)"
+            />
+
+            {/* Arc paths for curved text */}
+            <defs>
+              <path id="topArc" d="M 35,50 A 55,32 0 0 1 145,50" />
+              <path id="bottomArc" d="M 140,56 A 55,32 0 0 1 40,56" />
+            </defs>
+
+            {/* Top curved text: ZONA GRAFICA */}
+            <text
+              fill="currentColor"
+              fontSize="9"
+              fontWeight="700"
+              letterSpacing="0.12em"
+              textAnchor="middle"
+            >
+              <textPath href="#topArc" startOffset="50%">
+                ZONA GR&#193;FICA
+              </textPath>
+            </text>
+
+            {/* Star separators */}
+            <text
+              fill="currentColor"
+              fontSize="7"
+              textAnchor="middle"
+              x="42"
+              y="48"
+            >
+              &#9670;
+            </text>
+            <text
+              fill="currentColor"
+              fontSize="7"
+              textAnchor="middle"
+              x="138"
+              y="48"
+            >
+              &#9670;
+            </text>
+
+            {/* Center text: S.M.A. */}
+            <text
+              x="90"
+              y="56"
+              fill="currentColor"
+              fontSize="18"
+              fontWeight="700"
+              letterSpacing="0.08em"
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              S.M.A.
+            </text>
+
+            {/* Bottom curved text: 1993 */}
+            <text
+              fill="currentColor"
+              fontSize="8.5"
+              fontWeight="600"
+              letterSpacing="0.15em"
+              textAnchor="middle"
+            >
+              <textPath href="#bottomArc" startOffset="50%">
+                &#9670; 1993 &#9670;
+              </textPath>
+            </text>
+          </svg>
+        </div>
       </div>
     </footer>
   );

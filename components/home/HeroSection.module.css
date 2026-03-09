@@ -115,10 +115,25 @@
   letter-spacing: -0.03em;
 }
 
-.arrow {
-  color: var(--accent);
-  margin-left: 0.15em;
-  font-weight: 400;
+/* Blinking caret — "design that speaks" */
+.caret {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--accent);
+  margin-left: 0.12em;
+  vertical-align: baseline;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ─── Footnotes — asterisk style at bottom left ──────── */

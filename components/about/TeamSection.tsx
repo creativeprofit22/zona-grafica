@@ -15,7 +15,11 @@ export default function TeamSection({ members }: Props) {
   if (!member) return null;
 
   return (
-    <MotionSection className={styles.section} data-theme="cream">
+    <MotionSection
+      className={styles.section}
+      data-theme="cream"
+      variant="blur-in"
+    >
       <div className={styles.inner}>
         <div className={styles.labelRow}>
           <span className={styles.number}>(03)</span>

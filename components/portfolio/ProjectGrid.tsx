@@ -94,11 +94,7 @@ function CenterReveal({
   );
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{ clipPath: "inset(50% 50% 50% 50%)" }}
-    >
+    <div ref={ref} className={`${styles.centerReveal} ${className ?? ""}`}>
       {children}
     </div>
   );
@@ -138,11 +134,7 @@ function DiagonalReveal({
   );
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{ clipPath: "polygon(0 0, 0 0, -20% 100%, -20% 100%)" }}
-    >
+    <div ref={ref} className={`${styles.diagonalReveal} ${className ?? ""}`}>
       {children}
     </div>
   );

@@ -176,7 +176,7 @@ export const projects: Project[] = [
   {
     id: "giff-fotografia",
     slug: "giff-fotografia",
-    title: "GIFF — Retratos",
+    title: "GIFF / Retratos",
     client: "Guanajuato International Film Festival",
     category: "fotografia",
     year: 2023,
@@ -267,7 +267,7 @@ export const projects: Project[] = [
   {
     id: "cervantino-cartel-historico",
     slug: "cervantino-cartel-historico",
-    title: "Cervantino — Carteles",
+    title: "Cervantino / Carteles",
     client: "Festival Internacional Cervantino",
     category: "poster",
     year: 2019,
@@ -293,7 +293,7 @@ export const projects: Project[] = [
   {
     id: "giff-web",
     slug: "giff-web",
-    title: "GIFF — Web",
+    title: "GIFF / Web",
     client: "Guanajuato International Film Festival",
     category: "web",
     year: 2023,
@@ -306,7 +306,7 @@ export const projects: Project[] = [
   {
     id: "duncan-web",
     slug: "duncan-web",
-    title: "Duncan — Web",
+    title: "Duncan / Web",
     client: "Duncan Galería",
     category: "web",
     year: 2022,
@@ -348,7 +348,7 @@ export const projects: Project[] = [
   {
     id: "giff-cineminuto-viaje",
     slug: "giff-cineminuto-viaje",
-    title: "El Cine es un Viaje — GIFF",
+    title: "El Cine es un Viaje · GIFF",
     client: "Guanajuato International Film Festival",
     category: "video",
     year: 2024,
@@ -376,7 +376,7 @@ export const projects: Project[] = [
   {
     id: "dojo-muva",
     slug: "dojo-muva",
-    title: "Dojo — Muva",
+    title: "Dojo · Muva",
     client: "Muva",
     category: "video",
     year: 2023,
@@ -404,7 +404,7 @@ export const projects: Project[] = [
   {
     id: "sma-wellness",
     slug: "sma-wellness",
-    title: "SMA — Wellness",
+    title: "SMA · Wellness",
     client: "Consejo Turístico de San Miguel de Allende",
     category: "video",
     year: 2021,
@@ -418,7 +418,7 @@ export const projects: Project[] = [
   {
     id: "turismo-negocios-ags",
     slug: "turismo-negocios-ags",
-    title: "Turismo de Negocios — Aguascalientes",
+    title: "Turismo de Negocios · Aguascalientes",
     client: "Gobierno de Aguascalientes",
     category: "video",
     year: 2022,
@@ -452,7 +452,7 @@ export const caseStudies: CaseStudy[] = [
     brief:
       "Cardo Café necesitaba una identidad que reflejara su propuesta: café de especialidad en un espacio con alma artesanal, ubicado en el corazón de San Miguel de Allende.",
     approach:
-      "Desarrollamos un sistema visual inspirado en la planta del cardo — orgánico, resistente, con carácter. La paleta de colores terrosos y la tipografía manuscrita conectan con la calidez del lugar.",
+      "Desarrollamos un sistema visual inspirado en la planta del cardo: orgánico, resistente, con carácter. La paleta de colores terrosos y la tipografía manuscrita conectan con la calidez del lugar.",
     result:
       "La nueva identidad posicionó a Cardo Café como referencia de café artesanal en la región. El reconocimiento de marca aumentó significativamente en los primeros meses.",
     gallery: [

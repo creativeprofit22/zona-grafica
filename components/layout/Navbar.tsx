@@ -72,7 +72,12 @@ export default function Navbar() {
         className={`${styles.nav} ${scrolled ? styles.scrolled : ""} ${inverted ? styles.inverted : ""}`}
       >
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo} aria-label="Inicio">
+          <Link
+            href="/"
+            className={styles.logo}
+            aria-label="Inicio"
+            data-cursor-logo
+          >
             <Image
               src="/images/chameleon-logo.png"
               alt=""

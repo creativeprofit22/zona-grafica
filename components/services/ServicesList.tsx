@@ -29,10 +29,10 @@ export default function ServicesList({ services }: Props) {
     ) {
       elements.push(
         <div key={`compact-${i}`} className={styles.compactRow}>
-          <MotionSection as="div">
+          <MotionSection as="div" variant="slide-left">
             <ServiceCard service={services[i]} layout="compact" />
           </MotionSection>
-          <MotionSection as="div">
+          <MotionSection as="div" variant="slide-right">
             <ServiceCard service={services[i + 1]} layout="compact" />
           </MotionSection>
         </div>,
@@ -41,7 +41,11 @@ export default function ServicesList({ services }: Props) {
     } else {
       const reversed = layout === "wide" && i >= 5;
       elements.push(
-        <MotionSection key={services[i].id} as="div">
+        <MotionSection
+          key={services[i].id}
+          as="div"
+          variant={reversed ? "slide-right" : "slide-left"}
+        >
           <ServiceCard
             service={services[i]}
             layout={layout}

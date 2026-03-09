@@ -1,24 +1,36 @@
-/* ─── Post Header ────────────────────────────────────────── */
+/* ─── Post Header — Split-Screen Magazine Spread ──────────── */
+
+/* Split layout (with image) */
+.headerSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 85vh;
+  position: relative;
+  background: var(--bg-paper);
+}
+
+/* Fallback layout (no image) */
 .header {
-  padding: 160px 48px 0;
+  padding-top: 140px;
   background: var(--bg-paper);
   color: var(--fg-dark);
+  position: relative;
 }
 
-.inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-/* ─── Breadcrumb ─────────────────────────────────────────── */
+/* ─── Breadcrumb — top-left corner ───────────────────────── */
 .breadcrumb {
-  margin-bottom: var(--space-xl);
+  position: absolute;
+  top: 100px;
+  left: 48px;
+  z-index: 2;
 }
 
 .breadcrumbLink {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--muted);
   text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
@@ -26,53 +38,134 @@
   color: var(--accent);
 }
 
-/* ─── Category ───────────────────────────────────────────── */
-.category {
-  display: inline-block;
+/* ─── Title Column (split layout, left side) ─────────────── */
+.titleCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 140px 48px var(--space-3xl) 80px;
+  position: relative;
+}
+
+.categoryVertical {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
+  letter-spacing: 0.15em;
   color: var(--accent);
-  margin-bottom: var(--space-md);
 }
 
-/* ─── Title ──────────────────────────────────────────────── */
 .title {
-  font-size: clamp(32px, 6vw, 64px);
-  letter-spacing: -0.03em;
+  font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
-  line-height: 1.1;
-  max-width: 800px;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--fg-dark);
+  margin-bottom: var(--space-lg);
 }
 
-/* ─── Meta ───────────────────────────────────────────────── */
 .meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: var(--space-lg);
-  font-size: 14px;
+  gap: 10px;
+  font-size: 13px;
   color: var(--muted);
 }
 
-.dot {
-  opacity: 0.5;
+.separator {
+  color: var(--muted-light);
 }
 
-/* ─── Accent Bar ─────────────────────────────────────────── */
+/* ─── Image Column (split layout, right side) ────────────── */
+.imageCol {
+  position: relative;
+  overflow: hidden;
+}
+
+.heroImg {
+  object-fit: cover;
+}
+
+/* ─── Title-Only Layout (no image fallback) ──────────────── */
+.titleOnly {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-xl) 48px var(--space-xl);
+}
+
+.category {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 4px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  display: inline-block;
+  margin-bottom: var(--space-lg);
+}
+
+.titleLarge {
+  font-size: clamp(36px, 7vw, 72px);
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  line-height: 1.05;
+  max-width: 900px;
+  color: var(--fg-dark);
+  margin-bottom: var(--space-lg);
+}
+
+/* ─── Accent Bar (fallback when no image) ────────────────── */
 .accent {
   width: 100%;
   height: 4px;
   border-radius: 2px;
-  margin-top: var(--space-xl);
+  margin-top: var(--space-lg);
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
+  .headerSplit {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .breadcrumb {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+  }
+
+  .imageCol {
+    aspect-ratio: 16 / 9;
+    order: -1;
+  }
+
+  .titleCol {
+    padding: var(--space-xl) 20px;
+  }
+
+  .categoryVertical {
+    position: static;
+    writing-mode: horizontal-tb;
+    transform: none;
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+
   .header {
-    padding: 120px 20px 0;
+    padding-top: 110px;
+  }
+
+  .titleOnly {
+    padding: 0 20px;
   }
 }

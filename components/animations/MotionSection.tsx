@@ -2,6 +2,14 @@
 
 import { type ReactNode, useEffect, useRef } from "react";
 
+type RevealVariant =
+  | "fade-up"
+  | "slide-left"
+  | "slide-right"
+  | "clip-up"
+  | "scale-in"
+  | "blur-in";
+
 interface Props {
   children: ReactNode;
   className?: string;
@@ -10,8 +18,12 @@ interface Props {
   as?: "section" | "div" | "footer";
   /** When true, child elements stagger in one by one (CSS-only, 0.1s increments). */
   stagger?: boolean;
+  /** Reveal animation variant. Defaults to "fade-up". */
+  variant?: RevealVariant;
   /** Color-scheme override for this section. */
   "data-theme"?: "light" | "cream" | "dark";
+  /** Called once when the section becomes visible. */
+  onVisible?: () => void;
 }
 
 export default function MotionSection({
@@ -21,9 +33,14 @@ export default function MotionSection({
   id,
   as: Tag = "section",
   stagger = false,
+  variant,
   "data-theme": dataTheme,
+  onVisible,
 }: Props) {
   const ref = useRef<HTMLElement>(null);
+
+  const onVisibleRef = useRef(onVisible);
+  onVisibleRef.current = onVisible;
 
   useEffect(() => {
     const el = ref.current;
@@ -32,6 +49,7 @@ export default function MotionSection({
       ([entry]) => {
         if (entry.isIntersecting) {
           el.classList.add("is-visible");
+          onVisibleRef.current?.();
           obs.disconnect();
         }
       },
@@ -45,6 +63,7 @@ export default function MotionSection({
     <Tag
       ref={ref as React.RefObject<HTMLElement & HTMLDivElement>}
       data-animate=""
+      data-reveal={variant || undefined}
       data-stagger={stagger ? "" : undefined}
       data-theme={dataTheme}
       className={className}

@@ -43,28 +43,85 @@
   line-height: 1.6;
 }
 
-/* ─── WhatsApp CTA ───────────────────────────────────────── */
+/* ─── WhatsApp CTA — bracket marks ───────────────────────── */
 .whatsapp {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: #25d366;
-  color: #fff;
+  background-color: transparent;
+  color: var(--fg-dark);
   padding: 18px 36px;
-  border-radius: 100px;
+  border-radius: 0;
+  border: none;
   font-weight: 600;
   font-size: 16px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   width: fit-content;
   margin-top: var(--space-xl);
+  position: relative;
+  background-image:
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark));
+  background-size:
+    8px 1px,
+    1px 8px,
+    8px 1px,
+    1px 8px,
+    8px 1px,
+    1px 8px,
+    8px 1px,
+    1px 8px;
+  background-position:
+    0 0,
+    0 0,
+    0 100%,
+    0 calc(100% - 7px),
+    100% 0,
+    100% 0,
+    100% 100%,
+    100% calc(100% - 7px);
+  background-repeat: no-repeat;
   transition:
-    background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    background-size 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    letter-spacing 0.4s ease,
+    color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.whatsapp::before {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 36px;
+  right: 36px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
 }
 
 .whatsapp:hover {
-  background: #20bd5a;
-  transform: translateY(-1px);
+  letter-spacing: 0.03em;
+  background-size:
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%;
+}
+
+.whatsapp:hover::before {
+  transform: scaleX(1);
 }
 
 .whatsapp svg {

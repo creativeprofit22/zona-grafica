@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BlogCTA from "@/components/blog/BlogCTA";
 import BlogHero from "@/components/blog/BlogHero";
 import PostGrid from "@/components/blog/PostGrid";
 import { getAllPosts } from "@/lib/blog";
@@ -22,7 +23,7 @@ export default function BlogPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: "Blog — Zona Gráfica",
+              name: "Blog · Zona Gráfica",
               description: "Ideas sobre branding, diseño y proceso creativo.",
               url: "/blog",
             }),
@@ -32,6 +33,7 @@ export default function BlogPage() {
 
       <BlogHero postCount={posts.length} />
       <PostGrid posts={posts} />
+      <BlogCTA />
     </main>
   );
 }

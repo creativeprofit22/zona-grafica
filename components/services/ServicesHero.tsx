@@ -69,7 +69,7 @@ export default function ServicesHero({ serviceCount }: Props) {
           </span>
         </h1>
         <p className={`${styles.subtitle} ${styles.animItem}`}>
-          Cada servicio es un proceso — no una lista de precios. Investigamos,
+          Cada servicio es un proceso, no una lista de precios. Investigamos,
           diseñamos, iteramos y entregamos piezas que funcionan.
         </p>
       </div>

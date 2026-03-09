@@ -1,57 +1,96 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef } from "react";
 import { clients } from "@/data/clients";
 import styles from "./ClientMarquee.module.css";
 
-const FEATURED_CLIENTS = clients.slice(0, 6).map((c) => c.name);
+/* Two rows of client names scrolling in opposite directions */
+const ROW_1 = clients.slice(0, 7).map((c) => c.name);
+const ROW_2 = clients.slice(7).map((c) => c.name);
 
-export default function ClientMarquee() {
-  const ref = useRef<HTMLElement>(null);
+/* Triple the items for seamless loop (original + 2 clones) */
+function tripled(arr: string[]) {
+  return [...arr, ...arr, ...arr];
+}
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add(styles.visible);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.2 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const lastIndex = FEATURED_CLIENTS.length - 1;
+function MarqueeRow({
+  items,
+  reverse,
+  rowRef,
+}: {
+  items: string[];
+  reverse?: boolean;
+  rowRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const tripleItems = tripled(items);
 
   return (
-    <section ref={ref} className={styles.wrapper}>
-      <div className={styles.inner}>
-        <p className={styles.tagline}>
-          Buenos clientes hacen buenas historias.
-        </p>
-        <p className={styles.sentence}>
-          <span className={styles.prefix}>Hemos trabajado con </span>
-          {FEATURED_CLIENTS.map((name, i) => (
-            <span key={name}>
-              <span className={styles.client}>
-                <span className={styles.paren}>(</span>{" "}
-                <span className={styles.name}>{name}</span>{" "}
-                <span className={styles.paren}>)</span>
-              </span>
-              {i < lastIndex - 1 && (
-                <span className={styles.separator}>, </span>
-              )}
-              {i === lastIndex - 1 && (
-                <span className={styles.separator}> y </span>
-              )}
-            </span>
-          ))}
-          <span className={styles.suffix}> y muchos más.</span>
-        </p>
+    <div className={styles.track} ref={rowRef}>
+      <div
+        className={`${styles.slide} ${reverse ? styles.slideReverse : ""}`}
+        aria-hidden="true"
+      >
+        {tripleItems.map((name, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: tripled array needs index for unique keys
+          <span key={`${name}-${i}`} className={styles.item}>
+            <span className={styles.dot} aria-hidden="true" />
+            <span className={styles.name}>{name}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function ClientMarquee() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const animateRow = (rowEl: HTMLDivElement | null, reverse: boolean) => {
+        if (!rowEl) return;
+        const slide = rowEl.querySelector(`.${styles.slide}`) as HTMLElement;
+        if (!slide) return;
+
+        // Each slide contains 3x the items. We scroll exactly 1/3 then reset.
+        const distance = slide.scrollWidth / 3;
+
+        gsap.to(slide, {
+          x: reverse ? distance : -distance,
+          duration: reverse ? 45 : 35,
+          ease: "none",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize((x: number) => {
+              // Wrap so it loops seamlessly
+              return reverse
+                ? ((Number.parseFloat(String(x)) % distance) + distance) %
+                    distance
+                : -(
+                    ((-Number.parseFloat(String(x)) % distance) + distance) %
+                    distance
+                  );
+            }),
+          },
+        });
+      };
+
+      animateRow(row1Ref.current, false);
+      animateRow(row2Ref.current, true);
+    },
+    { scope: sectionRef },
+  );
+
+  return (
+    <section ref={sectionRef} className={styles.wrapper}>
+      <p className={styles.tagline}>Buenos clientes hacen buenas historias.</p>
+      <div className={styles.marquee}>
+        <MarqueeRow items={ROW_1} rowRef={row1Ref} />
+        <MarqueeRow items={ROW_2} reverse rowRef={row2Ref} />
       </div>
     </section>
   );

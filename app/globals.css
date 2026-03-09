@@ -209,6 +209,51 @@ img {
   transform: translateY(0);
 }
 
+/* ─── Reveal variants ────────────────────────────────────── */
+[data-animate][data-reveal="slide-left"] {
+  transform: translateX(-50px);
+}
+[data-animate][data-reveal="slide-left"].is-visible {
+  transform: translateX(0);
+}
+
+[data-animate][data-reveal="slide-right"] {
+  transform: translateX(50px);
+}
+[data-animate][data-reveal="slide-right"].is-visible {
+  transform: translateX(0);
+}
+
+[data-animate][data-reveal="clip-up"] {
+  transform: none;
+  clip-path: inset(100% 0 0 0);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+[data-animate][data-reveal="clip-up"].is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+[data-animate][data-reveal="scale-in"] {
+  transform: scale(0.92);
+}
+[data-animate][data-reveal="scale-in"].is-visible {
+  transform: scale(1);
+}
+
+[data-animate][data-reveal="blur-in"] {
+  transform: translateY(20px);
+  filter: blur(8px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out),
+    filter 0.7s var(--ease-out);
+}
+[data-animate][data-reveal="blur-in"].is-visible {
+  filter: blur(0);
+}
+
 /* Stagger variant */
 [data-animate][data-stagger] > * {
   opacity: 0;
@@ -452,8 +497,12 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: 2px solid var(--fg-dark);
+  outline-offset: 3px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--fg-light);
 }
 
 /* ─── Custom Scrollbar ──────────────────────────────────────── */

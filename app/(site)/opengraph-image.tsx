@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Zona Gráfica — Estudio Creativo en San Miguel de Allende";
+export const alt = "Zona Gráfica · Estudio Creativo en San Miguel de Allende";
 
 export default async function Image() {
   return new ImageResponse(

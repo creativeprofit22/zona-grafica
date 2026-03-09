@@ -64,33 +64,55 @@
   transition: color var(--duration-normal) var(--ease-out);
 }
 
-/* ─── Desktop Links ──────────────────────────────────── */
+/* ─── Desktop Links — editorial treatment ────────────── */
 .desktopLinks {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 8px;
 }
 
 .navLink {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--muted);
-  letter-spacing: 0.01em;
-  transition: color var(--duration-fast) var(--ease-out);
+  letter-spacing: 0.02em;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  position: relative;
 }
 
-.navLink:hover,
+.navLink:hover {
+  color: var(--fg-dark);
+  background: rgba(26, 23, 20, 0.04);
+}
+
 .navLink.active {
   color: var(--fg-dark);
+  font-weight: 600;
+}
+
+.navLink.active::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 14px;
+  right: 14px;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 1px;
 }
 
 .navNumber {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--ochre);
-  font-weight: 500;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   transition: color var(--duration-normal) var(--ease-out);
 }
 
@@ -101,22 +123,80 @@
   gap: 20px;
 }
 
+/* CTA — editorial bracket marks */
 .ctaButton {
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 10px 24px;
-  border-radius: 100px;
-  background: var(--accent);
-  color: var(--fg-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: var(--fg-dark);
+  border: none;
+  border-radius: 0;
+  position: relative;
+  background-image:
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark));
+  background-size:
+    8px 1px,
+    1px 8px,
+    8px 1px,
+    1px 8px,
+    8px 1px,
+    1px 8px,
+    8px 1px,
+    1px 8px;
+  background-position:
+    0 0,
+    0 0,
+    0 100%,
+    0 calc(100% - 7px),
+    100% 0,
+    100% 0,
+    100% 100%,
+    100% calc(100% - 7px);
+  background-repeat: no-repeat;
   transition:
-    background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    background-size 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    letter-spacing 0.4s ease,
+    color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ctaButton::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
 }
 
 .ctaButton:hover {
-  background: var(--accent-hover);
-  transform: translateY(-1px);
+  letter-spacing: 0.03em;
+  background-size:
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%;
+}
+
+.ctaButton:hover::after {
+  transform: scaleX(1);
 }
 
 /* ─── Burger (mobile) ─────────────────────────────────── */
@@ -153,7 +233,6 @@
 }
 
 /* ─── Inverted State (dark hero, not scrolled) ──────── */
-/* When over a dark hero section, use light text          */
 .nav.inverted .logo {
   color: var(--fg-light);
 }
@@ -166,13 +245,30 @@
   color: rgba(250, 249, 246, 0.55);
 }
 
-.nav.inverted .navLink:hover,
+.nav.inverted .navLink:hover {
+  color: var(--fg-light);
+  background: rgba(250, 249, 246, 0.08);
+}
+
 .nav.inverted .navLink.active {
   color: var(--fg-light);
 }
 
 .nav.inverted .navNumber {
   color: var(--ochre);
+}
+
+.nav.inverted .ctaButton {
+  color: var(--fg-light);
+  background-image:
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light)),
+    linear-gradient(var(--fg-light), var(--fg-light));
 }
 
 .nav.inverted .burgerLine {
@@ -192,9 +288,26 @@
   color: var(--muted);
 }
 
-.nav.scrolled .navLink:hover,
+.nav.scrolled .navLink:hover {
+  color: var(--fg-dark);
+  background: rgba(26, 23, 20, 0.04);
+}
+
 .nav.scrolled .navLink.active {
   color: var(--fg-dark);
+}
+
+.nav.scrolled .ctaButton {
+  color: var(--fg-dark);
+  background-image:
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark)),
+    linear-gradient(var(--fg-dark), var(--fg-dark));
 }
 
 .nav.scrolled .burgerLine {

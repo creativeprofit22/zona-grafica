@@ -33,6 +33,9 @@ export default function SmoothScroll({
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
+    // Recalculate ScrollTrigger positions after Lenis takes over scrolling
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+
     return () => {
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();

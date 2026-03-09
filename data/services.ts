@@ -7,7 +7,7 @@ export const services: Service[] = [
     number: "01",
     title: "Branding & Identidad",
     description:
-      "Construimos la personalidad visual de tu marca desde cero. Logotipo, paleta de color, tipografía, aplicaciones — todo lo que necesitas para que tu marca hable por sí sola.",
+      "Construimos la personalidad visual de tu marca desde cero. Logotipo, paleta de color, tipografía, aplicaciones: todo lo que necesitas para que tu marca hable por sí sola.",
     process: [
       "Investigación y análisis de mercado",
       "Desarrollo de concepto y estrategia",
@@ -22,7 +22,7 @@ export const services: Service[] = [
     number: "02",
     title: "Diseño Editorial",
     description:
-      "Revistas, libros, catálogos, folletos — diseño editorial que se siente tan bien como se lee. Cada página tiene ritmo, cada spread cuenta una historia.",
+      "Revistas, libros, catálogos, folletos. Diseño editorial que se siente tan bien como se lee. Cada página tiene ritmo, cada spread cuenta una historia.",
     process: [
       "Definición de formato y retícula",
       "Diseño de portada y páginas maestras",
@@ -37,7 +37,7 @@ export const services: Service[] = [
     number: "03",
     title: "Diseño Web",
     description:
-      "Sitios web que no solo se ven increíbles — funcionan, convierten y posicionan. Diseño responsive con atención obsesiva al detalle.",
+      "Sitios web que no solo se ven increíbles: funcionan, convierten y posicionan. Diseño responsive con atención obsesiva al detalle.",
     process: [
       "Wireframes y arquitectura de información",
       "Diseño visual y prototipado",
@@ -67,7 +67,7 @@ export const services: Service[] = [
     number: "05",
     title: "Ilustración",
     description:
-      "Ilustraciones originales que dan carácter único a tu marca. Desde personajes y mascotas hasta arte conceptual y murales — cada trazo tiene intención.",
+      "Ilustraciones originales que dan carácter único a tu marca. Desde personajes y mascotas hasta arte conceptual y murales. Cada trazo tiene intención.",
     process: [
       "Brief creativo y referencias visuales",
       "Bocetos y exploración de estilo",
@@ -104,6 +104,6 @@ export const services: Service[] = [
       "Edición y post-producción",
       "Entrega y distribución",
     ],
-    image: "/images/portfolio/giff-thumb.jpg",
+    image: "/images/portfolio/video-hero.png",
   },
 ];

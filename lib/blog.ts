@@ -13,6 +13,7 @@ export interface BlogPostMeta {
   readingTime: string;
   gradientFrom: string;
   gradientTo: string;
+  image?: string;
 }
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
@@ -43,6 +44,7 @@ export const getAllPosts = cache((): BlogPostMeta[] => {
       readingTime: (data.readingTime as string) || estimateReadingTime(content),
       gradientFrom: data.gradientFrom ?? "#1a1a2e",
       gradientTo: data.gradientTo ?? "#16213e",
+      image: (data.image as string) || undefined,
     } satisfies BlogPostMeta;
   });
   return posts.sort(
@@ -69,6 +71,7 @@ export const getPostBySlug = cache(
           (data.readingTime as string) || estimateReadingTime(content),
         gradientFrom: data.gradientFrom ?? "#1a1a2e",
         gradientTo: data.gradientTo ?? "#16213e",
+        image: (data.image as string) || undefined,
       },
       content,
     };
