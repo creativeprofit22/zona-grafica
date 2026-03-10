@@ -352,7 +352,7 @@ export const projects: Project[] = [
     client: "Guanajuato International Film Festival",
     category: "video",
     year: 2024,
-    thumbnail: "https://img.youtube.com/vi/Ht9ytBPJrPo/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/Ht9ytBPJrPo/hqdefault.jpg",
     description:
       "Cineminuto para el Guanajuato International Film Festival. Concepto, dirección y postproducción.",
     tags: ["Cineminuto", "Cine", "Dirección"],
@@ -366,7 +366,7 @@ export const projects: Project[] = [
     client: "Consejo Turístico de San Miguel de Allende",
     category: "video",
     year: 2021,
-    thumbnail: "https://img.youtube.com/vi/HDcIlUSjKDc/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/HDcIlUSjKDc/hqdefault.jpg",
     description:
       "Campaña audiovisual 2021 para San Miguel de Allende. Producción, fotografía y edición del video principal de la campaña turística.",
     tags: ["Turismo", "Campaña", "Producción"],

@@ -8,6 +8,7 @@ import Link from "next/link";
 import {
   type ReactNode,
   type RefObject,
+  type SyntheticEvent,
   useCallback,
   useRef,
   useState,
@@ -172,6 +173,42 @@ function CategoryImageWrap({
   );
 }
 
+/* ─── YouTube Thumbnail with quality fallback ─────────── */
+function YouTubeThumbnail({
+  src,
+  alt,
+  fill,
+  sizes,
+  className,
+}: {
+  src: string;
+  alt: string;
+  fill: boolean;
+  sizes: string;
+  className?: string;
+}) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  const handleError = useCallback((e: SyntheticEvent<HTMLImageElement>) => {
+    const el = e.currentTarget;
+    // If maxresdefault failed, try hqdefault
+    if (el.src.includes("maxresdefault")) {
+      setImgSrc(el.src.replace("maxresdefault", "hqdefault"));
+    }
+  }, []);
+
+  return (
+    <Image
+      src={imgSrc}
+      alt={alt}
+      fill={fill}
+      sizes={sizes}
+      className={className}
+      onError={handleError}
+    />
+  );
+}
+
 interface Props {
   projects: Project[];
   gridRef?: RefObject<HTMLDivElement | null>;
@@ -236,7 +273,7 @@ function VideoCard({
               staggerIndex={staggerIndex}
               className={styles.imageWrap}
             >
-              <Image
+              <YouTubeThumbnail
                 src={project.thumbnail}
                 alt={project.title}
                 fill
@@ -254,7 +291,7 @@ function VideoCard({
           staggerIndex={staggerIndex}
           className={styles.imageWrap}
         >
-          <Image
+          <YouTubeThumbnail
             src={project.thumbnail}
             alt={project.title}
             fill
