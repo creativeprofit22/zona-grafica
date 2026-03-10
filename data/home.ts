@@ -34,7 +34,7 @@ export const homeData: HomeData = {
     attribution: "Jesús Herrera, fundador",
   },
   cta: {
-    headline: "¿Tienes una idea? Platiquemos.",
+    headline: "¿Tienes una idea? Platiquemos",
     whatsappLabel: "WhatsApp →",
     emailLabel: "correo →",
   },

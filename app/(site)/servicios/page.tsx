@@ -38,7 +38,7 @@ export default function ServiciosPage() {
       <ServicesProcess />
 
       <CTASection
-        headline="¿Tienes un proyecto en mente? Platiquemos."
+        headline="¿Tienes un proyecto en mente? Platiquemos"
         whatsappLabel="Escríbenos por WhatsApp"
         whatsappHref={siteConfig.contact.whatsapp}
         emailLabel="Mándanos un correo"

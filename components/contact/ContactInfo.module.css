@@ -85,22 +85,30 @@
   letter-spacing: 0.02em;
 }
 
-/* ─── Social Links ───────────────────────────────────────── */
+/* ─── Social Icons ───────────────────────────────────────── */
 .socials {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  gap: 12px;
 }
 
-.socialLink {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--fg-dark);
-  transition: color var(--duration-fast) var(--ease-out);
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--fg-dark);
+  color: var(--bg-cream);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
-.socialLink:hover {
-  color: var(--accent);
+.socialIcon:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
 }
 
 /* ─── Styled Map ─────────────────────────────────────────── */
@@ -157,6 +165,19 @@
   font-size: 13px;
   color: var(--muted);
   letter-spacing: 0.04em;
+}
+
+/* ─── Screen reader only ─────────────────────────────────── */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */

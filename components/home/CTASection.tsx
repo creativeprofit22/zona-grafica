@@ -18,11 +18,11 @@ interface Props {
 }
 
 function splitHeadline(headline: string) {
-  // Split "¿Tienes una idea? Platiquemos." into visual lines
-  // Accent word: "Platiquemos." gets terracotta treatment
+  // Split headline into exactly 2 visual lines
+  // If "Platiquemos" present, it becomes the accent on line 2
   const accentMatch = headline.match(/(Platiquemos\.?)/);
   if (!accentMatch) {
-    // Fallback: split into ~2-3 word lines
+    // Fallback: split at roughly halfway
     const words = headline.split(" ");
     const mid = Math.ceil(words.length / 2);
     return [
@@ -33,20 +33,12 @@ function splitHeadline(headline: string) {
 
   const idx = headline.indexOf(accentMatch[1]);
   const before = headline.slice(0, idx).trim();
-  const accentText = accentMatch[1];
+  const accentText = accentMatch[1].replace(/\.$/, ""); // strip trailing dot
 
-  // Split the "before" text into short visual lines (~2 words each)
-  const words = before.split(" ").filter(Boolean);
-  const lines: { text: string; accent: boolean }[] = [];
-  for (let i = 0; i < words.length; i += 2) {
-    lines.push({
-      text: words.slice(i, i + 2).join(" "),
-      accent: false,
-    });
-  }
-  lines.push({ text: accentText, accent: true });
-
-  return lines;
+  return [
+    { text: before, accent: false },
+    { text: accentText, accent: true },
+  ];
 }
 
 export default function CTASection({

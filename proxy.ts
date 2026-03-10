@@ -10,7 +10,7 @@ export function proxy() {
     "img-src 'self' data: https:",
     "font-src 'self'",
     "connect-src 'self'",
-    "frame-src https://www.youtube.com https://www.openstreetmap.org",
+    "frame-src https://www.youtube.com https://www.google.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",

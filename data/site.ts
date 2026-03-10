@@ -18,7 +18,7 @@ export const siteConfig: SiteConfig = {
     whatsapp: "https://wa.me/524151140311",
   },
   social: {
-    instagram: "https://instagram.com/zonagrafica",
+    instagram: "https://www.instagram.com/zonagraficamx/",
     facebook: "https://facebook.com/zonagraficaSMA",
     behance: "https://behance.net/zonagrafica",
   },
