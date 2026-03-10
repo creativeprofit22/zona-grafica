@@ -14,7 +14,7 @@ export const services: Service[] = [
       "Diseño de logotipo y sistema visual",
       "Manual de identidad y aplicaciones",
     ],
-    image: "/images/portfolio/branding-hero.jpg",
+    image: "/images/portfolio/branding-hero.webp",
   },
   {
     id: "editorial",
@@ -29,7 +29,7 @@ export const services: Service[] = [
       "Maquetación y composición tipográfica",
       "Preparación para impresión o digital",
     ],
-    image: "/images/portfolio/editorial-hero.jpg",
+    image: "/images/portfolio/editorial-hero.webp",
   },
   {
     id: "web",
@@ -44,7 +44,7 @@ export const services: Service[] = [
       "Desarrollo front-end responsivo",
       "Optimización SEO y rendimiento",
     ],
-    image: "/images/portfolio/web-hero.jpg",
+    image: "/images/portfolio/web-hero-new.jpg",
   },
   {
     id: "fotografia",
@@ -59,7 +59,7 @@ export const services: Service[] = [
       "Selección y edición de imágenes",
       "Entrega en formatos optimizados",
     ],
-    image: "/images/portfolio/foto-hero.jpg",
+    image: "/images/portfolio/foto-hero-new.jpg",
   },
   {
     id: "ilustracion",
@@ -74,7 +74,7 @@ export const services: Service[] = [
       "Ilustración final en alta resolución",
       "Adaptación para diferentes formatos",
     ],
-    image: "/images/portfolio/ilustracion-hero.jpg",
+    image: "/images/portfolio/ilustracion-hero-new.jpg",
   },
   {
     id: "carteleria",
@@ -89,7 +89,7 @@ export const services: Service[] = [
       "Adaptación a diferentes formatos",
       "Supervisión de producción e impresión",
     ],
-    image: "/images/portfolio/carteleria-hero.jpg",
+    image: "/images/portfolio/carteleria-hero-new.jpg",
   },
   {
     id: "video",

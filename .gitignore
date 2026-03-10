@@ -7,3 +7,4 @@ node_modules/
 .gg/
 .mcp.json
 .vercel
+.env*.local
