@@ -46,6 +46,7 @@ export default async function BlogPostPage({ params }: Props) {
               description: post.meta.excerpt,
               datePublished: post.meta.isoDate,
               url: `/blog/${slug}`,
+              image: post.meta.image,
             }),
           ).replace(/</g, "\\u003c"),
         }}

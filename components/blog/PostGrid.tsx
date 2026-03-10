@@ -56,7 +56,9 @@ export default function PostGrid({ posts }: Props) {
     );
   }
 
-  const [featured, ...rest] = posts;
+  const featuredPost = posts.find((p) => p.featured);
+  const featured = featuredPost ?? posts[0];
+  const rest = posts.filter((p) => p !== featured);
 
   return (
     <div className={styles.wrapper}>
