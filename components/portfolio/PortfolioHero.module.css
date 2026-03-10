@@ -24,9 +24,7 @@
   line-height: 1.6;
 }
 
-.animItem {
-  opacity: 0;
-}
+/* Animation hiding DISABLED — content always visible */
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {

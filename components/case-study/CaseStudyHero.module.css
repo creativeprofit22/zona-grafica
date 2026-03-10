@@ -14,9 +14,7 @@
   will-change: transform;
 }
 
-.animItem {
-  opacity: 0;
-}
+/* Animation hiding DISABLED — content always visible */
 
 .image {
   object-fit: cover;

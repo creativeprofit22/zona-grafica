@@ -52,11 +52,12 @@
   );
 }
 
-/* ─── Word stagger animation ─────────────────────────────── */
+/* ─── Word stagger animation — only when JS is ready ─────── */
 .word {
   display: inline-block;
-  opacity: 0;
 }
+
+/* Animation hiding DISABLED — content always visible */
 
 .categoryVertical {
   position: absolute;

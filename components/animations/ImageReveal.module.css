@@ -4,18 +4,7 @@
   overflow: hidden;
 }
 
-/* Initial state: fully clipped (hidden) */
-.wipeLeft {
-  clip-path: inset(0 100% 0 0);
-}
-
-.wipeBottom {
-  clip-path: inset(100% 0 0 0);
-}
-
-.wipeRight {
-  clip-path: inset(0 0 0 100%);
-}
+/* Clip-path hiding DISABLED — content always visible */
 
 /* Revealed state (set by GSAP) — clip-path: inset(0 0 0 0) */
 

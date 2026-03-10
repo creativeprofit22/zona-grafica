@@ -136,10 +136,7 @@
   transform: translateX(3px);
 }
 
-/* ─── Animation ──────────────────────────────────────────── */
-.animItem {
-  opacity: 0;
-}
+/* Animation hiding DISABLED — content always visible */
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {

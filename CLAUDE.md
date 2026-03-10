@@ -92,17 +92,48 @@ npx tsc --noEmit && bun run lint
 Fix ALL errors/warnings before continuing.
 
 ## Current Focus
-Visual polish — verifying fixes in browser
+**CRITICAL BUG: Services page (and likely all pages) render as blank/invisible on production site.**
 
-## Last Session (2026-03-09)
-Fixed all 4 issues from friend feedback pass:
+## Deployment
+- Disconnected GitHub integration from Vercel
+- Now deploying via CLI: `vercel --prod`
+- Vercel project: `marios-projects-8c0d1128/zona-grafica`
+- Custom domain: `https://zgdemo.creativeprofitagency.com`
+- `.vercel/` directory exists locally (linked to project)
 
-1. **Dark line between sections — FIXED**: Removed `ScrollColorTransition` component (was broken — only found direct `<section>` children of `#main-content` but most sections wrapped in `<div>` for SectionNumber, causing wrong color transitions). Added `margin-top: -1px` overlap on `#main-content > * + *` to eliminate subpixel gaps.
-2. **Body font upgraded**: Replaced Satoshi (generic sans) with **Source Serif 4** (editorial serif). Creates strong typographic contrast with Clash Display headlines — much more creative/premium feel. Variable weight 400-700.
-3. **Blog white space reduced**: PostContent article padding 128→96px, h2 margin-top 128→96px, h2 padding-top 64→32px, h3 margin-top 96→64px, hr margin 128→96px. PostHeader min-height 85→70vh.
-4. **404 links verified**: `npx next build` succeeds, all 50 pages generated. No route errors — likely stale cache/deployment issue.
+## Session 2026-03-10 — BLANK PAGE BUG FIXED
+
+### The Problem (now resolved)
+All pages rendered blank because CSS animation hiding (`opacity: 0`, `clip-path: inset(...)`) was applied via `.js-ready` class, but the inline script that set `.js-ready` executed successfully — meaning the hiding CSS was always active. Then something (likely JS crash during hydration, or CSP blocking) prevented GSAP/IntersectionObserver from ever revealing the content.
+
+### The Fix — Nuclear Option
+Removed ALL CSS animation hiding entirely. Content is always visible now. No opacity: 0, no clip-path hiding, no `.js-ready` gating.
+
+**Files changed:**
+- `app/globals.css` — Removed entire `[data-animate]` hiding system (opacity: 0, clip-path, stagger delays)
+- `app/layout.tsx` — Removed `.js-ready` inline script, removed dead `nonce`/`headers()` plumbing, made layout sync (not async)
+- `components/animations/ImageReveal.module.css` — Removed clip-path hiding
+- `components/services/ServicesHero.module.css` — Removed `.animItem`/`.accentAnim` opacity: 0
+- `components/services/ServiceCard.module.css` — Removed `.animWord` opacity: 0
+- `components/services/ServicesProcess.module.css` — Changed `--dot-opacity`, `--dot-scale`, `--line-scale` defaults from 0 to 1
+- `components/about/AboutHero.module.css` — Removed opacity: 0 on all hero elements
+- `components/blog/BlogHero.module.css` — Removed `.animItem` opacity: 0, fixed `.rule` scaleX(0→1)
+- `components/blog/PostHeader.module.css` — Removed `.word` opacity: 0
+- `components/case-study/CaseStudyHero.module.css` — Removed `.animItem` opacity: 0
+- `components/contact/ContactHero.module.css` — Removed `.animItem` opacity: 0
+- `components/portfolio/PortfolioHero.module.css` — Removed `.animItem` opacity: 0
+- `components/ui/PullQuote.module.css` — Removed `.animItem` opacity: 0
+- `proxy.ts` — DELETED (was dead code, never imported)
+- `next.config.ts` — Removed stale proxy.ts comment
+
+**Deployed and verified**: `curl` confirms full content visible on `/servicios` and other pages.
+
+### Previous Session (2026-03-09)
+Fixed 4 issues from friend feedback: dark line between sections, body font upgrade to Source Serif 4, blog whitespace reduction, 404 link verification.
 
 ## Next Steps
-1. Verify all fixes in browser — especially dark line fix and new font rendering
-2. Consider removing old Satoshi font files from `public/fonts/` (no longer referenced)
-3. ScrollColorTransition.tsx can be deleted if confirmed unnecessary
+1. **Verify in browser** — confirm all pages render with visible content
+2. **Investigate JS execution** — open DevTools console to find why GSAP/hydration was failing
+3. **Restore animations incrementally** — once JS issue is identified, re-add animation hiding with proper fallbacks
+4. Consider removing old Satoshi font files from `public/fonts/`
+5. ScrollColorTransition.tsx can be deleted if confirmed unnecessary

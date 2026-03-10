@@ -1,12 +1,4 @@
-"use client";
-
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
 import styles from "./ServicesProcess.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
@@ -36,72 +28,8 @@ const steps = [
 ];
 
 export default function ServicesProcess() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const line = section.querySelector(`.${styles.list}`) as HTMLElement;
-      const dots = section.querySelectorAll(`.${styles.step}`);
-
-      // Animate the timeline line (scaleY 0→1) via CSS custom property
-      gsap.fromTo(
-        line,
-        { "--line-scale": 0 },
-        {
-          "--line-scale": 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: line,
-            start: "top 80%",
-            end: "bottom 60%",
-            scrub: 0.5,
-          },
-        },
-      );
-
-      // Sequential dot reveals + content cascade
-      dots.forEach((dot, i) => {
-        const content = dot.querySelector(`.${styles.stepContent}`);
-
-        // Dot bounce
-        gsap.to(dot, {
-          "--dot-opacity": 1,
-          "--dot-scale": 1,
-          duration: 0.4,
-          ease: "back.out(2)",
-          scrollTrigger: {
-            trigger: dot,
-            start: "top 75%",
-            toggleActions: "play none none none",
-          },
-          delay: i * 0.2,
-        });
-
-        // Content reveal (tied to same trigger, extra delay)
-        if (content) {
-          gsap.from(content, {
-            y: 20,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: dot,
-              start: "top 75%",
-              toggleActions: "play none none none",
-            },
-            delay: i * 0.2 + 0.15,
-          });
-        }
-      });
-    },
-    { scope: sectionRef },
-  );
-
   return (
-    <section ref={sectionRef} className={styles.section} data-theme="cream">
+    <section className={styles.section} data-theme="cream">
       <div className={styles.inner}>
         <div className={styles.header}>
           <span className={styles.label}>(proceso)</span>

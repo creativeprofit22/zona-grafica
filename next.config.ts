@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
-          // CSP is set dynamically in proxy.ts with per-request nonces
+          // CSP can be added here or via middleware if needed
         ],
       },
     ];

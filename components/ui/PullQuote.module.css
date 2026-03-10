@@ -29,8 +29,4 @@
   font-style: italic;
 }
 
-/* ─── Animation ────────────────────────────────────────── */
-.animItem {
-  opacity: 0;
-  will-change: transform, opacity;
-}
+/* Animation hiding DISABLED — content always visible */

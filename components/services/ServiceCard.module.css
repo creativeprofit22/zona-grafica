@@ -1,7 +1,9 @@
-/* ─── Service Card — Base ────────────────────────────────── */
+/* ─── Service Card ───────────────────────────────────────── */
 .card {
   position: relative;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
   padding: var(--space-xl) 0;
   border-bottom: 1px solid var(--border-light);
 }
@@ -10,36 +12,7 @@
   border-top: 1px solid var(--border-light);
 }
 
-/* ─── Wide Layout (3fr 2fr) ──────────────────────────────── */
-.cardWide {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
-}
-
-/* ─── Compact Layout (vertical stack for 2-up) ───────────── */
-.cardCompact {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  border-top: none;
-}
-
-.cardCompact .numberCol {
-  justify-content: flex-start;
-}
-
-/* ─── Centered Layout (narrow column) ────────────────────── */
-.cardCentered {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  max-width: 860px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ─── Number Column (watermark container) ────────────────── */
+/* ─── Number Column (watermark) ──────────────────────────── */
 .numberCol {
   position: absolute;
   top: 50%;
@@ -57,7 +30,6 @@
   letter-spacing: -0.03em;
   line-height: 1;
   opacity: 0.04;
-  will-change: transform;
   transition:
     opacity 0.4s var(--ease-out),
     transform 0.4s var(--ease-out);
@@ -68,7 +40,7 @@
   transform: translateX(-20px);
 }
 
-/* ─── Image Column ──────────────────────────────────────── */
+/* ─── Image Column ───────────────────────────────────────── */
 .imageCol {
   position: relative;
   aspect-ratio: 4 / 5;
@@ -83,19 +55,15 @@
   height: 100%;
 }
 
-/* ─── Per-Service Visual Themes ─────────────────────────── */
-
-/* Branding — accent left border */
+/* ─── Per-Service Visual Themes ──────────────────────────── */
 .card[data-service="branding"] .imageCol {
   border-left: 4px solid var(--accent);
 }
 
-/* Editorial — 3:4 aspect (taller, book-like) */
 .card[data-service="editorial"] .imageCol {
   aspect-ratio: 3 / 4;
 }
 
-/* Web — rounded + browser chrome bar */
 .card[data-service="web"] .imageCol {
   border-radius: 12px;
   display: flex;
@@ -136,25 +104,21 @@
   position: relative;
 }
 
-/* Photography — no radius, white inner outline (print mat) */
 .card[data-service="fotografia"] .imageCol {
   border-radius: 0;
   box-shadow: inset 0 0 0 4px white;
 }
 
-/* Ilustración — cream bg, dashed borders */
 .card[data-service="ilustracion"] .imageCol {
   background: var(--bg-cream);
   border: 2px dashed var(--stone);
   border-radius: 6px;
 }
 
-/* Cartelería / Pósters — 2:3 aspect (tall poster) */
 .card[data-service="carteleria"] .imageCol {
   aspect-ratio: 2 / 3;
 }
 
-/* Video — 16:9 + play overlay */
 .card[data-service="video"] .imageCol {
   aspect-ratio: 16 / 9;
 }
@@ -182,11 +146,6 @@
 .card[data-service="video"]:hover .playIcon {
   opacity: 1;
   transform: scale(1.1);
-}
-
-/* ─── Anim initial states ────────────────────────────────── */
-.animWord {
-  opacity: 0;
 }
 
 /* ─── Text Content ───────────────────────────────────────── */
@@ -219,10 +178,11 @@
   max-width: 600px;
 }
 
-/* ─── Process Steps — Inline Timeline ────────────────────── */
+/* ─── Process Steps ──────────────────────────────────────── */
 .process {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0;
   margin-top: var(--space-sm);
@@ -240,7 +200,6 @@
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-/* Dot before each step */
 .step::before {
   content: "";
   width: 6px;
@@ -251,7 +210,6 @@
   margin-right: 6px;
 }
 
-/* Connecting line between steps */
 .step:not(:first-child)::before {
   margin-left: 0;
 }
@@ -260,7 +218,6 @@
   content: none;
 }
 
-/* Line connector between steps */
 .process .step:not(:last-child) {
   padding-right: 0;
 }
@@ -283,7 +240,7 @@
   background: var(--accent-hover);
 }
 
-/* ─── Reversed layout (visual variety, no RTL hack) ──────── */
+/* ─── Reversed layout ────────────────────────────────────── */
 .reversed .imageCol {
   order: 3;
 }
@@ -294,12 +251,9 @@
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .cardWide {
+  .card {
     grid-template-columns: 1fr;
     gap: var(--space-md);
-  }
-
-  .card {
     padding: var(--space-lg) 0;
   }
 
@@ -311,9 +265,5 @@
     /* biome-ignore lint/complexity/noImportantStyles: must override .reversed order on mobile */
     order: 0 !important;
     aspect-ratio: 16 / 9;
-  }
-
-  .cardCentered {
-    max-width: none;
   }
 }

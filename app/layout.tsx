@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import Analytics from "@/components/Analytics";
 import { siteConfig } from "@/data/site";
 import { organizationSchema, webSiteSchema } from "@/lib/jsonld";
@@ -24,19 +23,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Reading x-nonce header is required — Next.js uses the await headers() call
-  // to discover the nonce and apply it to its own bootstrap <script> tags.
-  // Without this, CSP blocks all client-side JavaScript.
-  const nonce = (await headers()).get("x-nonce") ?? undefined;
-
   return (
     <html lang="es" suppressHydrationWarning>
-      <body suppressHydrationWarning nonce={nonce}>
+      <body suppressHydrationWarning>
         <a className="skip-to-content" href="#main-content">
           Ir al contenido
         </a>
