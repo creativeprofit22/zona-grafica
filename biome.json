@@ -9,7 +9,8 @@
       "!**/.claude",
       "!**/.mcp.json",
       "!**/test-results",
-      "!**/playwright-report"
+      "!**/playwright-report",
+      "!**/.vercel"
     ]
   },
   "formatter": {
