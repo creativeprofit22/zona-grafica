@@ -12,7 +12,6 @@ import {
   useRef,
   useState,
 } from "react";
-import ImageReveal from "@/components/animations/ImageReveal";
 import ParallaxDrift from "@/components/animations/ParallaxDrift";
 import type { Project } from "@/types/content";
 import styles from "./ProjectGrid.module.css";
@@ -103,94 +102,14 @@ function useTiltEffect(cardRef: RefObject<HTMLElement | null>) {
   return { onMouseMove, onMouseLeave };
 }
 
-/* ─── Custom Reveal: Photography "film develop" effect ──── */
-function DevelopReveal({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
+/* ─── Idle Float Wrapper for Featured Cards ────────────── */
+function IdleFloat({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-
-      gsap.fromTo(
-        el,
-        { filter: "brightness(3) contrast(0.3) sepia(1)", opacity: 0 },
-        {
-          filter: "brightness(1) contrast(1) sepia(0)",
-          opacity: 1,
-          duration: 1.2,
-          delay,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-    },
-    { scope: ref },
-  );
-
-  return (
-    <div ref={ref} className={`${styles.developReveal} ${className ?? ""}`}>
-      {children}
-    </div>
-  );
+  useIdleFloat(ref);
+  return <div ref={ref}>{children}</div>;
 }
 
-/* ─── Custom Reveal: Web "center expand" effect ─────────── */
-function CenterReveal({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-
-      gsap.fromTo(
-        el,
-        { clipPath: "inset(50% 50% 50% 50%)" },
-        {
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 1,
-          delay,
-          ease: "power3.inOut",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-    },
-    { scope: ref },
-  );
-
-  return (
-    <div ref={ref} className={`${styles.centerReveal} ${className ?? ""}`}>
-      {children}
-    </div>
-  );
-}
-
-/* ─── Custom Reveal: Editorial diagonal wipe ────────────── */
+/* ─── Diagonal Wipe Reveal for All Portfolio Cards ───────── */
 function DiagonalReveal({
   children,
   className,
@@ -233,19 +152,9 @@ function DiagonalReveal({
   );
 }
 
-/* ─── Idle Float Wrapper for Featured Cards ────────────── */
-function IdleFloat({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useIdleFloat(ref);
-  return <div ref={ref}>{children}</div>;
-}
-
-/* ─── Category → Reveal wrapper ─────────────────────────── */
 function CategoryImageWrap({
-  category,
   children,
   className,
-  index,
   staggerIndex = 0,
 }: {
   category: string;
@@ -256,54 +165,11 @@ function CategoryImageWrap({
 }) {
   const delay = staggerIndex * 0.15;
 
-  switch (category) {
-    case "fotografia":
-      return (
-        <DevelopReveal className={className} delay={delay}>
-          {children}
-        </DevelopReveal>
-      );
-    case "web":
-      return (
-        <CenterReveal className={className} delay={delay}>
-          {children}
-        </CenterReveal>
-      );
-    case "editorial":
-      return (
-        <DiagonalReveal className={className} delay={delay}>
-          {children}
-        </DiagonalReveal>
-      );
-    case "branding":
-      return (
-        <ImageReveal direction="left" delay={delay} className={className}>
-          {children}
-        </ImageReveal>
-      );
-    case "poster":
-      return (
-        <ImageReveal direction="bottom" delay={delay} className={className}>
-          {children}
-        </ImageReveal>
-      );
-    case "video":
-      return (
-        <ImageReveal direction="left" delay={delay + 0.1} className={className}>
-          {children}
-        </ImageReveal>
-      );
-    default:
-      return (
-        <ImageReveal
-          direction={index % 2 === 0 ? "left" : "bottom"}
-          delay={delay + (index % 2 === 0 ? 0 : 0.1)}
-          className={className}
-        >
-          {children}
-        </ImageReveal>
-      );
-  }
+  return (
+    <DiagonalReveal className={className} delay={delay}>
+      {children}
+    </DiagonalReveal>
+  );
 }
 
 interface Props {

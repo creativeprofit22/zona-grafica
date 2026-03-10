@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  return projects.filter((p) => p.featured).map((p) => ({ slug: p.slug }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
 export default async function CaseStudyPage({ params }: Props) {

@@ -4,7 +4,7 @@
 .headerSplit {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 85vh;
+  min-height: 70vh;
   position: relative;
   background: var(--bg-paper);
 }

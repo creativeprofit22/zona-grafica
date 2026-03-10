@@ -102,7 +102,7 @@
 }
 
 .navLink {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--muted);
   letter-spacing: 0.02em;
@@ -169,80 +169,27 @@
   margin-left: auto;
 }
 
-/* CTA — editorial bracket marks */
+/* CTA — solid filled button */
 .ctaButton {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 10px 20px;
-  background-color: transparent;
-  color: var(--fg-dark);
+  padding: 10px 24px;
+  background: var(--fg-dark);
+  color: var(--fg-light);
   border: none;
   border-radius: 0;
   position: relative;
-  background-image:
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark));
-  background-size:
-    8px 1px,
-    1px 8px,
-    8px 1px,
-    1px 8px,
-    8px 1px,
-    1px 8px,
-    8px 1px,
-    1px 8px;
-  background-position:
-    0 0,
-    0 0,
-    0 100%,
-    0 calc(100% - 7px),
-    100% 0,
-    100% 0,
-    100% 100%,
-    100% calc(100% - 7px);
-  background-repeat: no-repeat;
   transition:
-    background-size 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    letter-spacing 0.4s ease,
-    color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.ctaButton::after {
-  content: "";
-  position: absolute;
-  bottom: 8px;
-  left: 20px;
-  right: 20px;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s ease;
+    background 0.3s var(--ease-out),
+    color 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out);
 }
 
 .ctaButton:hover {
-  letter-spacing: 0.03em;
-  background-size:
-    100% 1px,
-    1px 100%,
-    100% 1px,
-    1px 100%,
-    100% 1px,
-    1px 100%,
-    100% 1px,
-    1px 100%;
-}
-
-.ctaButton:hover::after {
-  transform: scaleX(1);
+  background: var(--accent);
+  transform: translateY(-1px);
 }
 
 /* ─── Burger (mobile) ─────────────────────────────────── */
@@ -308,16 +255,8 @@
 }
 
 .nav.inverted .ctaButton {
-  color: var(--fg-light);
-  background-image:
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light)),
-    linear-gradient(var(--fg-light), var(--fg-light));
+  background: var(--fg-light);
+  color: var(--fg-dark);
 }
 
 .nav.inverted .burgerLine {
@@ -347,16 +286,8 @@
 }
 
 .nav.scrolled .ctaButton {
-  color: var(--fg-dark);
-  background-image:
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark)),
-    linear-gradient(var(--fg-dark), var(--fg-dark));
+  background: var(--fg-dark);
+  color: var(--fg-light);
 }
 
 .nav.scrolled .burgerLine {

@@ -22,22 +22,70 @@ export default function StatsStrip({ stats }: Props) {
       if (!el) return;
 
       const tiles = el.querySelectorAll<HTMLElement>(`.${styles.tile}`);
+      const values = el.querySelectorAll<HTMLElement>(`.${styles.value}`);
+      const contexts = el.querySelectorAll<HTMLElement>(`.${styles.context}`);
 
-      gsap.set(tiles, { opacity: 0, y: 60 });
+      gsap.set(tiles, { opacity: 0, y: 80, scale: 0.9 });
+      gsap.set(contexts, { opacity: 0, y: 20 });
 
       tiles.forEach((tile, i) => {
-        gsap.to(tile, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: tile,
-            start: "top 88%",
+            start: "top 90%",
             toggleActions: "play none none none",
           },
-          delay: i * 0.12,
         });
+
+        // Tile slides up with scale
+        tl.to(tile, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          ease: "power3.out",
+          delay: i * 0.1,
+        });
+
+        // Context text fades in after value
+        if (contexts[i]) {
+          tl.to(
+            contexts[i],
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out",
+            },
+            "-=0.4",
+          );
+        }
+
+        // Counter animation for numeric values
+        const valEl = values[i];
+        if (valEl) {
+          const text = valEl.textContent ?? "";
+          const numMatch = text.match(/^(\d+)/);
+          if (numMatch) {
+            const target = Number.parseInt(numMatch[1], 10);
+            const suffix = text.replace(numMatch[1], "");
+            const obj = { val: 0 };
+            tl.fromTo(
+              obj,
+              { val: 0 },
+              {
+                val: target,
+                duration: 1.5,
+                ease: "power2.out",
+                snap: { val: 1 },
+                onUpdate: () => {
+                  valEl.textContent = `${obj.val}${suffix}`;
+                },
+              },
+              "<",
+            );
+          }
+        }
       });
     },
     { scope: sectionRef },

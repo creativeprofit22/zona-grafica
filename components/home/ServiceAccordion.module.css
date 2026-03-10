@@ -1,11 +1,16 @@
 /* ─── Service List — Hover Image Follow ─────────────────── */
 .section {
   --section-accent: var(--accent);
-  padding: var(--space-3xl) 48px;
-  max-width: var(--max-width);
-  margin: 0 auto;
+  padding: var(--space-2xl) 48px var(--space-lg);
   position: relative;
   background: var(--bg-ink);
+}
+
+.header,
+.list {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ─── Header ────────────────────────────────────────────── */
@@ -28,12 +33,14 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: 1.15;
   text-wrap: balance;
   background: var(--gradient-teal-ochre);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding: 0.05em 0.02em;
+  display: inline-block;
 }
 
 /* ─── Service List ──────────────────────────────────────── */

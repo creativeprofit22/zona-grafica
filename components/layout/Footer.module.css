@@ -135,20 +135,29 @@
 
 .social {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   margin-top: 10px;
 }
 
 .social a {
-  font-size: 12px;
-  color: rgba(250, 249, 246, 0.45);
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  transition: color var(--duration-fast) var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(250, 249, 246, 0.08);
+  color: rgba(250, 249, 246, 0.55);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .social a:hover {
-  color: var(--purple);
+  color: var(--fg-light);
+  background: rgba(250, 249, 246, 0.15);
+  transform: translateY(-2px);
 }
 
 /* ─── Newsletter Column ─────────────────────────────────── */
@@ -279,6 +288,19 @@
   color: rgba(250, 249, 246, 0.35);
   letter-spacing: 0.03em;
   font-variant-numeric: tabular-nums;
+}
+
+/* ─── Screen-reader only ────────────────────────────────── */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */

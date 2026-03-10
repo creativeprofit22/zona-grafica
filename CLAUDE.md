@@ -90,3 +90,19 @@ npx tsc --noEmit && bun run lint
 ```
 
 Fix ALL errors/warnings before continuing.
+
+## Current Focus
+Visual polish — verifying fixes in browser
+
+## Last Session (2026-03-09)
+Fixed all 4 issues from friend feedback pass:
+
+1. **Dark line between sections — FIXED**: Removed `ScrollColorTransition` component (was broken — only found direct `<section>` children of `#main-content` but most sections wrapped in `<div>` for SectionNumber, causing wrong color transitions). Added `margin-top: -1px` overlap on `#main-content > * + *` to eliminate subpixel gaps.
+2. **Body font upgraded**: Replaced Satoshi (generic sans) with **Source Serif 4** (editorial serif). Creates strong typographic contrast with Clash Display headlines — much more creative/premium feel. Variable weight 400-700.
+3. **Blog white space reduced**: PostContent article padding 128→96px, h2 margin-top 128→96px, h2 padding-top 64→32px, h3 margin-top 96→64px, hr margin 128→96px. PostHeader min-height 85→70vh.
+4. **404 links verified**: `npx next build` succeeds, all 50 pages generated. No route errors — likely stale cache/deployment issue.
+
+## Next Steps
+1. Verify all fixes in browser — especially dark line fix and new font rendering
+2. Consider removing old Satoshi font files from `public/fonts/` (no longer referenced)
+3. ScrollColorTransition.tsx can be deleted if confirmed unnecessary
