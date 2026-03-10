@@ -88,8 +88,10 @@ export default function HeroSection() {
         }
 
         // Continuous slow color shift — chameleon effect
-        let colorInterval: ReturnType<typeof setInterval>;
+        let colorInterval: ReturnType<typeof setInterval> | undefined;
         tl.call(() => {
+          // Clear any previous interval before starting a new one
+          if (colorInterval) clearInterval(colorInterval);
           let offset = 0;
           colorInterval = setInterval(() => {
             offset++;
@@ -106,7 +108,8 @@ export default function HeroSection() {
 
         // Cleanup interval on revert
         return () => {
-          clearInterval(colorInterval);
+          if (colorInterval) clearInterval(colorInterval);
+          colorInterval = undefined;
         };
       }
 
