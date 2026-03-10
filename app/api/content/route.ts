@@ -30,6 +30,14 @@ export async function PUT(request: NextRequest) {
     );
   }
 
+  const raw = JSON.stringify(body);
+  if (raw.length > 50_000) {
+    return NextResponse.json(
+      { error: "Payload too large (max 50KB)" },
+      { status: 413 },
+    );
+  }
+
   const { key, value } = body as { key: unknown; value: unknown };
 
   if (!key || typeof key !== "string") {

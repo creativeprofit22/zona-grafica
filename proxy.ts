@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function middleware() {
+export function proxy() {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
   const csp = [
@@ -23,19 +23,3 @@ export function middleware() {
 
   return response;
 }
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization)
-     * - favicon.ico, sitemap.xml, robots.txt
-     * - public folder assets
-     */
-    {
-      source:
-        "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|fonts/|images/).*)",
-    },
-  ],
-};

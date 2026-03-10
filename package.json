@@ -2,6 +2,9 @@
   "name": "zona-grafica",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "description": "Zona Gráfica — Creative agency website. Logo design, branding, editorial, web design, photography, illustration, poster design. Based in San Miguel de Allende, Guanajuato, Mexico.",
   "keywords": [
     "creative-agency",

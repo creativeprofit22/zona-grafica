@@ -104,6 +104,6 @@ export const services: Service[] = [
       "Edición y post-producción",
       "Entrega y distribución",
     ],
-    image: "/images/portfolio/video-hero.png",
+    image: "/images/portfolio/video-hero.webp",
   },
 ];
