@@ -19,7 +19,7 @@ for (const { path, title } of pages) {
 
 test("navigation links are visible", async ({ page }) => {
   await page.goto("/");
-  const nav = page.getByRole("navigation").first();
+  const nav = page.getByRole("navigation");
   await expect(nav).toBeVisible();
   for (const label of ["Portafolio", "Servicios", "Nosotros", "Contacto"]) {
     await expect(
@@ -36,7 +36,7 @@ test("contact form renders", async ({ page }) => {
 
 test("homepage has hero section", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("section").first()).toBeVisible();
+  await expect(page.getByText("GRÁFICA")).toBeVisible();
 });
 
 test("service accordion shows all 6 services", async ({ page }) => {

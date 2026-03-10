@@ -215,7 +215,7 @@ export default function ServiceAccordion({ services }: Props) {
             width={400}
             height={300}
             className={styles.cursorImg}
-            preload
+            fetchPriority="high"
           />
         )}
       </div>

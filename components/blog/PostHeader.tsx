@@ -80,7 +80,7 @@ export default function PostHeader({ meta }: Props) {
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className={styles.heroImg}
-              preload
+              fetchPriority="high"
             />
           </div>
         </>

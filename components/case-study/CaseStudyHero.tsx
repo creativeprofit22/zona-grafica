@@ -85,7 +85,7 @@ export default function CaseStudyHero({ project }: Props) {
           src={heroImage}
           alt={project.title}
           fill
-          preload
+          fetchPriority="high"
           sizes="100vw"
           className={styles.image}
         />
