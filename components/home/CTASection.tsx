@@ -25,9 +25,9 @@ function splitHeadline(headline: string) {
     return [{ text: headline, accent: false }];
   }
 
-  const idx = headline.indexOf(accentMatch[1]);
+  const idx = headline.indexOf(accentMatch[1]!);
   const before = headline.slice(0, idx).trim();
-  const accentText = accentMatch[1].replace(/\.$/, ""); // strip trailing dot
+  const accentText = accentMatch[1]!.replace(/\.$/, ""); // strip trailing dot
 
   return [
     { text: before, accent: false },

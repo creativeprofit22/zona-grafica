@@ -167,11 +167,11 @@ describe("jsonld", () => {
       const schema = faqSchema(items);
       expect(schema["@type"]).toBe("FAQPage");
       expect(schema.mainEntity).toHaveLength(2);
-      expect(schema.mainEntity[0]["@type"]).toBe("Question");
-      expect(schema.mainEntity[0].name).toBe("What is this?");
-      expect(schema.mainEntity[0].acceptedAnswer["@type"]).toBe("Answer");
-      expect(schema.mainEntity[0].acceptedAnswer.text).toBe("A test.");
-      expect(schema.mainEntity[1].name).toBe("Why?");
+      expect(schema.mainEntity[0]!["@type"]).toBe("Question");
+      expect(schema.mainEntity[0]!.name).toBe("What is this?");
+      expect(schema.mainEntity[0]!.acceptedAnswer["@type"]).toBe("Answer");
+      expect(schema.mainEntity[0]!.acceptedAnswer.text).toBe("A test.");
+      expect(schema.mainEntity[1]!.name).toBe("Why?");
     });
   });
 
@@ -185,12 +185,14 @@ describe("jsonld", () => {
       const schema = breadcrumbSchema(items);
       expect(schema["@type"]).toBe("BreadcrumbList");
       expect(schema.itemListElement).toHaveLength(3);
-      expect(schema.itemListElement[0].position).toBe(1);
-      expect(schema.itemListElement[0].name).toBe("Home");
-      expect(schema.itemListElement[0].item).toBe("https://test.com/");
-      expect(schema.itemListElement[1].position).toBe(2);
-      expect(schema.itemListElement[2].position).toBe(3);
-      expect(schema.itemListElement[2].item).toBe("https://test.com/blog/post");
+      expect(schema.itemListElement[0]!.position).toBe(1);
+      expect(schema.itemListElement[0]!.name).toBe("Home");
+      expect(schema.itemListElement[0]!.item).toBe("https://test.com/");
+      expect(schema.itemListElement[1]!.position).toBe(2);
+      expect(schema.itemListElement[2]!.position).toBe(3);
+      expect(schema.itemListElement[2]!.item).toBe(
+        "https://test.com/blog/post",
+      );
     });
   });
 });

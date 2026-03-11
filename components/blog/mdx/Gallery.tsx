@@ -83,15 +83,15 @@ export function Gallery({ images }: { images: GalleryImage[] }) {
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={images[lightbox].src}
-              alt={images[lightbox].alt}
+              src={images[lightbox]!.src}
+              alt={images[lightbox]!.alt}
               width={1200}
               height={800}
               style={{ objectFit: "contain", width: "100%", height: "auto" }}
             />
-            {images[lightbox].caption && (
+            {images[lightbox]!.caption && (
               <p className={styles.lightboxCaption}>
-                {images[lightbox].caption}
+                {images[lightbox]!.caption}
               </p>
             )}
           </div>

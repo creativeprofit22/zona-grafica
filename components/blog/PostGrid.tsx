@@ -40,7 +40,7 @@ function ReadingArc({ minutes }: { minutes: number }) {
 
 function parseMinutes(readingTime: string): number {
   const match = readingTime.match(/(\d+)/);
-  return match ? Number.parseInt(match[1], 10) : 3;
+  return match?.[1] ? Number.parseInt(match[1], 10) : 3;
 }
 
 interface Props {
@@ -57,7 +57,8 @@ export default function PostGrid({ posts }: Props) {
   }
 
   const featuredPost = posts.find((p) => p.featured);
-  const featured = featuredPost ?? posts[0];
+  // posts.length > 0 guaranteed by the early return above
+  const featured = featuredPost ?? posts[0]!;
   const rest = posts.filter((p) => p !== featured);
 
   return (

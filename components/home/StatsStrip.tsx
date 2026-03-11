@@ -67,8 +67,8 @@ export default function StatsStrip({ stats }: Props) {
           const text = valEl.textContent ?? "";
           const numMatch = text.match(/^(\d+)/);
           if (numMatch) {
-            const target = Number.parseInt(numMatch[1], 10);
-            const suffix = text.replace(numMatch[1], "");
+            const target = Number.parseInt(numMatch[1]!, 10);
+            const suffix = text.replace(numMatch[1]!, "");
             const obj = { val: 0 };
             tl.fromTo(
               obj,

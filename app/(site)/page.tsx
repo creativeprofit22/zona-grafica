@@ -69,7 +69,7 @@ export default function Home() {
           <ServiceAccordion services={services} />
         </div>
 
-        <PullQuote data={pullQuotes[0]} />
+        {pullQuotes[0] && <PullQuote data={pullQuotes[0]} />}
 
         <div style={{ position: "relative" }}>
           <SectionNumber n={3} />

@@ -51,11 +51,12 @@ export default function AboutStory({ segments }: Props) {
       gsap.set(words, { color: "var(--muted-light)" });
 
       for (const word of words) {
-        const finalColor = word.classList.contains(styles.accent)
-          ? "var(--accent)"
-          : word.classList.contains(styles.ochre)
-            ? "var(--ochre)"
-            : "var(--fg-dark)";
+        const finalColor =
+          styles.accent && word.classList.contains(styles.accent)
+            ? "var(--accent)"
+            : styles.ochre && word.classList.contains(styles.ochre)
+              ? "var(--ochre)"
+              : "var(--fg-dark)";
 
         gsap.to(word, {
           color: finalColor,

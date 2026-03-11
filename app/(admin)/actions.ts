@@ -3,14 +3,11 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { login, logout } from "@/lib/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function loginAction(_prev: unknown, formData: FormData) {
   const hdrs = await headers();
-  const ip =
-    hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    hdrs.get("x-real-ip") ??
-    "unknown";
+  const ip = getClientIp(hdrs);
 
   if (!checkRateLimit(`login:${ip}`, 5, 300_000)) {
     return { error: "Demasiados intentos. Espera 5 minutos." };

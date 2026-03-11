@@ -47,7 +47,7 @@ export default function MotionSection({
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           el.classList.add("is-visible");
           onVisibleRef.current?.();
           obs.disconnect();

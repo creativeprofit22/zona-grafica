@@ -27,9 +27,9 @@ interface Props {
 }
 
 const directionClass: Record<Direction, string> = {
-  left: styles.wipeLeft,
-  bottom: styles.wipeBottom,
-  right: styles.wipeRight,
+  left: styles.wipeLeft!,
+  bottom: styles.wipeBottom!,
+  right: styles.wipeRight!,
 };
 
 export default function ImageReveal({

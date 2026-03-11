@@ -1,17 +1,17 @@
 import { test } from "@playwright/test";
 
 test("servicios screenshots", async ({ page }) => {
-  await page.goto("/servicios", { waitUntil: "networkidle" });
+  await page.goto("/servicios", { waitUntil: "domcontentloaded" });
   await page.waitForTimeout(2000);
 
   await page.screenshot({ path: "/tmp/serv-01-hero.png" });
 
   const scrollPositions = [800, 1200, 2000, 2800, 3600, 5000, 7000];
   for (let i = 0; i < scrollPositions.length; i++) {
-    await page.evaluate((y) => window.scrollTo(0, y), scrollPositions[i]);
+    await page.evaluate((y) => window.scrollTo(0, y), scrollPositions[i]!);
     await page.waitForTimeout(1500);
     await page.screenshot({
-      path: `/tmp/serv-${String(i + 2).padStart(2, "0")}-scroll${scrollPositions[i]}.png`,
+      path: `/tmp/serv-${String(i + 2).padStart(2, "0")}-scroll${scrollPositions[i]!}.png`,
     });
   }
 

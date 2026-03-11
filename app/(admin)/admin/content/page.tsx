@@ -98,10 +98,10 @@ export default async function ContentPage() {
   const groups: Record<string, typeof blocks> = {};
   for (const block of blocks) {
     const section = block.key.includes(".")
-      ? block.key.split(".")[0]
+      ? (block.key.split(".")[0] ?? block.key)
       : block.key;
     if (!groups[section]) groups[section] = [];
-    groups[section].push(block);
+    groups[section]!.push(block);
   }
 
   return (

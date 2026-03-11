@@ -73,15 +73,15 @@ export default async function AdminPage() {
       .orderBy(desc(count())),
   ]);
 
-  const [totalResult] = totalResults;
-  const [todayResult] = todayResults;
-  const [uniquePagesResult] = uniquePagesResults;
-  const [topReferrer] = topReferrers;
-  const [thisWeek] = thisWeekResults;
-  const [lastWeek] = lastWeekResults;
+  const totalResult = totalResults[0];
+  const todayResult = todayResults[0];
+  const uniquePagesResult = uniquePagesResults[0];
+  const topReferrer = topReferrers[0];
+  const thisWeek = thisWeekResults[0];
+  const lastWeek = lastWeekResults[0];
 
   const trendPct =
-    lastWeek.count > 0
+    lastWeek && lastWeek.count > 0 && thisWeek
       ? Math.round(((thisWeek.count - lastWeek.count) / lastWeek.count) * 100)
       : null;
 
@@ -92,7 +92,7 @@ export default async function AdminPage() {
         <div className={styles.card}>
           <p className={styles.cardLabel}>Total Views</p>
           <p className={styles.cardValue}>
-            {totalResult.count.toLocaleString()}
+            {totalResult?.count.toLocaleString() ?? "0"}
             {trendPct !== null && (
               <span
                 className={`${styles.cardTrend} ${trendPct >= 0 ? styles.cardTrendUp : styles.cardTrendDown}`}
@@ -106,13 +106,13 @@ export default async function AdminPage() {
         <div className={styles.card}>
           <p className={styles.cardLabel}>Today</p>
           <p className={styles.cardValue}>
-            {todayResult.count.toLocaleString()}
+            {todayResult?.count.toLocaleString() ?? "0"}
           </p>
         </div>
         <div className={styles.card}>
           <p className={styles.cardLabel}>Unique Pages</p>
           <p className={styles.cardValue}>
-            {uniquePagesResult.count.toLocaleString()}
+            {uniquePagesResult?.count.toLocaleString() ?? "0"}
           </p>
         </div>
         <div className={styles.card}>

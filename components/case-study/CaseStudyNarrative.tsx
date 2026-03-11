@@ -68,9 +68,9 @@ export default function CaseStudyNarrative({
         const match = raw.match(/^([^\d]*)(\d+)([^\d]*)$/);
         if (!match) return;
 
-        const prefix = match[1];
-        const target = Number.parseInt(match[2], 10);
-        const suffix = match[3];
+        const prefix = match[1] ?? "";
+        const target = Number.parseInt(match[2] ?? "0", 10);
+        const suffix = match[3] ?? "";
         const obj = { val: 0 };
 
         gsap.to(obj, {

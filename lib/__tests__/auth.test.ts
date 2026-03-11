@@ -65,7 +65,7 @@ describe("auth", () => {
       expect(await login("correct-password")).toBe(true);
       expect(mockCookieStore.set).toHaveBeenCalledTimes(1);
       const [cookieName, cookieValue, options] =
-        mockCookieStore.set.mock.calls[0];
+        mockCookieStore.set.mock.calls[0]!;
       expect(cookieName).toBe("dd_admin_session");
       expect(cookieValue).toContain(".");
       expect(options.httpOnly).toBe(true);
@@ -75,7 +75,7 @@ describe("auth", () => {
 
     it("verifies session after successful login", async () => {
       await login("correct-password");
-      const [, cookieValue] = mockCookieStore.set.mock.calls[0];
+      const [, cookieValue] = mockCookieStore.set.mock.calls[0]!;
       mockCookieStore.get.mockReturnValue({ value: cookieValue });
       expect(await verifySession()).toBe(true);
     });

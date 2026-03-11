@@ -257,7 +257,7 @@ const images: ImageSpec[] = [
 ];
 
 function createSVG(spec: ImageSpec): string {
-  const [color1, color2] = GRADIENTS[spec.gradientIndex % GRADIENTS.length];
+  const [color1, color2] = GRADIENTS[spec.gradientIndex % GRADIENTS.length]!;
   const { width, height, initials } = spec;
 
   // Calculate font size based on image dimensions and initials length

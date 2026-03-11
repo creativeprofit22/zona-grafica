@@ -77,7 +77,7 @@ export default function HeroSection() {
         // Staggered color wave — each letter gets its color one by one
         for (let i = 0; i < split.chars.length; i++) {
           tl.to(
-            split.chars[i],
+            split.chars[i]!,
             {
               color: colors[i % colors.length],
               duration: 0.4,
@@ -97,7 +97,7 @@ export default function HeroSection() {
             offset++;
             if (!split) return;
             for (let i = 0; i < split.chars.length; i++) {
-              gsap.to(split.chars[i], {
+              gsap.to(split.chars[i]!, {
                 color: colors[(i + offset) % colors.length],
                 duration: 1.2,
                 ease: "power1.inOut",

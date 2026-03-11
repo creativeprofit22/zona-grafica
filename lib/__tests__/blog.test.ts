@@ -173,8 +173,8 @@ Short content.
       const posts = getAllPosts();
       expect(posts).toHaveLength(2);
       // Post Two (2026-03-05) should come before Post One (2026-03-01)
-      expect(posts[0].title).toBe("Post Two");
-      expect(posts[1].title).toBe("Post One");
+      expect(posts[0]!.title).toBe("Post Two");
+      expect(posts[1]!.title).toBe("Post One");
     });
 
     it("filters non-mdx files", async () => {
@@ -189,7 +189,7 @@ Short content.
       const { getAllPosts } = await import("../blog");
       const posts = getAllPosts();
       expect(posts).toHaveLength(1);
-      expect(posts[0].slug).toBe("post-one");
+      expect(posts[0]!.slug).toBe("post-one");
     });
   });
 });

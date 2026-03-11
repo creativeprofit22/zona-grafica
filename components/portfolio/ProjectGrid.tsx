@@ -389,7 +389,7 @@ function ProjectCard({
 function getStaggerIndex(index: number, projects: Project[]): number {
   let col = 0;
   for (let i = 0; i < index; i++) {
-    col += projects[i].featured ? 8 : 4;
+    col += projects[i]!.featured ? 8 : 4;
     if (col >= 12) col = col % 12;
   }
   // Map column position to stagger slot (0-2)

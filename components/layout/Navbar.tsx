@@ -51,6 +51,7 @@ export default function Navbar() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (!entry) return;
         // Hero is dark when it's visible (intersecting) and covers most of viewport
         setHeroDark(entry.isIntersecting && entry.intersectionRatio > 0.3);
       },

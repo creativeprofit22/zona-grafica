@@ -447,7 +447,7 @@ export const projects: Project[] = [
 
 export const caseStudies: CaseStudy[] = [
   {
-    ...projects[2], // Cardo Café
+    ...projects[2]!, // Cardo Café
     heroImage: "/images/portfolio/cardo-cafe-hero.jpg",
     brief:
       "Cardo Café necesitaba una identidad que reflejara su propuesta: café de especialidad en un espacio con alma artesanal, ubicado en el corazón de San Miguel de Allende.",
