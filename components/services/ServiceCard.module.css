@@ -1,51 +1,80 @@
-/* ─── Service Card ───────────────────────────────────────── */
+/* ─── Service Card — Immersive Full-Width ────────────────── */
 .card {
   position: relative;
+  min-height: 85vh;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Per-Service Background Tints ──────────────────────── */
+.card[data-service="branding"] {
+  background: linear-gradient(135deg, #f0faf5 0%, #faf9f6 100%);
+}
+
+.card[data-service="editorial"] {
+  background: linear-gradient(135deg, #faf6f0 0%, #faf9f6 100%);
+}
+
+.card[data-service="web"] {
+  background: linear-gradient(135deg, #f0f4fa 0%, #faf9f6 100%);
+}
+
+.card[data-service="fotografia"] {
+  background: linear-gradient(135deg, #f5f0fa 0%, #faf9f6 100%);
+}
+
+.card[data-service="ilustracion"] {
+  background: linear-gradient(135deg, #faf9f0 0%, #faf9f6 100%);
+}
+
+.card[data-service="carteleria"] {
+  background: linear-gradient(135deg, #faf0f0 0%, #faf9f6 100%);
+}
+
+.card[data-service="video"] {
+  background: linear-gradient(135deg, #f0f0fa 0%, #faf9f6 100%);
+}
+
+/* ─── Card Inner — 2-Column Grid ────────────────────────── */
+.cardInner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 45% 1fr;
   gap: var(--space-xl);
-  padding: var(--space-xl) 0;
-  border-bottom: 1px solid var(--border-light);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+  align-items: center;
 }
 
-.card:first-child {
-  border-top: 1px solid var(--border-light);
-}
-
-/* ─── Number Column (watermark) ──────────────────────────── */
+/* ─── Number Watermark ──────────────────────────────────── */
 .numberCol {
   position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
+  top: var(--space-lg);
+  right: var(--space-xl);
   pointer-events: none;
   z-index: 0;
 }
 
 .number {
   font-family: var(--font-display);
-  font-size: clamp(120px, 20vw, 300px);
+  font-size: clamp(150px, 25vw, 400px);
   font-weight: 700;
-  color: var(--ochre);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  opacity: 0.04;
-  transition:
-    opacity 0.4s var(--ease-out),
-    transform 0.4s var(--ease-out);
+  color: var(--fg-dark);
+  letter-spacing: -0.04em;
+  line-height: 0.8;
+  opacity: 0.05;
 }
 
-.card:hover .number {
-  opacity: 0.12;
-  transform: translateX(-20px);
-}
-
-/* ─── Image Column ───────────────────────────────────────── */
+/* ─── Image Column ──────────────────────────────────────── */
 .imageCol {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 12px;
   z-index: 1;
 }
 
@@ -55,15 +84,7 @@
   height: 100%;
 }
 
-/* ─── Per-Service Visual Themes ──────────────────────────── */
-.card[data-service="branding"] .imageCol {
-  border-left: 4px solid var(--accent);
-}
-
-.card[data-service="editorial"] .imageCol {
-  aspect-ratio: 3 / 4;
-}
-
+/* ─── Web Service — Chrome Bar ──────────────────────────── */
 .card[data-service="web"] .imageCol {
   border-radius: 12px;
   display: flex;
@@ -74,7 +95,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: #e5e5e5;
   border-radius: 12px 12px 0 0;
   flex-shrink: 0;
@@ -104,25 +125,7 @@
   position: relative;
 }
 
-.card[data-service="fotografia"] .imageCol {
-  border-radius: 0;
-  box-shadow: inset 0 0 0 4px white;
-}
-
-.card[data-service="ilustracion"] .imageCol {
-  background: var(--bg-cream);
-  border: 2px dashed var(--stone);
-  border-radius: 6px;
-}
-
-.card[data-service="carteleria"] .imageCol {
-  aspect-ratio: 2 / 3;
-}
-
-.card[data-service="video"] .imageCol {
-  aspect-ratio: 16 / 9;
-}
-
+/* ─── Video Service — Play Overlay ──────────────────────── */
 .playOverlay {
   position: absolute;
   inset: 0;
@@ -134,8 +137,8 @@
 }
 
 .playIcon {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   opacity: 0.85;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   transition:
@@ -148,122 +151,110 @@
   transform: scale(1.1);
 }
 
-/* ─── Text Content ───────────────────────────────────────── */
+/* ─── Text Content ──────────────────────────────────────── */
 .content {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  max-width: 780px;
+  justify-content: center;
+  padding: var(--space-lg) 0;
 }
 
 .title {
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(32px, 5vw, 56px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: 1.05;
   color: var(--fg-dark);
-  transition: color var(--duration-fast) var(--ease-out);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.25em;
 }
 
-.card:hover .title {
-  color: var(--accent);
+.word {
+  display: inline-block;
 }
 
 .description {
-  font-size: 18px;
+  font-size: clamp(16px, 1.4vw, 19px);
   line-height: 1.7;
   color: var(--muted);
-  max-width: 600px;
+  max-width: 520px;
 }
 
-/* ─── Process Steps ──────────────────────────────────────── */
+/* ─── Process Steps — Pills ─────────────────────────────── */
 .process {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0;
+  gap: 8px;
   margin-top: var(--space-sm);
 }
 
 .step {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--muted-light);
-  display: flex;
-  align-items: center;
-  gap: 0;
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.step::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-  margin-right: 6px;
-}
-
-.step:not(:first-child)::before {
-  margin-left: 0;
-}
-
-.step + .step::after {
-  content: none;
-}
-
-.process .step:not(:last-child) {
-  padding-right: 0;
-}
-
-.process .step:not(:last-child)::after {
-  content: "";
-  width: 16px;
-  height: 1px;
-  background: var(--stone);
-  flex-shrink: 0;
-  margin-left: 6px;
-  margin-right: 0;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  background: var(--bg-cream);
+  padding: 6px 16px;
+  border-radius: 100px;
+  transform-origin: left center;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
 }
 
 .card:hover .step {
-  color: var(--muted);
-}
-
-.card:hover .step::before {
-  background: var(--accent-hover);
-}
-
-/* ─── Reversed layout ────────────────────────────────────── */
-.reversed .imageCol {
-  order: 3;
-}
-
-.reversed .content {
-  margin-left: auto;
+  background: var(--bg-paper);
+  color: var(--fg-dark);
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .card {
+    min-height: auto;
+    border-radius: 12px;
+  }
+
+  .cardInner {
     grid-template-columns: 1fr;
     gap: var(--space-md);
-    padding: var(--space-lg) 0;
+    padding: var(--space-lg) 20px;
+  }
+
+  .numberCol {
+    top: var(--space-md);
+    right: 20px;
   }
 
   .number {
     font-size: clamp(80px, 25vw, 150px);
+    opacity: 0.08;
   }
 
   .imageCol {
-    /* biome-ignore lint/complexity/noImportantStyles: must override .reversed order on mobile */
-    order: 0 !important;
     aspect-ratio: 16 / 9;
+    border-radius: 8px;
+  }
+
+  .content {
+    padding: 0;
+  }
+
+  .title {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+
+  .process {
+    gap: 6px;
+  }
+
+  .step {
+    font-size: 12px;
+    padding: 5px 12px;
   }
 }

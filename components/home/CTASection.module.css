@@ -19,12 +19,14 @@
 
 /* ─── Headline — Extreme display size ───────────────────── */
 .headline {
-  font-size: clamp(48px, 12vw, 160px);
+  font-size: clamp(48px, 9vw, 130px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.04em;
   margin-bottom: var(--space-xl);
   color: var(--fg-light);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .line {
@@ -109,7 +111,7 @@
   }
 
   .headline {
-    font-size: clamp(40px, 10vw, 80px);
+    font-size: clamp(36px, 9vw, 64px);
     margin-bottom: var(--space-xl);
   }
 

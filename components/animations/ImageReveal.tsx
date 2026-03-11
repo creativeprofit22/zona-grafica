@@ -50,17 +50,27 @@ export default function ImageReveal({
       const inner = innerRef.current;
       if (!wrap) return;
 
-      gsap.to(wrap, {
-        clipPath: "inset(0 0 0 0)",
-        duration,
-        delay,
-        ease: "power3.inOut",
-        scrollTrigger: {
-          trigger: wrap,
-          start: "top 85%",
-          toggleActions: "play none none none",
+      const fromClip: Record<Direction, string> = {
+        left: "inset(0 100% 0 0)",
+        right: "inset(0 0 0 100%)",
+        bottom: "inset(100% 0 0 0)",
+      };
+
+      gsap.fromTo(
+        wrap,
+        { clipPath: fromClip[direction] },
+        {
+          clipPath: "inset(0 0 0 0)",
+          duration,
+          delay,
+          ease: "power3.inOut",
+          scrollTrigger: {
+            trigger: wrap,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
         },
-      });
+      );
 
       if (scaleReveal && inner) {
         gsap.fromTo(
@@ -80,7 +90,7 @@ export default function ImageReveal({
         );
       }
     },
-    { scope: wrapRef },
+    { scope: wrapRef, dependencies: [direction, delay, duration, scaleReveal] },
   );
 
   return (

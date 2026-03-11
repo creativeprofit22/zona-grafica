@@ -48,6 +48,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-right: 0.05em;
 }
 
 .subtitle {
@@ -56,6 +57,11 @@
   max-width: 520px;
   margin-top: var(--space-xl);
   line-height: 1.6;
+}
+
+/* GSAP animation target — no hiding in CSS (blank-page convention) */
+.animItem {
+  will-change: transform, opacity;
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */

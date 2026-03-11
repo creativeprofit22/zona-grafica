@@ -18,17 +18,11 @@ interface Props {
 }
 
 function splitHeadline(headline: string) {
-  // Split headline into exactly 2 visual lines
   // If "Platiquemos" present, it becomes the accent on line 2
   const accentMatch = headline.match(/(Platiquemos\.?)/);
   if (!accentMatch) {
-    // Fallback: split at roughly halfway
-    const words = headline.split(" ");
-    const mid = Math.ceil(words.length / 2);
-    return [
-      { text: words.slice(0, mid).join(" "), accent: false },
-      { text: words.slice(mid).join(" "), accent: false },
-    ];
+    // Single line, no accent
+    return [{ text: headline, accent: false }];
   }
 
   const idx = headline.indexOf(accentMatch[1]);

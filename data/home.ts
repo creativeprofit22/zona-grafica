@@ -57,7 +57,7 @@ export const stats: Stat[] = [
 
 export const pullQuotes: PullQuoteData[] = [
   {
-    text: "No hacemos diseño bonito. Hacemos diseño que mueve, que comunica, que conecta, que deja marca.",
+    text: "Hacemos diseño que mueve, que comunica, que conecta, que deja marca.",
     accentPhrase: "diseño que mueve",
   },
 ];

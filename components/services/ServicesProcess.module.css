@@ -41,7 +41,7 @@
   padding-left: 32px;
 }
 
-/* Vertical connecting line */
+/* Vertical connecting line — animated via --line-scale */
 .list::before {
   content: "";
   position: absolute;
@@ -50,6 +50,8 @@
   bottom: 0;
   width: 2px;
   background: var(--accent);
+  transform: scaleY(var(--line-scale, 0));
+  transform-origin: top;
 }
 
 /* ─── Step ───────────────────────────────────────────────── */
@@ -63,7 +65,7 @@
   border-bottom: 1px solid var(--border-light);
 }
 
-/* Timeline dot */
+/* Timeline dot — animated via --dot-opacity, --dot-scale */
 .step::before {
   content: "";
   position: absolute;
@@ -75,6 +77,8 @@
   background: var(--bg-cream);
   border: 2px solid var(--accent);
   z-index: 1;
+  opacity: var(--dot-opacity, 0);
+  transform: scale(var(--dot-scale, 0));
 }
 
 /* ─── Step Content ───────────────────────────────────────── */

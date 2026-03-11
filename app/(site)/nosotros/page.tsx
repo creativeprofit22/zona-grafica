@@ -52,7 +52,7 @@ export default function NosotrosPage() {
       <TeamSection members={team} />
 
       <CTASection
-        headline="¿Quieres trabajar con nosotros?"
+        headline="¿Quieres trabajar con nosotros? Platiquemos"
         whatsappLabel="Escríbenos por WhatsApp"
         whatsappHref={siteConfig.contact.whatsapp}
         emailLabel="Mándanos un correo"

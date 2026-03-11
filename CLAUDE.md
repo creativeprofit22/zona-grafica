@@ -137,3 +137,17 @@ Fixed 4 issues from friend feedback: dark line between sections, body font upgra
 3. **Restore animations incrementally** — once JS issue is identified, re-add animation hiding with proper fallbacks
 4. Consider removing old Satoshi font files from `public/fonts/`
 5. ScrollColorTransition.tsx can be deleted if confirmed unnecessary
+
+## Session Recovery
+
+If a session crashes mid-work, the next session should:
+1. Read this file first (happens automatically)
+2. Run `tasks list` to see pending work
+3. Check `git status` and `git log --oneline -5` to see what was in progress
+4. Check `git diff --stat` for uncommitted changes that may be mid-edit
+5. Resume from the "Current Session" section below (if present)
+
+**Convention**: When starting meaningful work, update "Current Session" with what's being done. When work completes, move notes to a dated session log above.
+
+## Current Session
+_No active work in progress._

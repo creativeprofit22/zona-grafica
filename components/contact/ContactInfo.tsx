@@ -143,6 +143,9 @@ export default function ContactInfo() {
               title="Ubicación de Zona Gráfica en San Miguel de Allende"
             />
           </div>
+          <p className={styles.mapCaption}>
+            San Miguel de Allende, Guanajuato · 20.9144° N, 100.7452° W
+          </p>
         </div>
 
         <div className={styles.closing}>

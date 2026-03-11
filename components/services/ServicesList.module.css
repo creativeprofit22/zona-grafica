@@ -1,17 +1,32 @@
-/* ─── Services List ──────────────────────────────────────── */
+/* ─── Services List — Sticky Stack Container ─────────────── */
 .section {
-  padding: 0 48px var(--space-3xl);
+  padding: var(--space-xl) 0 var(--space-3xl);
   background: var(--bg-paper);
 }
 
 .inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Card Wrapper — Sticky Positioning ──────────────────── */
+.cardWrapper {
+  position: sticky;
+  top: 16px;
+  padding: 0 24px;
+  will-change: transform;
+  transform-origin: center top;
 }
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .section {
-    padding: 0 20px var(--space-2xl);
+    padding: var(--space-lg) 0 var(--space-2xl);
+  }
+
+  .cardWrapper {
+    position: static;
+    padding: 0 12px;
+    margin-bottom: 16px;
   }
 }
