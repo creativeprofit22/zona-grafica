@@ -334,55 +334,6 @@ img {
   margin: 2.5rem 0;
 }
 
-/* ─── Texture Overlays ─────────────────────────────────────── */
-/* Usage: add .texture-grain or .texture-stone to any section.   */
-/* The ::after pseudo-element tiles the texture at low opacity.  */
-/* Both are pointer-events: none so they don't interfere with    */
-/* clicks/hovers. Combine with position: relative on the parent. */
-
-.texture-grain {
-  position: relative;
-}
-
-.texture-grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("/images/textures/paper-grain.png") repeat;
-  opacity: 0.4;
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: multiply;
-}
-
-.texture-stone {
-  position: relative;
-}
-
-.texture-stone::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("/images/textures/cantera-stone.png") repeat;
-  opacity: 0.3;
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: multiply;
-}
-
-/* Dark sections: use overlay blend instead of multiply */
-[data-theme="dark"] .texture-grain::after,
-[data-theme="dark"].texture-grain::after {
-  mix-blend-mode: overlay;
-  opacity: 0.25;
-}
-
-[data-theme="dark"] .texture-stone::after,
-[data-theme="dark"].texture-stone::after {
-  mix-blend-mode: overlay;
-  opacity: 0.2;
-}
-
 /* ─── Skeleton Loading ─────────────────────────────────────── */
 @keyframes skeleton-pulse {
   0% {

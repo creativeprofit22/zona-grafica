@@ -166,7 +166,7 @@ export default function CustomCursor() {
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("mouseenter", onEnter);
-      document.head.removeChild(style);
+      style.parentNode?.removeChild(style);
       if (blinkTween) blinkTween.kill();
     };
   }, []);
