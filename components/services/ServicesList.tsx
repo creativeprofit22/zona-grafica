@@ -35,7 +35,7 @@ export default function ServicesList({ services }: Props) {
 
           gsap.to(wrapper, {
             scale: 0.96,
-            filter: "brightness(0.92)",
+
             ease: "none",
             scrollTrigger: {
               trigger: wrappers[i + 1],
