@@ -34,7 +34,19 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
-          // CSP can be added here or via middleware if needed
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: https://img.youtube.com https://i.ytimg.com",
+              "font-src 'self'",
+              "connect-src 'self' https://maps.googleapis.com https://maps.gstatic.com",
+              "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com",
+              "media-src 'self'",
+            ].join("; "),
+          },
         ],
       },
     ];

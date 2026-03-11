@@ -1,24 +1,28 @@
-import type { NextRequest } from "next/server";
-
 /**
  * Extract client IP from request headers.
  * Only trusts X-Forwarded-For when TRUSTED_PROXY_IPS is configured,
  * preventing IP spoofing on self-hosted deployments.
  * On Vercel, X-Forwarded-For is always safe (set by the platform).
+ *
+ * Accepts a NextRequest, a Headers object, or any object with a
+ * `.headers` property that exposes `.get()`.
  */
-export function getClientIp(request: NextRequest): string {
+export function getClientIp(
+  source: { headers: { get(name: string): string | null } } | Headers,
+): string {
+  const hdrs =
+    source instanceof Headers
+      ? source
+      : (source.headers as { get(name: string): string | null });
   const isVercel = !!process.env.VERCEL;
   const trustedProxies = process.env.TRUSTED_PROXY_IPS?.split(",") ?? [];
 
   if (isVercel || trustedProxies.length > 0) {
-    const forwarded = request.headers
-      .get("x-forwarded-for")
-      ?.split(",")[0]
-      ?.trim();
+    const forwarded = hdrs.get("x-forwarded-for")?.split(",")[0]?.trim();
     if (forwarded) return forwarded;
   }
 
-  return request.headers.get("x-real-ip") ?? "unknown";
+  return hdrs.get("x-real-ip") ?? "unknown";
 }
 
 const MAX_KEYS = 10_000; // cap to prevent unbounded growth
