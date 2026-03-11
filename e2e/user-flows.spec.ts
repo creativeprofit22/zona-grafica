@@ -15,22 +15,18 @@ test.describe("Navigation flow", () => {
   for (const { label, path } of links) {
     test(`clicking "${label}" navigates to ${path}`, async ({ page }) => {
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
 
       const nav = page.getByRole("navigation");
       await nav.getByRole("link", { name: new RegExp(label, "i") }).click();
 
-      await page.waitForLoadState("networkidle");
       await expect(page).toHaveURL(new RegExp(`${path}$`));
     });
   }
 
   test("logo links back to home", async ({ page }) => {
     await page.goto("/servicios");
-    await page.waitForLoadState("networkidle");
 
     await page.getByRole("link", { name: /inicio/i }).click();
-    await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(/\/$/);
   });
 });
@@ -41,7 +37,6 @@ test.describe("Navigation flow", () => {
 test.describe("Contact form validation", () => {
   test("shows error messages when submitting empty form", async ({ page }) => {
     await page.goto("/contacto");
-    await page.waitForLoadState("networkidle");
 
     await page.getByRole("button", { name: /enviar/i }).click();
 
@@ -53,7 +48,6 @@ test.describe("Contact form validation", () => {
 
   test("clears error when user fills a field", async ({ page }) => {
     await page.goto("/contacto");
-    await page.waitForLoadState("networkidle");
 
     await page.getByRole("button", { name: /enviar/i }).click();
     await expect(page.getByText("Tu nombre es requerido")).toBeVisible();
@@ -68,7 +62,6 @@ test.describe("Contact form validation", () => {
  * ──────────────────────────────────────────────────── */
 test("contact form submission shows success message", async ({ page }) => {
   await page.goto("/contacto");
-  await page.waitForLoadState("networkidle");
 
   // Mock the API to avoid actually sending
   await page.route("**/api/contact", (route) =>
@@ -93,7 +86,6 @@ test("contact form submission shows success message", async ({ page }) => {
  * ──────────────────────────────────────────────────── */
 test("newsletter form submits and shows success", async ({ page }) => {
   await page.goto("/");
-  await page.waitForLoadState("networkidle");
 
   // Mock the newsletter API
   await page.route("**/api/newsletter", (route) =>
@@ -116,7 +108,6 @@ test.describe("Mobile navigation", () => {
 
   test("hamburger opens overlay with nav links", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
 
     const burger = page.getByRole("button", { name: /abrir menú/i });
     await expect(burger).toBeVisible();
@@ -144,7 +135,6 @@ test.describe("Mobile navigation", () => {
 
   test("tapping overlay link navigates and closes menu", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
 
     await page.getByRole("button", { name: /abrir menú/i }).click();
 
@@ -153,7 +143,6 @@ test.describe("Mobile navigation", () => {
     });
     await overlay.getByRole("link", { name: /servicios/i }).click();
 
-    await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(/\/servicios$/);
   });
 });
@@ -163,9 +152,9 @@ test.describe("Mobile navigation", () => {
  * ──────────────────────────────────────────────────── */
 test("pages contain sections with data-theme attributes", async ({ page }) => {
   await page.goto("/");
-  await page.waitForLoadState("networkidle");
 
   const themedSections = page.locator("[data-theme]");
+  await expect(themedSections.first()).toBeAttached();
   const count = await themedSections.count();
   expect(count).toBeGreaterThan(0);
 });
@@ -175,7 +164,6 @@ test("pages contain sections with data-theme attributes", async ({ page }) => {
  * ──────────────────────────────────────────────────── */
 test("blog page lists posts and navigates to a post", async ({ page }) => {
   await page.goto("/blog");
-  await page.waitForLoadState("networkidle");
 
   // Find any blog post link (href starts with /blog/)
   const postLink = page.locator('a[href^="/blog/"]').first();
@@ -183,7 +171,6 @@ test("blog page lists posts and navigates to a post", async ({ page }) => {
 
   const href = await postLink.getAttribute("href");
   await postLink.click();
-  await page.waitForLoadState("networkidle");
 
   await expect(page).toHaveURL(new RegExp(`${href}$`));
   // Post should have an article or main content area
