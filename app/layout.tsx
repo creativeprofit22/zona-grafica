@@ -1,8 +1,37 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import Analytics from "@/components/Analytics";
 import { siteConfig } from "@/data/site";
 import { organizationSchema, webSiteSchema } from "@/lib/jsonld";
 import "./globals.css";
+
+const clashDisplay = localFont({
+  src: [
+    {
+      path: "../public/fonts/clash-display.woff2",
+      style: "normal",
+    },
+  ],
+  weight: "400 700",
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const sourceSerif = localFont({
+  src: [
+    {
+      path: "../public/fonts/source-serif-4.woff2",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/source-serif-4-italic.woff2",
+      style: "italic",
+    },
+  ],
+  weight: "400 700",
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -30,7 +59,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body
+        className={`${clashDisplay.variable} ${sourceSerif.variable}`}
+        suppressHydrationWarning
+      >
         <a className="skip-to-content" href="#main-content">
           Ir al contenido
         </a>

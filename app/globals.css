@@ -1,31 +1,6 @@
-/* ─── Local Fonts ─────────────────────────────────────────── */
-/* Clash Display: bold geometric display sans — headlines      */
-/* Source Serif 4: editorial serif — body, UI                  */
-/* Both from Indian Type Foundry (free for web)                */
-
-@font-face {
-  font-family: "Clash Display";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("/fonts/clash-display.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("/fonts/source-serif-4.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  font-style: italic;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("/fonts/source-serif-4-italic.woff2") format("woff2");
-}
+/* ─── Fonts ───────────────────────────────────────────────── */
+/* Clash Display + Source Serif 4 loaded via next/font/local   */
+/* in app/layout.tsx — sets --font-heading and --font-body     */
 
 /* ─── Design Tokens — San Miguel Editorial ──────────────── */
 :root {
@@ -75,9 +50,9 @@
   --fg: var(--fg-dark);
   --border: var(--border-light);
 
-  /* Typography */
-  --font-display: "Clash Display", system-ui, sans-serif;
-  --font-sans: "Source Serif 4", Georgia, "Times New Roman", serif;
+  /* Typography — next/font/local sets --font-heading and --font-body */
+  --font-display: var(--font-heading), system-ui, sans-serif;
+  --font-sans: var(--font-body), Georgia, "Times New Roman", serif;
 
   /* Spacing scale */
   --space-xs: 4px;
