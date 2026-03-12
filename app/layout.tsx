@@ -34,18 +34,41 @@ const sourceSerif = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : siteConfig.url,
+  ),
   title: {
     default: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   openGraph: {
+    type: "website",
     locale: siteConfig.locale,
     siteName: siteConfig.name,
+    title: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
+    description: siteConfig.description,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
+      },
+    ],
   },
   alternates: {
     canonical: siteConfig.url,

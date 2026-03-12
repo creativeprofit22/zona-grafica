@@ -32,6 +32,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: siteConfig.description,
       type: "website",
       url: "/",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
+        },
+      ],
     },
   };
 }
