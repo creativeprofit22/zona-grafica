@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
 import CaseStudyGallery from "@/components/case-study/CaseStudyGallery";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import CaseStudyNarrative from "@/components/case-study/CaseStudyNarrative";
@@ -7,20 +8,21 @@ import CaseStudyTestimonial from "@/components/case-study/CaseStudyTestimonial";
 import ProjectDetail from "@/components/case-study/ProjectDetail";
 import RelatedProjects from "@/components/case-study/RelatedProjects";
 import { caseStudies, projects } from "@/data/work";
+import { localeAlternates } from "@/lib/alternates";
 import { breadcrumbSchema } from "@/lib/jsonld";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
     title: `${project.title} · ${project.client}`,
     description: project.description,
-    alternates: { canonical: `/portafolio/${slug}` },
+    alternates: localeAlternates(`portafolio/${slug}`, locale),
   };
 }
 
@@ -29,7 +31,8 @@ export async function generateStaticParams() {
 }
 
 export default async function CaseStudyPage({ params }: Props) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const caseStudy = caseStudies.find((cs) => cs.slug === slug);
   const project = caseStudy ?? projects.find((p) => p.slug === slug);
 

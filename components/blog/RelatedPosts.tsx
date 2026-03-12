@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import MotionSection from "@/components/animations/MotionSection";
+import { Link } from "@/i18n/navigation";
 import { getAllPosts } from "@/lib/blog";
 import styles from "./RelatedPosts.module.css";
 

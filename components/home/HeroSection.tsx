@@ -4,14 +4,16 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
-import { homeData } from "@/data/home";
+import type { HomeData } from "@/types/content";
 import styles from "./HeroSection.module.css";
 
 gsap.registerPlugin(SplitText);
 
-const { hero } = homeData;
+interface Props {
+  hero: HomeData["hero"];
+}
 
-export default function HeroSection() {
+export default function HeroSection({ hero }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -165,7 +167,10 @@ export default function HeroSection() {
 
         {/* Line 2: "GRÁFICA" — massive, dominant */}
         <div className={`${styles.line} ${styles.lineGrafica}`}>
-          <span className={`${styles.grafica} ${styles.animItem}`}>
+          <span
+            translate="no"
+            className={`${styles.grafica} ${styles.animItem}`}
+          >
             {hero.headline[1]}
           </span>
         </div>

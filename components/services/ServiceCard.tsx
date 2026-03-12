@@ -177,7 +177,7 @@ export default function ServiceCard({ service, index }: Props) {
         </div>
 
         <div className={styles.content}>
-          <h2 className={styles.title}>
+          <h2 translate="no" className={styles.title}>
             {service.title.split(/\s+/).map((word) => (
               <span key={word} className={styles.word}>
                 {word}

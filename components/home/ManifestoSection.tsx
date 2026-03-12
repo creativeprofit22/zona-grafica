@@ -4,14 +4,16 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
-import { homeData } from "@/data/home";
+import type { HomeData } from "@/types/content";
 import styles from "./ManifestoSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const { manifesto } = homeData;
+interface Props {
+  manifesto: HomeData["manifesto"];
+}
 
-export default function ManifestoSection() {
+export default function ManifestoSection({ manifesto }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const quoteRef = useRef<HTMLQuoteElement>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -76,7 +78,7 @@ export default function ManifestoSection() {
           </span>
         </div>
         <blockquote ref={quoteRef} className={styles.quote}>
-          <p className={styles.text}>
+          <p translate="no" className={styles.text}>
             {manifesto.segments.map((segment, si) =>
               segment.text.split(" ").map((word, wi) => (
                 <span

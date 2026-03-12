@@ -3,7 +3,13 @@ import { siteConfig } from "@/data/site";
 const SITE_URL = siteConfig.url;
 const SITE_NAME = siteConfig.name;
 
-export function organizationSchema() {
+type Locale = "es" | "en";
+
+function langTag(locale: Locale): string {
+  return locale === "es" ? "es-MX" : "en-US";
+}
+
+export function organizationSchema(locale: Locale = "es") {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -27,16 +33,17 @@ export function organizationSchema() {
     ].filter(Boolean),
     priceRange: "$$",
     knowsLanguage: ["es", "en"],
+    inLanguage: langTag(locale),
   };
 }
 
-export function webSiteSchema() {
+export function webSiteSchema(locale: Locale = "es") {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
-    inLanguage: siteConfig.locale,
+    inLanguage: langTag(locale),
   };
 }
 
@@ -44,10 +51,12 @@ export function webPageSchema({
   name,
   description,
   url,
+  locale = "es",
 }: {
   name: string;
   description: string;
   url: string;
+  locale?: Locale;
 }) {
   return {
     "@context": "https://schema.org",
@@ -55,7 +64,7 @@ export function webPageSchema({
     name,
     description,
     url: `${SITE_URL}${url}`,
-    inLanguage: siteConfig.locale,
+    inLanguage: langTag(locale),
     isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
   };
 }
@@ -63,17 +72,21 @@ export function webPageSchema({
 export function aboutPageSchema({
   name,
   description,
+  url = "/nosotros",
+  locale = "es",
 }: {
   name: string;
   description: string;
+  url?: string;
+  locale?: Locale;
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "AboutPage",
     name,
     description,
-    url: `${SITE_URL}/nosotros`,
-    inLanguage: siteConfig.locale,
+    url: `${SITE_URL}${url}`,
+    inLanguage: langTag(locale),
     isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
   };
 }
@@ -84,12 +97,14 @@ export function articleSchema({
   datePublished,
   url,
   image,
+  locale = "es",
 }: {
   headline: string;
   description: string;
   datePublished: string;
   url: string;
   image?: string;
+  locale?: Locale;
 }) {
   return {
     "@context": "https://schema.org",
@@ -98,7 +113,7 @@ export function articleSchema({
     description,
     datePublished,
     url: `${SITE_URL}${url}`,
-    inLanguage: siteConfig.locale,
+    inLanguage: langTag(locale),
     ...(image ? { image: `${SITE_URL}${image}` } : {}),
     author: {
       "@type": "Organization",

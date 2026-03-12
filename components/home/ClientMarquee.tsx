@@ -4,12 +4,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
 import { useRef } from "react";
-import { clients } from "@/data/clients";
+import type { Client } from "@/data/clients";
 import styles from "./ClientMarquee.module.css";
-
-/* Two rows scrolling in opposite directions */
-const ROW_1 = clients.slice(0, 7);
-const ROW_2 = clients.slice(7);
 
 /* Triple the items for seamless loop (original + 2 clones) */
 function tripled<T>(arr: T[]): T[] {
@@ -21,7 +17,7 @@ function MarqueeRow({
   reverse,
   rowRef,
 }: {
-  items: typeof clients;
+  items: Client[];
   reverse?: boolean;
   rowRef: React.RefObject<HTMLDivElement | null>;
 }) {
@@ -51,7 +47,14 @@ function MarqueeRow({
   );
 }
 
-export default function ClientMarquee() {
+interface Props {
+  clients: Client[];
+  tagline: string;
+}
+
+export default function ClientMarquee({ clients, tagline }: Props) {
+  const ROW_1 = clients.slice(0, 7);
+  const ROW_2 = clients.slice(7);
   const sectionRef = useRef<HTMLElement>(null);
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
@@ -94,7 +97,7 @@ export default function ClientMarquee() {
 
   return (
     <section ref={sectionRef} className={styles.wrapper}>
-      <p className={styles.tagline}>Buenos clientes hacen buenas historias.</p>
+      <p className={styles.tagline}>{tagline}</p>
       <div className={styles.marquee}>
         <MarqueeRow items={ROW_1} rowRef={row1Ref} />
         <MarqueeRow items={ROW_2} reverse rowRef={row2Ref} />

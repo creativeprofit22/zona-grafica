@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
 import BlogCTA from "@/components/blog/BlogCTA";
 import PostContent from "@/components/blog/PostContent";
 import PostHeader from "@/components/blog/PostHeader";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import ScrollProgress from "@/components/effects/ScrollProgress";
+import { localeAlternates } from "@/lib/alternates";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -18,19 +20,20 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
 
   return {
     title: post.meta.title,
     description: post.meta.excerpt,
-    alternates: { canonical: `/blog/${slug}` },
+    alternates: localeAlternates(`blog/${slug}`, locale),
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const post = getPostBySlug(slug);
   if (!post) notFound();
 

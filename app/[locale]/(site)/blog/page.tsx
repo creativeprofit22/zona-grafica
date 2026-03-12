@@ -1,18 +1,33 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import BlogCTA from "@/components/blog/BlogCTA";
 import BlogHero from "@/components/blog/BlogHero";
 import PostGrid from "@/components/blog/PostGrid";
+import { localeAlternates } from "@/lib/alternates";
 import { getAllPosts } from "@/lib/blog";
 import { webPageSchema } from "@/lib/jsonld";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Ideas sobre branding, diseño, proceso creativo e inspiración visual desde Zona Gráfica.",
-  alternates: { canonical: "/blog" },
-};
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-export default function BlogPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Blog",
+    description:
+      "Ideas sobre branding, diseño, proceso creativo e inspiración visual desde Zona Gráfica.",
+    alternates: localeAlternates("blog", locale),
+  };
+}
+
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const posts = getAllPosts();
 
   return (

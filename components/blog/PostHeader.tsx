@@ -3,8 +3,8 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
-import Link from "next/link";
 import { useRef } from "react";
+import { Link } from "@/i18n/navigation";
 import type { BlogPostMeta } from "@/lib/blog";
 import styles from "./PostHeader.module.css";
 
@@ -94,7 +94,9 @@ export default function PostHeader({ meta }: Props) {
           }
         >
           <span className={styles.category}>{meta.category}</span>
-          <h1 className={styles.titleLarge}>{titleWords}</h1>
+          <h1 translate="no" className={styles.titleLarge}>
+            {titleWords}
+          </h1>
           <div ref={metaRef} className={styles.meta}>
             <time dateTime={meta.isoDate}>{meta.date}</time>
             <span className={styles.separator}>/</span>

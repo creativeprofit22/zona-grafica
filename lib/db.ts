@@ -6,9 +6,14 @@ const globalForDb = globalThis as unknown as {
 };
 
 function createDb() {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error("DATABASE_URL environment variable is required");
+  }
+
   return drizzle({
     connection: {
-      connectionString: process.env.DATABASE_URL!,
+      connectionString: databaseUrl,
       ssl: process.env.NODE_ENV === "production",
       max: 10,
     },

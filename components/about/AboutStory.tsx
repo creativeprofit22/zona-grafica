@@ -142,7 +142,7 @@ export default function AboutStory({ segments }: Props) {
             </blockquote>
           </div>
 
-          <div className={styles.text} ref={textRef}>
+          <div translate="no" className={styles.text} ref={textRef}>
             {!isMounted ? (
               <p className={styles.body}>{plainText}</p>
             ) : (

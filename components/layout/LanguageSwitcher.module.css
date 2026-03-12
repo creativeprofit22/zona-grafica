@@ -1,0 +1,45 @@
+/* ─── Language Switcher ───────────────────────────────────── */
+
+.switcher {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.switcher:hover {
+  color: var(--fg-dark);
+  border-color: var(--fg-dark);
+}
+
+/* ─── Mobile overlay variant ─────────────────────────────── */
+.switcherMobile {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(250, 249, 246, 0.55);
+  background: none;
+  border: 1px solid var(--border-dark);
+  border-radius: 2px;
+  padding: 6px 12px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.switcherMobile:hover {
+  color: var(--fg-light);
+  border-color: var(--fg-light);
+}

@@ -50,6 +50,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.url,
   },
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({
@@ -58,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" translate="no" suppressHydrationWarning>
       <body
         className={`${clashDisplay.variable} ${sourceSerif.variable}`}
         suppressHydrationWarning

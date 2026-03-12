@@ -1,10 +1,14 @@
 import MotionSection from "@/components/animations/MotionSection";
-import { siteConfig } from "@/data/site";
+import type { SiteConfig } from "@/types/content";
 import styles from "./ContactInfo.module.css";
 
-export default function ContactInfo() {
-  const { contact, location, social } = siteConfig;
+interface Props {
+  contact: SiteConfig["contact"];
+  location: SiteConfig["location"];
+  social: SiteConfig["social"];
+}
 
+export default function ContactInfo({ contact, location, social }: Props) {
   return (
     <MotionSection
       className={styles.section}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import AboutHero from "@/components/about/AboutHero";
 import AboutStory from "@/components/about/AboutStory";
 import TeamSection from "@/components/about/TeamSection";
@@ -7,16 +8,30 @@ import CTASection from "@/components/home/CTASection";
 import { story, team, values } from "@/data/about";
 import { aboutFAQ } from "@/data/faq";
 import { siteConfig } from "@/data/site";
+import { localeAlternates } from "@/lib/alternates";
 import { aboutPageSchema, faqSchema } from "@/lib/jsonld";
 
-export const metadata: Metadata = {
-  title: "Nosotros",
-  description:
-    "Conoce a Zona Gráfica ·estudio creativo fundado por Jesús Herrera en San Miguel de Allende, Guanajuato.",
-  alternates: { canonical: "/nosotros" },
-};
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-export default function NosotrosPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Nosotros",
+    description:
+      "Conoce a Zona Gráfica · estudio creativo fundado por Jesús Herrera en San Miguel de Allende, Guanajuato.",
+    alternates: localeAlternates("nosotros", locale),
+  };
+}
+
+export default async function NosotrosPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <main id="main-content">
       <script

@@ -1,20 +1,35 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import CTASection from "@/components/home/CTASection";
 import ServicesHero from "@/components/services/ServicesHero";
 import ServicesList from "@/components/services/ServicesList";
 import ServicesProcess from "@/components/services/ServicesProcess";
 import { services } from "@/data/services";
 import { siteConfig } from "@/data/site";
+import { localeAlternates } from "@/lib/alternates";
 import { webPageSchema } from "@/lib/jsonld";
 
-export const metadata: Metadata = {
-  title: "Servicios",
-  description:
-    "Branding, diseño editorial, web, fotografía, ilustración y cartelería. Servicios creativos desde San Miguel de Allende.",
-  alternates: { canonical: "/servicios" },
-};
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-export default function ServiciosPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Servicios",
+    description:
+      "Branding, diseño editorial, web, fotografía, ilustración y cartelería. Servicios creativos desde San Miguel de Allende.",
+    alternates: localeAlternates("servicios", locale),
+  };
+}
+
+export default async function ServiciosPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <main id="main-content">
       <script

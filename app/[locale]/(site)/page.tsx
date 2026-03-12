@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import ClientMarquee from "@/components/home/ClientMarquee";
 import CTASection from "@/components/home/CTASection";
 import FeaturedShowcase from "@/components/home/FeaturedShowcase";
@@ -8,26 +9,41 @@ import ServiceAccordion from "@/components/home/ServiceAccordion";
 import StatsStrip from "@/components/home/StatsStrip";
 import PullQuote from "@/components/ui/PullQuote";
 import SectionNumber from "@/components/ui/SectionNumber";
+import { clients } from "@/data/clients";
 import { homeFAQ } from "@/data/faq";
 import { homeData, pullQuotes, stats } from "@/data/home";
 import { services } from "@/data/services";
 import { siteConfig } from "@/data/site";
 import { projects } from "@/data/work";
+import { localeAlternates } from "@/lib/alternates";
 import { faqSchema, webPageSchema } from "@/lib/jsonld";
 
-export const metadata: Metadata = {
-  title: `${siteConfig.name} ·Estudio Creativo en ${siteConfig.location.city}`,
-  description: siteConfig.description,
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: `${siteConfig.name} ·${siteConfig.tagline}`,
-    description: siteConfig.description,
-    type: "website",
-    url: "/",
-  },
-};
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-export default function Home() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
+    description: siteConfig.description,
+    alternates: localeAlternates("", locale),
+    openGraph: {
+      title: `${siteConfig.name} · ${siteConfig.tagline}`,
+      description: siteConfig.description,
+      type: "website",
+      url: "/",
+    },
+  };
+}
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const { cta } = homeData;
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 5);
 
@@ -55,14 +71,17 @@ export default function Home() {
       />
 
       <main id="main-content">
-        <HeroSection />
+        <HeroSection hero={homeData.hero} />
 
         <div style={{ position: "relative" }}>
           <SectionNumber n={1} />
-          <ManifestoSection />
+          <ManifestoSection manifesto={homeData.manifesto} />
         </div>
 
-        <ClientMarquee />
+        <ClientMarquee
+          clients={clients}
+          tagline="Buenos clientes hacen buenas historias."
+        />
 
         <div style={{ position: "relative" }}>
           <SectionNumber n={2} />

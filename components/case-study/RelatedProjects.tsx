@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import ImageReveal from "@/components/animations/ImageReveal";
 import MotionSection from "@/components/animations/MotionSection";
+import { Link } from "@/i18n/navigation";
 import type { Project } from "@/types/content";
 import styles from "./RelatedProjects.module.css";
 

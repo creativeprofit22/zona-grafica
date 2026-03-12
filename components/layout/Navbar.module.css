@@ -259,6 +259,17 @@
   color: var(--fg-dark);
 }
 
+/* Language switcher adapts to inverted navbar */
+.nav.inverted :global(.langSwitcher) {
+  color: rgba(250, 249, 246, 0.55);
+  border-color: var(--border-dark);
+}
+
+.nav.inverted :global(.langSwitcher):hover {
+  color: var(--fg-light);
+  border-color: var(--fg-light);
+}
+
 .nav.inverted .burgerLine {
   background: var(--fg-light);
 }
