@@ -10,13 +10,12 @@ import StatsStrip from "@/components/home/StatsStrip";
 import PullQuote from "@/components/ui/PullQuote";
 import SectionNumber from "@/components/ui/SectionNumber";
 import { clients } from "@/data/clients";
-import { homeFAQ } from "@/data/faq";
-import { homeData, pullQuotes, stats } from "@/data/home";
-import { services } from "@/data/services";
+import { getDictionary } from "@/data/dictionaries";
 import { siteConfig } from "@/data/site";
-import { projects } from "@/data/work";
 import { localeAlternates } from "@/lib/alternates";
 import { faqSchema, webPageSchema } from "@/lib/jsonld";
+
+type Locale = "es" | "en";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -25,7 +24,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
+    title: `${siteConfig.name} · ${locale === "en" ? "Creative Studio in" : "Estudio Creativo en"} ${siteConfig.location.city}`,
     description: siteConfig.description,
     alternates: localeAlternates("", locale),
     openGraph: {
@@ -44,6 +43,8 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const dict = await getDictionary(locale as Locale);
+  const { homeData, pullQuotes, stats, services, projects, homeFAQ } = dict;
   const { cta } = homeData;
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 5);
 
@@ -55,9 +56,10 @@ export default async function Home({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: `${siteConfig.name} ·${siteConfig.tagline}`,
+              name: `${siteConfig.name} · ${siteConfig.tagline}`,
               description: siteConfig.description,
               url: "/",
+              locale: locale as Locale,
             }),
           ).replace(/</g, "\\u003c"),
         }}
@@ -80,7 +82,11 @@ export default async function Home({
 
         <ClientMarquee
           clients={clients}
-          tagline="Buenos clientes hacen buenas historias."
+          tagline={
+            locale === "en"
+              ? "Good clients make good stories."
+              : "Buenos clientes hacen buenas historias."
+          }
         />
 
         <div style={{ position: "relative" }}>

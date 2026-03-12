@@ -22,6 +22,12 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <script
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: sets html lang attribute for SSG pages
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.lang="${locale}"`,
+        }}
+      />
       {children}
     </NextIntlClientProvider>
   );

@@ -5,11 +5,12 @@ import AboutStory from "@/components/about/AboutStory";
 import TeamSection from "@/components/about/TeamSection";
 import ValuesGrid from "@/components/about/ValuesGrid";
 import CTASection from "@/components/home/CTASection";
-import { story, team, values } from "@/data/about";
-import { aboutFAQ } from "@/data/faq";
+import { getDictionary } from "@/data/dictionaries";
 import { siteConfig } from "@/data/site";
 import { localeAlternates } from "@/lib/alternates";
 import { aboutPageSchema, faqSchema } from "@/lib/jsonld";
+
+type Locale = "es" | "en";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -18,9 +19,11 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: "Nosotros",
+    title: locale === "en" ? "About" : "Nosotros",
     description:
-      "Conoce a Zona Gráfica · estudio creativo fundado por Jesús Herrera en San Miguel de Allende, Guanajuato.",
+      locale === "en"
+        ? "Meet Zona Gráfica · creative studio founded by Jesús Herrera in San Miguel de Allende, Guanajuato."
+        : "Conoce a Zona Gráfica · estudio creativo fundado por Jesús Herrera en San Miguel de Allende, Guanajuato.",
     alternates: localeAlternates("nosotros", locale),
   };
 }
@@ -32,6 +35,9 @@ export default async function NosotrosPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const { story, team, values, aboutFAQ } = await getDictionary(
+    locale as Locale,
+  );
   return (
     <main id="main-content">
       <script
@@ -40,8 +46,9 @@ export default async function NosotrosPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             aboutPageSchema({
-              name: "Nosotros ·Zona Gráfica",
+              name: `${locale === "en" ? "About" : "Nosotros"} · Zona Gráfica`,
               description: story.intro,
+              locale: locale as Locale,
             }),
           ).replace(/</g, "\\u003c"),
         }}
@@ -67,10 +74,16 @@ export default async function NosotrosPage({
       <TeamSection members={team} />
 
       <CTASection
-        headline="¿Quieres trabajar con nosotros? Platiquemos"
-        whatsappLabel="Escríbenos por WhatsApp"
+        headline={
+          locale === "en"
+            ? "Want to work with us? Let's talk"
+            : "¿Quieres trabajar con nosotros? Platiquemos"
+        }
+        whatsappLabel={
+          locale === "en" ? "Message us on WhatsApp" : "Escríbenos por WhatsApp"
+        }
         whatsappHref={siteConfig.contact.whatsapp}
-        emailLabel="Mándanos un correo"
+        emailLabel={locale === "en" ? "Send us an email" : "Mándanos un correo"}
         emailHref={`mailto:${siteConfig.contact.email}`}
       />
     </main>

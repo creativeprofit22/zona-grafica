@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import PortfolioClient from "@/components/portfolio/PortfolioClient";
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
-import { portfolioCategories, projects } from "@/data/work";
+import { getDictionary } from "@/data/dictionaries";
 import { localeAlternates } from "@/lib/alternates";
 import { webPageSchema } from "@/lib/jsonld";
+
+type Locale = "es" | "en";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -13,9 +15,11 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: "Portafolio",
+    title: locale === "en" ? "Portfolio" : "Portafolio",
     description:
-      "Explora nuestro trabajo: branding, diseño editorial, web, fotografía, ilustración y cartelería.",
+      locale === "en"
+        ? "Explore our work: branding, editorial design, web, photography, illustration and poster design."
+        : "Explora nuestro trabajo: branding, diseño editorial, web, fotografía, ilustración y cartelería.",
     alternates: localeAlternates("portafolio", locale),
   };
 }
@@ -27,6 +31,9 @@ export default async function PortafolioPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const { projects, portfolioCategories } = await getDictionary(
+    locale as Locale,
+  );
   return (
     <main id="main-content">
       <script
@@ -35,18 +42,25 @@ export default async function PortafolioPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: "Portafolio",
+              name: locale === "en" ? "Portfolio" : "Portafolio",
               description:
-                "Proyectos de branding, diseño editorial, web, fotografía e ilustración.",
+                locale === "en"
+                  ? "Branding, editorial design, web, photography and illustration projects."
+                  : "Proyectos de branding, diseño editorial, web, fotografía e ilustración.",
               url: "/portafolio",
+              locale: locale as Locale,
             }),
           ).replace(/</g, "\\u003c"),
         }}
       />
 
       <PortfolioHero
-        title="Nuestro trabajo"
-        description="Cada proyecto es una historia. Aquí están las que más nos enorgullecen."
+        title={locale === "en" ? "Our work" : "Nuestro trabajo"}
+        description={
+          locale === "en"
+            ? "Every project is a story. Here are the ones we're most proud of."
+            : "Cada proyecto es una historia. Aquí están las que más nos enorgullecen."
+        }
         projectCount={projects.length}
       />
 

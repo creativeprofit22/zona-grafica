@@ -16,7 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: "Blog",
     description:
-      "Ideas sobre branding, diseño, proceso creativo e inspiración visual desde Zona Gráfica.",
+      locale === "en"
+        ? "Ideas on branding, design, creative process and visual inspiration from Zona Gráfica."
+        : "Ideas sobre branding, diseño, proceso creativo e inspiración visual desde Zona Gráfica.",
     alternates: localeAlternates("blog", locale),
   };
 }
@@ -28,7 +30,7 @@ export default async function BlogPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const posts = getAllPosts();
+  const posts = getAllPosts(locale);
 
   return (
     <main id="main-content">
@@ -39,8 +41,12 @@ export default async function BlogPage({
           __html: JSON.stringify(
             webPageSchema({
               name: "Blog · Zona Gráfica",
-              description: "Ideas sobre branding, diseño y proceso creativo.",
+              description:
+                locale === "en"
+                  ? "Ideas on branding, design and creative process."
+                  : "Ideas sobre branding, diseño y proceso creativo.",
               url: "/blog",
+              locale: locale as "es" | "en",
             }),
           ).replace(/</g, "\\u003c"),
         }}

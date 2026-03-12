@@ -4,10 +4,12 @@ import CTASection from "@/components/home/CTASection";
 import ServicesHero from "@/components/services/ServicesHero";
 import ServicesList from "@/components/services/ServicesList";
 import ServicesProcess from "@/components/services/ServicesProcess";
-import { services } from "@/data/services";
+import { getDictionary } from "@/data/dictionaries";
 import { siteConfig } from "@/data/site";
 import { localeAlternates } from "@/lib/alternates";
 import { webPageSchema } from "@/lib/jsonld";
+
+type Locale = "es" | "en";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,9 +18,11 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: "Servicios",
+    title: locale === "en" ? "Services" : "Servicios",
     description:
-      "Branding, diseño editorial, web, fotografía, ilustración y cartelería. Servicios creativos desde San Miguel de Allende.",
+      locale === "en"
+        ? "Branding, editorial design, web, photography, illustration and poster design. Creative services from San Miguel de Allende."
+        : "Branding, diseño editorial, web, fotografía, ilustración y cartelería. Servicios creativos desde San Miguel de Allende.",
     alternates: localeAlternates("servicios", locale),
   };
 }
@@ -30,6 +34,7 @@ export default async function ServiciosPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const { services } = await getDictionary(locale as Locale);
   return (
     <main id="main-content">
       <script
@@ -38,9 +43,13 @@ export default async function ServiciosPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: "Servicios",
-              description: "Servicios creativos de diseño gráfico y branding.",
+              name: locale === "en" ? "Services" : "Servicios",
+              description:
+                locale === "en"
+                  ? "Creative graphic design and branding services."
+                  : "Servicios creativos de diseño gráfico y branding.",
               url: "/servicios",
+              locale: locale as Locale,
             }),
           ).replace(/</g, "\\u003c"),
         }}
@@ -53,10 +62,16 @@ export default async function ServiciosPage({
       <ServicesProcess />
 
       <CTASection
-        headline="¿Tienes un proyecto en mente? Platiquemos"
-        whatsappLabel="Escríbenos por WhatsApp"
+        headline={
+          locale === "en"
+            ? "Have a project in mind? Let's talk"
+            : "¿Tienes un proyecto en mente? Platiquemos"
+        }
+        whatsappLabel={
+          locale === "en" ? "Message us on WhatsApp" : "Escríbenos por WhatsApp"
+        }
         whatsappHref={siteConfig.contact.whatsapp}
-        emailLabel="Mándanos un correo"
+        emailLabel={locale === "en" ? "Send us an email" : "Mándanos un correo"}
         emailHref={`mailto:${siteConfig.contact.email}`}
       />
     </main>

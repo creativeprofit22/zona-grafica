@@ -14,9 +14,11 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: "Contacto",
+    title: locale === "en" ? "Contact" : "Contacto",
     description:
-      "Platiquemos sobre tu próximo proyecto. Escríbenos por WhatsApp, correo o llámanos.",
+      locale === "en"
+        ? "Let's talk about your next project. Message us on WhatsApp, email or call us."
+        : "Platiquemos sobre tu próximo proyecto. Escríbenos por WhatsApp, correo o llámanos.",
     alternates: localeAlternates("contacto", locale),
   };
 }
@@ -36,21 +38,33 @@ export default async function ContactoPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             webPageSchema({
-              name: "Contacto · Zona Gráfica",
-              description: "Escríbenos para cotizar tu proyecto de diseño.",
+              name: `${locale === "en" ? "Contact" : "Contacto"} · Zona Gráfica`,
+              description:
+                locale === "en"
+                  ? "Get in touch to quote your design project."
+                  : "Escríbenos para cotizar tu proyecto de diseño.",
               url: "/contacto",
+              locale: locale as "es" | "en",
             }),
           ).replace(/</g, "\\u003c"),
         }}
       />
 
       <ContactHero
-        label="(contacto)"
-        titleLine1="Platiquemos"
-        titleLine2="sobre tu proyecto"
-        subtitle="Escríbenos directo o llena el formulario. Te respondemos en menos de 24 horas."
+        label={locale === "en" ? "(contact)" : "(contacto)"}
+        titleLine1={locale === "en" ? "Let's talk" : "Platiquemos"}
+        titleLine2={
+          locale === "en" ? "about your project" : "sobre tu proyecto"
+        }
+        subtitle={
+          locale === "en"
+            ? "Write us directly or fill out the form. We respond within 24 hours."
+            : "Escríbenos directo o llena el formulario. Te respondemos en menos de 24 horas."
+        }
         whatsappUrl={siteConfig.contact.whatsapp}
-        whatsappLabel="Escríbenos por WhatsApp"
+        whatsappLabel={
+          locale === "en" ? "Message us on WhatsApp" : "Escríbenos por WhatsApp"
+        }
       />
 
       <section

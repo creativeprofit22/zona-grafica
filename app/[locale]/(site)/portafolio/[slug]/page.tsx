@@ -7,9 +7,11 @@ import CaseStudyNarrative from "@/components/case-study/CaseStudyNarrative";
 import CaseStudyTestimonial from "@/components/case-study/CaseStudyTestimonial";
 import ProjectDetail from "@/components/case-study/ProjectDetail";
 import RelatedProjects from "@/components/case-study/RelatedProjects";
-import { caseStudies, projects } from "@/data/work";
+import { getDictionary } from "@/data/dictionaries";
 import { localeAlternates } from "@/lib/alternates";
 import { breadcrumbSchema } from "@/lib/jsonld";
+
+type Locale = "es" | "en";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -17,6 +19,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
+  const { projects } = await getDictionary(locale as Locale);
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
@@ -27,12 +30,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
+  const { projects } = await getDictionary("es");
   return projects.map((p) => ({ slug: p.slug }));
 }
 
 export default async function CaseStudyPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+  const { projects, caseStudies } = await getDictionary(locale as Locale);
   const caseStudy = caseStudies.find((cs) => cs.slug === slug);
   const project = caseStudy ?? projects.find((p) => p.slug === slug);
 
@@ -53,8 +58,11 @@ export default async function CaseStudyPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbSchema([
-              { name: "Inicio", url: "/" },
-              { name: "Portafolio", url: "/portafolio" },
+              { name: locale === "en" ? "Home" : "Inicio", url: "/" },
+              {
+                name: locale === "en" ? "Portfolio" : "Portafolio",
+                url: "/portafolio",
+              },
               { name: project.title, url: `/portafolio/${slug}` },
             ]),
           ).replace(/</g, "\\u003c"),

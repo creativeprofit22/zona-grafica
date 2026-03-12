@@ -7,10 +7,15 @@ import styles from "./RelatedPosts.module.css";
 interface Props {
   currentSlug: string;
   category: string;
+  locale?: string;
 }
 
-export default function RelatedPosts({ currentSlug, category }: Props) {
-  const allPosts = getAllPosts();
+export default function RelatedPosts({
+  currentSlug,
+  category,
+  locale = "es",
+}: Props) {
+  const allPosts = getAllPosts(locale);
   const related = allPosts
     .filter((p) => p.slug !== currentSlug)
     .sort((a, b) => {
@@ -29,7 +34,9 @@ export default function RelatedPosts({ currentSlug, category }: Props) {
       className={styles.section}
       stagger
     >
-      <h2 className={styles.heading}>Sigue leyendo</h2>
+      <h2 className={styles.heading}>
+        {locale === "en" ? "Keep reading" : "Sigue leyendo"}
+      </h2>
       <div className={styles.grid}>
         {related.map((post) => (
           <Link

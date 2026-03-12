@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getPostBySlug(slug, locale);
   if (!post) return {};
 
   return {
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const post = getPostBySlug(slug);
+  const post = getPostBySlug(slug, locale);
   if (!post) notFound();
 
   return (
@@ -50,6 +50,7 @@ export default async function BlogPostPage({ params }: Props) {
               datePublished: post.meta.isoDate,
               url: `/blog/${slug}`,
               image: post.meta.image,
+              locale: locale as "es" | "en",
             }),
           ).replace(/</g, "\\u003c"),
         }}
@@ -60,7 +61,7 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbSchema([
-              { name: "Inicio", url: "/" },
+              { name: locale === "en" ? "Home" : "Inicio", url: "/" },
               { name: "Blog", url: "/blog" },
               { name: post.meta.title, url: `/blog/${slug}` },
             ]),
@@ -75,7 +76,11 @@ export default async function BlogPostPage({ params }: Props) {
         gradientFrom={post.meta.gradientFrom}
       />
       <BlogCTA />
-      <RelatedPosts currentSlug={slug} category={post.meta.category} />
+      <RelatedPosts
+        currentSlug={slug}
+        category={post.meta.category}
+        locale={locale}
+      />
     </main>
   );
 }
