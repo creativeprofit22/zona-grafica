@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "common": {
+    "home": "Home",
+    "letsChat": "Let's Talk",
+    "menu": "Menu",
+    "close": "Close",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "navMenu": "Navigation menu",
+    "loading": "Loading...",
+    "readMore": "Read more",
+    "viewProject": "View project",
+    "allRightsReserved": "All rights reserved",
+    "backToTop": "Back to top",
+    "emailForNewsletter": "Email for newsletter"
+  },
+  "footer": {
+    "navLabel": "Footer navigation",
+    "newsletterDesc": "Design and branding tips straight to your inbox.",
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "you@email.com",
+      "submit": "Subscribe",
+      "success": "Thanks for subscribing!",
+      "error": "Subscription failed"
+    },
+    "madeIn": "Made in San Miguel de Allende, GTO · Since 1993"
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send message",
+      "success": "Message sent! We'll get back to you soon.",
+      "error": "Failed to send. Please try again."
+    }
+  },
+  "language": {
+    "switchTo": "Español",
+    "current": "English"
+  }
+}

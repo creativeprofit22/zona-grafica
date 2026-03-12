@@ -1,10 +1,21 @@
 import Image from "next/image";
-import Link from "next/link";
-import { navigation, siteConfig } from "@/data/site";
+import { getTranslations } from "next-intl/server";
+import { siteConfig } from "@/data/site";
+import { Link } from "@/i18n/navigation";
 import styles from "./Footer.module.css";
 import NewsletterForm from "./NewsletterForm";
 
-export default function Footer() {
+const navItems = [
+  { number: "01", key: "home", href: "/" },
+  { number: "02", key: "portfolio", href: "/portafolio" },
+  { number: "03", key: "services", href: "/servicios" },
+  { number: "04", key: "about", href: "/nosotros" },
+  { number: "05", key: "blog", href: "/blog" },
+  { number: "06", key: "contact", href: "/contacto" },
+] as const;
+
+export default async function Footer() {
+  const t = await getTranslations();
   const year = new Date().getFullYear();
 
   return (
@@ -32,11 +43,11 @@ export default function Footer() {
         </div>
 
         {/* ── Column 2: Navigation ── */}
-        <nav className={styles.nav} aria-label="Navegación de pie de página">
-          {navigation.map((link) => (
-            <Link key={link.href} href={link.href} className={styles.navLink}>
-              <span className={styles.navNumber}>{link.number}</span>
-              {link.label}
+        <nav className={styles.nav} aria-label={t("footer.navLabel")}>
+          {navItems.map((item) => (
+            <Link key={item.href} href={item.href} className={styles.navLink}>
+              <span className={styles.navNumber}>{item.number}</span>
+              {t(`nav.${item.key}`)}
             </Link>
           ))}
         </nav>
@@ -127,10 +138,10 @@ export default function Footer() {
 
         {/* ── Column 4: Newsletter ── */}
         <div className={styles.newsletter}>
-          <p className={styles.newsletterLabel}>Newsletter</p>
-          <p className={styles.newsletterDesc}>
-            Tips de diseño y branding directo a tu inbox.
+          <p className={styles.newsletterLabel}>
+            {t("footer.newsletter.title")}
           </p>
+          <p className={styles.newsletterDesc}>{t("footer.newsletterDesc")}</p>
           <NewsletterForm />
         </div>
       </div>
@@ -140,9 +151,7 @@ export default function Footer() {
         <p className={styles.copyright}>
           © {year} {siteConfig.name}
         </p>
-        <p className={styles.craft}>
-          Hecho en San Miguel de Allende, GTO · Desde 1993
-        </p>
+        <p className={styles.craft}>{t("footer.madeIn")}</p>
 
         {/* ── Postal Cancellation Mark (Matasellos) ── */}
         <div className={styles.stamp} aria-hidden="true">

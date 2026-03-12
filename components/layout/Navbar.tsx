@@ -4,16 +4,27 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MagneticButton from "@/components/ui/MagneticButton";
-import { navigation, siteConfig } from "@/data/site";
+import { siteConfig } from "@/data/site";
+import { Link, usePathname } from "@/i18n/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
 import styles from "./Navbar.module.css";
+
+const navItems = [
+  { number: "01", key: "home", href: "/" },
+  { number: "02", key: "portfolio", href: "/portafolio" },
+  { number: "03", key: "services", href: "/servicios" },
+  { number: "04", key: "about", href: "/nosotros" },
+  { number: "05", key: "blog", href: "/blog" },
+  { number: "06", key: "contact", href: "/contacto" },
+] as const;
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
+  const t = useTranslations();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -134,7 +145,7 @@ export default function Navbar() {
           <Link
             href="/"
             className={styles.logo}
-            aria-label="Inicio"
+            aria-label={t("common.home")}
             data-cursor-logo
           >
             <Image
@@ -149,37 +160,40 @@ export default function Navbar() {
           </Link>
 
           <div className={styles.desktopLinks}>
-            {navigation.slice(1).map((link) => (
+            {navItems.slice(1).map((item) => (
               <MagneticButton
-                key={link.href}
+                key={item.href}
                 strength={0.25}
                 className={styles.navLinkWrap}
               >
                 <Link
-                  href={link.href}
-                  className={`${styles.navLink} ${activeSection ? (activeSection === link.href ? styles.active : "") : pathname === link.href ? styles.active : ""}`}
+                  href={item.href}
+                  className={`${styles.navLink} ${activeSection ? (activeSection === item.href ? styles.active : "") : pathname === item.href ? styles.active : ""}`}
                 >
-                  <span className={styles.navNumber}>{link.number}</span>
-                  {link.label}
+                  <span className={styles.navNumber}>{item.number}</span>
+                  {t(`nav.${item.key}`)}
                 </Link>
               </MagneticButton>
             ))}
           </div>
 
           <div className={styles.right}>
+            <LanguageSwitcher />
             <a
               href={siteConfig.contact.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.ctaButton}
             >
-              Hablemos
+              {t("common.letsChat")}
             </a>
             <button
               type="button"
               className={`${styles.burger} ${menuOpen ? styles.burgerOpen : ""}`}
               onClick={toggleMenu}
-              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-label={
+                menuOpen ? t("common.closeMenu") : t("common.openMenu")
+              }
               aria-expanded={menuOpen}
             >
               <span className={styles.burgerLine} />
@@ -197,24 +211,27 @@ export default function Navbar() {
       {/* ── Mobile Overlay ── */}
       <dialog
         className={`${styles.overlay} ${menuOpen ? styles.overlayOpen : ""}`}
-        aria-label="Menú de navegación"
+        aria-label={t("common.navMenu")}
         open={menuOpen}
       >
         <div className={styles.overlayContent}>
-          {navigation.map((link, i) => (
+          {navItems.map((item, i) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={item.href}
+              href={item.href}
               className={styles.overlayLink}
               style={{ transitionDelay: menuOpen ? `${0.05 * i}s` : "0s" }}
               onClick={() => setMenuOpen(false)}
             >
-              <span className={styles.overlayNumber}>{link.number}</span>
-              <span className={styles.overlayLabel}>{link.label}</span>
+              <span className={styles.overlayNumber}>{item.number}</span>
+              <span className={styles.overlayLabel}>
+                {t(`nav.${item.key}`)}
+              </span>
             </Link>
           ))}
         </div>
         <div className={styles.overlayFooter}>
+          <LanguageSwitcher variant="mobile" />
           <a
             href={siteConfig.contact.whatsapp}
             target="_blank"

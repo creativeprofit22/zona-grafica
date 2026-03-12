@@ -1,9 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import styles from "./Footer.module.css";
 
 export default function NewsletterForm() {
+  const t = useTranslations();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">(
     "idle",
@@ -24,20 +26,24 @@ export default function NewsletterForm() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Error al suscribirte");
+        throw new Error(data.error || t("footer.newsletter.error"));
       }
 
       setStatus("ok");
       setEmail("");
     } catch (err) {
       setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Error al suscribirte");
+      setErrorMsg(
+        err instanceof Error ? err.message : t("footer.newsletter.error"),
+      );
     }
   }
 
   if (status === "ok") {
     return (
-      <p className={styles.newsletterSuccess}>¡Gracias por suscribirte!</p>
+      <p className={styles.newsletterSuccess}>
+        {t("footer.newsletter.success")}
+      </p>
     );
   }
 
@@ -47,10 +53,10 @@ export default function NewsletterForm() {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="tu@email.com"
+        placeholder={t("footer.newsletter.placeholder")}
         required
         className={styles.newsletterInput}
-        aria-label="Email para newsletter"
+        aria-label={t("common.emailForNewsletter")}
       />
       <button
         type="submit"

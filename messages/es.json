@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "portfolio": "Portafolio",
+    "services": "Servicios",
+    "about": "Nosotros",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "common": {
+    "home": "Inicio",
+    "letsChat": "Hablemos",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "navMenu": "Menú de navegación",
+    "loading": "Cargando...",
+    "readMore": "Leer más",
+    "viewProject": "Ver proyecto",
+    "allRightsReserved": "Todos los derechos reservados",
+    "backToTop": "Volver arriba",
+    "emailForNewsletter": "Email para newsletter"
+  },
+  "footer": {
+    "navLabel": "Navegación de pie de página",
+    "newsletterDesc": "Tips de diseño y branding directo a tu inbox.",
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "tu@email.com",
+      "submit": "Suscribirse",
+      "success": "¡Gracias por suscribirte!",
+      "error": "Error al suscribirse"
+    },
+    "madeIn": "Hecho en San Miguel de Allende, GTO · Desde 1993"
+  },
+  "contact": {
+    "form": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "success": "¡Mensaje enviado! Te responderemos pronto.",
+      "error": "Error al enviar. Intenta de nuevo."
+    }
+  },
+  "language": {
+    "switchTo": "English",
+    "current": "Español"
+  }
+}
