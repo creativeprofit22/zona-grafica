@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: "/og-image-v2.png",
+        url: "/og-image-v2.jpg",
         width: 1200,
         height: 630,
         alt: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: [
       {
-        url: "/og-image-v2.png",
+        url: "/og-image-v2.jpg",
         width: 1200,
         height: 630,
         alt: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
