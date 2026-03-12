@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: "/",
       images: [
         {
-          url: "/og-image.png",
+          url: "/og-image-v2.png",
           width: 1200,
           height: 630,
           alt: `${siteConfig.name} · Estudio Creativo en ${siteConfig.location.city}`,
